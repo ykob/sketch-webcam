@@ -8,20 +8,21 @@ export default class WebCam {
   }
   async init(facingMode = 'user') {
     if (!navigator.mediaDevices) {
-      window.alert("navigator.mediaDevices is disabled.");
+      window.alert('navigator.mediaDevices is disabled.');
       return;
     }
 
-    await navigator.mediaDevices.getUserMedia({
+    await navigator.mediaDevices
+      .getUserMedia({
         audio: false,
         video: {
-          facingMode: facingMode,
+          facingMode: facingMode
         }
       })
-      .then((stream) => {
+      .then(stream => {
         this.video.srcObject = stream;
       })
-      .catch((error) => {
+      .catch(() => {
         window.alert("It wasn't allowed to use WebCam.");
       });
 
