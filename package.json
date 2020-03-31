@@ -34,6 +34,7 @@
     "prettier": "^1.19.1",
     "raw-loader": "^4.0.0",
     "sass-loader": "^8.0.2",
+    "vue-cli-plugin-pug": "^1.0.7",
     "vue-template-compiler": "^2.6.11"
   }
 }
