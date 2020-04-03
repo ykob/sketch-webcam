@@ -6,10 +6,17 @@ export default {
       webcam: null
     };
   },
-  async mounted() {
+  async created() {
     const WebCam = await import('@/components/common/WebCam.js');
     this.webcam = new WebCam.default();
     await this.webcam.init();
+
+    document.body.append(state.canvas);
+    state.canvas.style = `
+        position: absolute;
+        top: 0;
+        left: 0;
+      `;
   }
 };
 </script>
