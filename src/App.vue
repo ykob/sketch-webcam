@@ -7,6 +7,8 @@ export default {
     };
   },
   async created() {
+    const { state } = this.$store;
+
     const WebCam = await import('@/components/common/WebCam.js');
     this.webcam = new WebCam.default();
     await this.webcam.init();
