@@ -1,13 +1,20 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import { Vector2 } from 'three';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    canvas: document.createElement('canvas')
+    canvas: document.createElement('canvas'),
+    resolution: new Vector2(),
+    isMobile: false
   },
-  mutations: {},
+  mutations: {
+    changeMediaQuery(state, bool) {
+      state.isMobile = bool;
+    }
+  },
   actions: {},
   modules: {}
 });
