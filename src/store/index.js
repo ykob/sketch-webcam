@@ -8,7 +8,9 @@ export default new Vuex.Store({
   state: {
     canvas: document.createElement('canvas'),
     resolution: new Vector2(),
-    isMobile: false
+    mouse: new Vector2(),
+    isMobile: false,
+    isEnabledTouch: false
   },
   mutations: {
     changeMediaQuery(state, bool) {

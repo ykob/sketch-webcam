@@ -23,6 +23,7 @@ export default {
 
     // On global events.
     window.addEventListener('resize', this.resize);
+    window.addEventListener('mousemove', this.mousemove);
 
     // Initialize
     this.resize();
@@ -35,6 +36,15 @@ export default {
       state.canvas.width = state.resolution.x;
       state.canvas.height = state.resolution.y;
       commit('changeMediaQuery', state.resolution.x < 768);
+    },
+    mousemove(e) {
+      const { state } = this.$store;
+
+      if (state.isEnabledTouch === true) return;
+      state.mouse.set(
+        (e.clientX / state.resolution.x) * 2 - 1,
+        -(e.clientY / state.resolution.y) * 2 + 1
+      );
     }
   }
 };
