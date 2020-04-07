@@ -1,17 +1,10 @@
 <script>
 export default {
   name: 'App',
-  data() {
-    return {
-      webcam: null
-    };
-  },
   async created() {
-    const { state } = this.$store;
+    const { state, dispatch } = this.$store;
 
-    const WebCam = await import('@/components/common/WebCam.js');
-    this.webcam = new WebCam.default();
-    await this.webcam.init();
+    dispatch('initWebCam');
 
     // append canvas and add styles to it.
     document.body.append(state.canvas);
