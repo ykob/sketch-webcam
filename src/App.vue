@@ -3,8 +3,9 @@ export default {
   name: 'App',
   async created() {
     const { state, dispatch } = this.$store;
+    console.log(this.$store);
 
-    dispatch('initWebCam');
+    dispatch('webcam/init');
 
     // append canvas and add styles to it.
     document.body.append(state.canvas);

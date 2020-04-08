@@ -9,24 +9,33 @@ export default new Vuex.Store({
     canvas: document.createElement('canvas'),
     resolution: new Vector2(),
     mouse: new Vector2(),
-    webcam: null,
     isMobile: false,
     isEnabledTouch: false
   },
   mutations: {
-    setWebCam(state, webcam) {
-      state.webcam = webcam;
-    },
     changeMediaQuery(state, bool) {
       state.isMobile = bool;
     }
   },
-  actions: {
-    async initWebCam({ state, commit }) {
-      const WebCam = await import('@/components/common/WebCam.js');
-      commit('setWebCam', new WebCam.default());
-      return state.webcam.init();
+  actions: {},
+  modules: {
+    webcam: {
+      namespaced: true,
+      state: {
+        obj: null
+      },
+      mutations: {
+        set(state, webcam) {
+          state.obj = webcam;
+        }
+      },
+      actions: {
+        async init({ state, commit }) {
+          const WebCam = await import('@/components/common/WebCam.js');
+          commit('set', new WebCam.default());
+          return state.obj.init();
+        }
+      }
     }
-  },
-  modules: {}
+  }
 });
