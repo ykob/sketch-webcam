@@ -8,6 +8,25 @@ const routes = [
     path: '/',
     name: 'Home',
     component: () => import(/* webpackChunkName: "home" */ '../views/Home.vue')
+  },
+  {
+    path: '/demo',
+    name: 'Demo',
+    component: () => import(/* webpackChunkName: "demo" */ '../views/Demo.vue'),
+    children: [
+      {
+        path: '',
+        name: 'DemoHome',
+        component: () =>
+          import(/* webpackChunkName: "demo-home" */ '../views/demo/Home.vue')
+      },
+      {
+        path: 'body-pix',
+        name: 'BodyPix',
+        component: () =>
+          import(/* webpackChunkName: "bodypix" */ '../views/demo/BodyPix.vue')
+      }
+    ]
   }
 ];
 

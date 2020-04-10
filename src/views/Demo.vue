@@ -1,10 +1,14 @@
 <script>
 export default {
-  name: 'Home'
+  name: 'Demo',
+  created() {
+    console.log('created');
+  }
 };
 </script>
 
 <template lang="pug">
+router-view
 </template>
 
 <style lang="scss" scoped></style>
