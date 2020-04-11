@@ -1,18 +1,57 @@
+import { Vector2 } from 'three';
+import sleep from 'js-util/sleep';
+
 export default {
   namespaced: true,
   state: {
-    obj: null
+    video: document.createElement('video'),
+    resolution: new Vector2()
   },
   mutations: {
-    set(state, webcam) {
-      state.obj = webcam;
+    playVideo(state) {
+      // play video.
+      state.video.play();
+    },
+    setVideoAttr(state, srcObject) {
+      // get video stream, and set attributes to video object to play auto on iOS.
+      state.video.srcObject = srcObject;
+      state.video.setAttribute('playsinline', true);
+      state.video.setAttribute('controls', true);
+    },
+    setResolution(state) {
+      // get video resolution with promise.
+      state.resolution.x = state.video.width = state.video.videoWidth;
+      state.resolution.y = state.video.height = state.video.videoHeight;
     }
   },
   actions: {
-    async init({ state, commit }) {
-      const WebCam = await import('@/components/common/WebCam.js');
-      commit('set', new WebCam.default());
-      return state.obj.init();
+    async init({ commit }, facingMode = 'user') {
+      if (!navigator.mediaDevices) {
+        window.alert('navigator.mediaDevices is disabled.');
+        return;
+      }
+
+      let srcObject;
+
+      await navigator.mediaDevices
+        .getUserMedia({
+          audio: false,
+          video: {
+            facingMode: facingMode
+          }
+        })
+        .then(stream => {
+          srcObject = stream;
+        })
+        .catch(() => {
+          window.alert("It wasn't allowed to use WebCam.");
+        });
+      commit('setVideoAttr', srcObject);
+      commit('playVideo', srcObject);
+      await sleep(1000);
+      commit('setResolution');
+
+      return;
     }
   }
 };
