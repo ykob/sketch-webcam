@@ -1,6 +1,11 @@
 <script>
+import Alert from '@/components/Alert.vue';
+
 export default {
   name: 'App',
+  components: {
+    Alert
+  },
   async created() {
     const { state, dispatch } = this.$store;
     console.log(this.$store);
@@ -47,6 +52,7 @@ export default {
 <template lang="pug">
   #app
     router-view
+    Alert
 </template>
 
 <style lang="scss"></style>

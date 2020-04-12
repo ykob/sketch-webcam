@@ -27,7 +27,9 @@ export default {
   actions: {
     async init({ commit }, facingMode = 'user') {
       if (!navigator.mediaDevices) {
-        window.alert('navigator.mediaDevices is disabled.');
+        commit('alert/show', 'navigator.mediaDevices is disabled.', {
+          root: true
+        });
         return;
       }
 
@@ -44,7 +46,9 @@ export default {
           srcObject = stream;
         })
         .catch(() => {
-          window.alert("It wasn't allowed to use WebCam.");
+          commit('alert/show', "It's not allowed to use WebCam.", {
+            root: true
+          });
         });
       commit('setVideoAttr', srcObject);
       commit('playVideo', srcObject);

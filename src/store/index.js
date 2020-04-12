@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import { Vector2 } from 'three';
 
+import alert from './alert';
 import webcam from './webcam';
 
 Vue.use(Vuex);
@@ -21,6 +22,7 @@ export default new Vuex.Store({
   },
   actions: {},
   modules: {
+    alert,
     webcam
   }
 });

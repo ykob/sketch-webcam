@@ -1,12 +1,17 @@
 <script>
 export default {
-  name: 'Alert'
+  name: 'Alert',
+  computed: {
+    text() {
+      return this.$store.state.alert.text;
+    }
+  }
 };
 </script>
 
 <template lang="pug">
 .alert
-  |navigator.mediaDevices is disabled.
+  |{{ text }}
 </template>
 
 <style lang="scss" scoped>
