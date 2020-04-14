@@ -55,4 +55,10 @@ export default {
     Alert
 </template>
 
-<style lang="scss"></style>
+<style lang="scss">
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap');
+
+@import '@/assets/scss/foundation/normalize.scss';
+@import '@/assets/scss/foundation/global.scss';
+@import '@/assets/scss/foundation/keyframes.scss';
+</style>

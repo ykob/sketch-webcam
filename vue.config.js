@@ -1,4 +1,15 @@
 module.exports = {
+  css: {
+    loaderOptions: {
+      sass: {
+        prependData: `
+          @import "@/assets/scss/foundation/variables.scss";
+          @import "@/assets/scss/foundation/functions.scss";
+          @import "@/assets/scss/foundation/mixins.scss";
+        `
+      }
+    }
+  },
   configureWebpack: {
     module: {
       rules: [
