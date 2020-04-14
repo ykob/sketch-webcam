@@ -10,7 +10,7 @@ export default {
     const { state, dispatch } = this.$store;
     console.log(this.$store);
 
-    dispatch('webcam/init');
+    await dispatch('webcam/init');
 
     // append canvas and add styles to it.
     document.body.append(state.canvas);
