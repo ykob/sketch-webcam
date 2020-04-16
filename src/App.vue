@@ -8,7 +8,6 @@ export default {
   },
   async created() {
     const { state, dispatch } = this.$store;
-    console.log(this.$store);
 
     await dispatch('webcam/init');
 
@@ -26,15 +25,26 @@ export default {
 
     // Initialize
     this.resize();
+    state.camera.start();
+    this.update();
   },
   methods: {
+    update() {
+      const { state } = this.$store;
+
+      state.renderer.render(state.scene, state.camera);
+      console.log(state.camera);
+      requestAnimationFrame(this.update);
+    },
     resize() {
       const { state, commit } = this.$store;
 
+      commit('changeMediaQuery', state.resolution.x < 768);
       state.resolution.set(document.body.clientWidth, window.innerHeight);
       state.canvas.width = state.resolution.x;
       state.canvas.height = state.resolution.y;
-      commit('changeMediaQuery', state.resolution.x < 768);
+      state.camera.resize();
+      state.renderer.setSize(state.resolution.x, state.resolution.y);
     },
     mousemove(e) {
       const { state } = this.$store;

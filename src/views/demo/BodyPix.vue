@@ -1,8 +1,19 @@
 <script>
+import store from '@/store';
+import Video from '@/components/demo/bodyPix/Video';
+
+const video = new Video();
+
 export default {
   name: 'BodyPix',
   created() {
-    console.log('created bodypix');
+    const { scene } = store.state;
+    video.resize();
+    scene.add(video);
+  },
+  destroyed() {
+    const { scene } = store.state;
+    scene.remove(video);
   }
 };
 </script>

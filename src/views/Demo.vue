@@ -1,9 +1,6 @@
 <script>
 export default {
-  name: 'Demo',
-  created() {
-    console.log('created');
-  }
+  name: 'Demo'
 };
 </script>
 

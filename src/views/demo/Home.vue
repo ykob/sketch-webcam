@@ -1,9 +1,6 @@
 <script>
 export default {
-  name: 'BodyPix',
-  created() {
-    console.log('created demo home');
-  }
+  name: 'DemoHome'
 };
 </script>
 
