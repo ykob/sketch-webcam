@@ -6,10 +6,12 @@ const video = new Video();
 
 export default {
   name: 'BodyPix',
-  created() {
-    const { scene } = store.state;
+  async created() {
+    const { state, dispatch } = store;
+
+    await dispatch('webcam/init');
     video.resize();
-    scene.add(video);
+    state.scene.add(video);
   },
   destroyed() {
     const { scene } = store.state;

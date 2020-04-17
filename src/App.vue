@@ -7,9 +7,7 @@ export default {
     Alert
   },
   async created() {
-    const { state, dispatch } = this.$store;
-
-    await dispatch('webcam/init');
+    const { state } = this.$store;
 
     // append canvas and add styles to it.
     document.body.append(state.canvas);
@@ -33,7 +31,6 @@ export default {
       const { state } = this.$store;
 
       state.renderer.render(state.scene, state.camera);
-      console.log(state.camera);
       requestAnimationFrame(this.update);
     },
     resize() {
