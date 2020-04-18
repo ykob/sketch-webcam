@@ -23,10 +23,17 @@ export default new Vuex.Store({
     }),
     scene: new Scene(),
     camera: new Camera(),
+    update: null,
     isMobile: false,
     isEnabledTouch: false
   },
   mutations: {
+    setUpdates(state, update) {
+      state.update = update;
+    },
+    destroyUpdates(state, update) {
+      state.update = update;
+    },
     changeMediaQuery(state, bool) {
       state.isMobile = bool;
     }

@@ -30,6 +30,9 @@ export default {
     update() {
       const { state } = this.$store;
 
+      if (state.update !== null) {
+        state.update();
+      }
       state.renderer.render(state.scene, state.camera);
       requestAnimationFrame(this.update);
     },
