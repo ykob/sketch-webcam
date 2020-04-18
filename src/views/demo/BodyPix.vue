@@ -20,9 +20,9 @@ export default {
 
     commit('setUpdates', async () => {
       const segmentation = await this.net.segmentPerson(state.webcam.video, {
-        internalResolution: 'low'
+        internalResolution: 'medium'
       });
-      console.log(segmentation);
+      video.updateSegmentation(segmentation);
     });
   },
   destroyed() {

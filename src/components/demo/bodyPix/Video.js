@@ -4,7 +4,11 @@ import {
   RawShaderMaterial,
   Vector2,
   Vector3,
-  VideoTexture
+  VideoTexture,
+  DataTexture,
+  LuminanceFormat,
+  UnsignedByteType,
+  LinearFilter
 } from 'three';
 import MathEx from 'js-util/MathEx';
 
@@ -36,6 +40,10 @@ export default class Video extends Mesh {
         videoResolution: {
           type: 'v2',
           value: store.state.webcam.resolution
+        },
+        segmentation: {
+          type: 't',
+          value: null
         }
       },
       vertexShader: vs,
@@ -43,6 +51,23 @@ export default class Video extends Mesh {
     });
     super(geometry, material);
     this.size = new Vector3();
+  }
+  updateSegmentation(segmentation) {
+    const texture = this.material.uniforms.segmentation;
+    if (texture.value === null) {
+      texture.value = new DataTexture(
+        segmentation.data,
+        segmentation.width,
+        segmentation.height,
+        LuminanceFormat,
+        UnsignedByteType
+      );
+      texture.value.magFilter = LinearFilter;
+      texture.value.minFilter = LinearFilter;
+    } else {
+      texture.value.image.data.set(segmentation.data);
+    }
+    texture.value.needsUpdate = true;
   }
   resize() {
     const { camera } = store.state;

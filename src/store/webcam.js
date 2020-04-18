@@ -20,8 +20,8 @@ export default {
     },
     setResolution(state) {
       // get video resolution with promise.
-      state.resolution.x = state.video.width = state.video.videoWidth;
-      state.resolution.y = state.video.height = state.video.videoHeight;
+      state.resolution.x = state.video.width = state.video.videoWidth / 2;
+      state.resolution.y = state.video.height = state.video.videoHeight / 2;
     }
   },
   actions: {
