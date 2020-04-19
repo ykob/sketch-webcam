@@ -8,7 +8,7 @@ import {
   DataTexture,
   LuminanceFormat,
   UnsignedByteType,
-  LinearFilter
+  NearestFilter
 } from 'three';
 import MathEx from 'js-util/MathEx';
 
@@ -62,8 +62,8 @@ export default class Video extends Mesh {
         LuminanceFormat,
         UnsignedByteType
       );
-      texture.value.magFilter = LinearFilter;
-      texture.value.minFilter = LinearFilter;
+      texture.value.magFilter = NearestFilter;
+      texture.value.minFilter = NearestFilter;
     } else {
       texture.value.image.data.set(segmentation.data);
     }

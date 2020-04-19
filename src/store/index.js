@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { WebGLRenderer, Vector2, Scene } from 'three';
+import { WebGLRenderer, Vector2, Scene, Clock } from 'three';
 
 import alert from './alert';
 import webcam from './webcam';
@@ -23,6 +23,7 @@ export default new Vuex.Store({
     }),
     scene: new Scene(),
     camera: new Camera(),
+    clock: new Clock(),
     update: null,
     isMobile: false,
     isEnabledTouch: false

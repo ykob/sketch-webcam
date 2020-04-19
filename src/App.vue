@@ -25,13 +25,15 @@ export default {
     this.resize();
     state.camera.start();
     this.update();
+    state.clock.start();
   },
   methods: {
     update() {
       const { state } = this.$store;
 
+      const time = state.clock.running === true ? state.clock.getDelta() : 0;
       if (state.update !== null) {
-        state.update();
+        state.update(time);
       }
       state.renderer.render(state.scene, state.camera);
       requestAnimationFrame(this.update);

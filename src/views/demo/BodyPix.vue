@@ -15,14 +15,26 @@ export default {
 
     await dispatch('webcam/init');
     video.resize();
-    this.net = await bodyPix.load();
+    this.net = await bodyPix.load({
+      architecture: 'MobileNetV1',
+      outputStride: 16,
+      multiplier: 0.75,
+      quantBytes: 4
+    });
     state.scene.add(video);
 
-    commit('setUpdates', async () => {
-      const segmentation = await this.net.segmentPerson(state.webcam.video, {
-        internalResolution: 'medium'
-      });
-      video.updateSegmentation(segmentation);
+    let timeSegment = 0;
+    commit('setUpdates', async time => {
+      timeSegment += time;
+      if (timeSegment >= 1 / 30) {
+        const segmentation = await this.net.segmentPerson(state.webcam.video, {
+          flipHorizontal: true,
+          internalResolution: 'medium',
+          segmentationThreshold: 0.5
+        });
+        video.updateSegmentation(segmentation);
+        timeSegment = 0;
+      }
     });
   },
   destroyed() {
