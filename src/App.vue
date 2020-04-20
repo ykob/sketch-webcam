@@ -47,6 +47,9 @@ export default {
       state.canvas.height = state.resolution.y;
       state.camera.resize();
       state.renderer.setSize(state.resolution.x, state.resolution.y);
+      if (state.resize !== null) {
+        state.resize();
+      }
     },
     mousemove(e) {
       const { state } = this.$store;

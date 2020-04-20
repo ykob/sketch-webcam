@@ -25,15 +25,22 @@ export default new Vuex.Store({
     camera: new Camera(),
     clock: new Clock(),
     update: null,
+    resize: null,
     isMobile: false,
     isEnabledTouch: false
   },
   mutations: {
-    setUpdates(state, update) {
+    setUpdate(state, update) {
       state.update = update;
     },
-    destroyUpdates(state, update) {
-      state.update = update;
+    destroyUpdate(state) {
+      state.update = null;
+    },
+    setResize(state, resize) {
+      state.resize = resize;
+    },
+    destroyResize(state) {
+      state.resize = null;
     },
     changeMediaQuery(state, bool) {
       state.isMobile = bool;

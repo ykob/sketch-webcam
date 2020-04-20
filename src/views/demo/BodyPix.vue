@@ -8,13 +8,13 @@ const video = new Video();
 export default {
   name: 'BodyPix',
   data: () => ({
-    net: null
+    net: null,
+    timeSegment: 0
   }),
   async created() {
     const { state, commit, dispatch } = store;
 
     await dispatch('webcam/init');
-    video.resize();
     this.net = await bodyPix.load({
       architecture: 'MobileNetV1',
       outputStride: 16,
@@ -23,23 +23,32 @@ export default {
     });
     state.scene.add(video);
 
-    let timeSegment = 0;
-    commit('setUpdates', async time => {
-      timeSegment += time;
-      if (timeSegment >= 1 / 30) {
+    commit('setUpdate', this.update);
+    commit('setResize', this.resize);
+    this.resize();
+  },
+  destroyed() {
+    const { scene } = store.state;
+    scene.remove(video);
+  },
+  methods: {
+    async update(time) {
+      const { state } = store;
+
+      this.timeSegment += time;
+      if (this.timeSegment >= 1 / 30) {
         const segmentation = await this.net.segmentPerson(state.webcam.video, {
           flipHorizontal: true,
           internalResolution: 'medium',
           segmentationThreshold: 0.5
         });
         video.updateSegmentation(segmentation);
-        timeSegment = 0;
+        this.timeSegment = 0;
       }
-    });
-  },
-  destroyed() {
-    const { scene } = store.state;
-    scene.remove(video);
+    },
+    resize() {
+      video.resize();
+    }
   }
 };
 </script>
