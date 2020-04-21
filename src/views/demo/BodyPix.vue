@@ -29,8 +29,8 @@ export default {
     });
   },
   destroyed() {
-    const { scene, commit } = store.state;
-    scene.remove(video);
+    const { state, commit } = store;
+    state.scene.remove(video);
     commit('destroyUpdate');
     commit('destroyResize');
   },
