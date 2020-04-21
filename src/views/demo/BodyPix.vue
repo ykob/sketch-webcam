@@ -29,8 +29,10 @@ export default {
     });
   },
   destroyed() {
-    const { scene } = store.state;
+    const { scene, commit } = store.state;
     scene.remove(video);
+    commit('destroyUpdate');
+    commit('destroyResize');
   },
   methods: {
     async update(time) {
