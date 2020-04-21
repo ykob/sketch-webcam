@@ -30,7 +30,7 @@ export default {
         commit('alert/show', 'navigator.mediaDevices is disabled.', {
           root: true
         });
-        return;
+        throw new Error('navigator.mediaDevices is disabled.');
       }
 
       let srcObject;
@@ -49,6 +49,7 @@ export default {
           commit('alert/show', "It's not allowed to use WebCam.", {
             root: true
           });
+          throw new Error("It's not allowed to use WebCam.");
         });
       commit('setVideoAttr', srcObject);
       commit('playVideo', srcObject);
