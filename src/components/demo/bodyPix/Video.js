@@ -29,21 +29,17 @@ export default class Video extends Mesh {
           type: 'v2',
           value: store.state.resolution
         },
-        imgRatio: {
-          type: 'v2',
-          value: new Vector2()
-        },
         video: {
           type: 't',
           value: new VideoTexture(store.state.webcam.video)
         },
-        videoResolution: {
-          type: 'v2',
-          value: store.state.webcam.resolution
-        },
         segmentation: {
           type: 't',
           value: null
+        },
+        imgRatio: {
+          type: 'v2',
+          value: new Vector2()
         }
       },
       vertexShader: vs,
@@ -80,10 +76,12 @@ export default class Video extends Mesh {
     const width = height * camera.aspect;
 
     this.size.set(width, height, 1);
-    this.material.uniforms.imgRatio.value.set(
-      Math.min(1, this.size.x / this.size.y),
-      Math.min(1, this.size.y / this.size.x)
-    );
     this.scale.copy(this.size);
+
+    const { resolution } = store.state.webcam;
+    this.material.uniforms.imgRatio.value.set(
+      Math.min(1, ((this.size.x / this.size.y) * resolution.y) / resolution.x),
+      Math.min(1, ((this.size.y / this.size.x) * resolution.x) / resolution.y)
+    );
   }
 }
