@@ -24,6 +24,14 @@ const routes = [
         name: 'BodyPix',
         component: () =>
           import(/* webpackChunkName: "bodypix" */ '../views/demo/BodyPix.vue')
+      },
+      {
+        path: 'facemesh',
+        name: 'Facemesh',
+        component: () =>
+          import(
+            /* webpackChunkName: "facemesh" */ '../views/demo/Facemesh.vue'
+          )
       }
     ]
   }
