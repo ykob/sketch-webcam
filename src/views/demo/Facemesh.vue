@@ -1,6 +1,9 @@
 <script>
 import * as facemesh from '@tensorflow-models/facemesh';
 import store from '@/store';
+import Video from '@/components/demo/bodyPix/Video';
+
+const video = new Video();
 
 export default {
   name: 'Facemesh',
@@ -9,10 +12,11 @@ export default {
     timeSegment: 0
   }),
   async created() {
-    const { commit, dispatch } = store;
+    const { state, commit, dispatch } = store;
 
     dispatch('webcam/init').then(async () => {
       this.model = await facemesh.load();
+      state.scene.add(video);
 
       commit('setUpdate', this.update);
       commit('setResize', this.resize);
@@ -20,7 +24,8 @@ export default {
     });
   },
   destroyed() {
-    const { commit } = store;
+    const { state, commit } = store;
+    state.scene.remove(video);
     commit('destroyUpdate');
     commit('destroyResize');
   },
@@ -35,13 +40,15 @@ export default {
         this.timeSegment = 0;
       }
     },
-    resize() {}
+    resize() {
+      video.resize();
+    }
   }
 };
 </script>
 
 <template lang="pug">
-h1 BodyPix
+h1 Facemesh
 </template>
 
 <style lang="scss" scoped></style>
