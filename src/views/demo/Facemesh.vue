@@ -1,12 +1,17 @@
 <script>
 import * as facemesh from '@tensorflow-models/facemesh';
 import store from '@/store';
+
+import DemoTitle from '@/components/common/DemoTitle';
 import Video from '@/components/demo/bodyPix/Video';
 
 const video = new Video();
 
 export default {
   name: 'Facemesh',
+  components: {
+    DemoTitle
+  },
   data: () => ({
     model: null,
     timeSegment: 0
@@ -48,7 +53,9 @@ export default {
 </script>
 
 <template lang="pug">
-h1 Facemesh
+DemoTitle(
+  text = 'Facemesh'
+)
 </template>
 
 <style lang="scss" scoped></style>

@@ -1,12 +1,17 @@
 <script>
 import * as bodyPix from '@tensorflow-models/body-pix';
 import store from '@/store';
+
+import DemoTitle from '@/components/common/DemoTitle';
 import Video from '@/components/demo/bodyPix/Video';
 
 const video = new Video();
 
 export default {
   name: 'BodyPix',
+  components: {
+    DemoTitle
+  },
   data: () => ({
     net: null,
     timeSegment: 0
@@ -57,7 +62,9 @@ export default {
 </script>
 
 <template lang="pug">
-h1 BodyPix
+DemoTitle(
+  text = 'BodyPix'
+)
 </template>
 
 <style lang="scss" scoped></style>
