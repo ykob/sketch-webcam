@@ -7,6 +7,7 @@ html {
 body {
   width: 100%;
   min-height: 100%;
+  line-height: 1.75;
   position: fixed;
   overflow: hidden;
   color: $color-text;
@@ -15,7 +16,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   font-feature-settings: 'palt';
   background-color: #1b191c;
-  letter-spacing: 0.06em;
+  @include fontSizeAll(14, 14, 12);
+  letter-spacing: 0.16em;
 }
 h1, h2, h3, h4, h5, h6 {
   font-weight: 400;
