@@ -21,6 +21,13 @@ module.exports = {
       }
     }
   },
+  pwa: {
+    name: 'Sketch WebCam',
+    themeColor: '#000000',
+    msTileColor: '#000000',
+    appleMobileWebAppCapable: 'yes',
+    appleMobileWebAppStatusBarStyle: 'black',
+  },
   configureWebpack: {
     module: {
       rules: [
