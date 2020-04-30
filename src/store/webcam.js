@@ -45,6 +45,7 @@ export default {
         .getUserMedia({
           audio: false,
           video: {
+            width: 1920,
             facingMode: facingMode
           }
         })
