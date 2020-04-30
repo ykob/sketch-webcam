@@ -4,13 +4,18 @@ export default {
   computed: {
     text() {
       return this.$store.state.alert.text;
+    },
+    isShown() {
+      return this.$store.state.alert.isShown;
     }
   }
 };
 </script>
 
 <template lang="pug">
-.alert
+.alert(
+  v-if = 'isShown === true'
+)
   |{{ text }}
 </template>
 
