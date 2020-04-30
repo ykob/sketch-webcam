@@ -2,6 +2,14 @@
 export default {
   name: 'Home',
   computed: {
+    demos() {
+      return this.$router.options.routes[1].children.map(demo => {
+        return {
+          name: demo.name,
+          path: `/demo/${demo.path}`
+        };
+      });
+    },
     stylesWrap() {
       const { resolution } = this.$store.state;
       return {
@@ -14,16 +22,25 @@ export default {
 </script>
 
 <template lang="pug">
-.wrap(
-  :style = 'stylesWrap'
-  )
-  div
-    h1
-      |sketch-webcam
-    p
-      |Interactive demos with webcam,
-      br
-      |tensorflow.js models, three.js and Vue-CLI.
+div
+  .wrap(
+    :style = 'stylesWrap'
+    )
+    div
+      h1
+        |sketch-webcam
+      p
+        |Interactive demos with webcam,
+        br
+        |tensorflow.js models, three.js and Vue-CLI.
+  ul
+    li(
+      v-for = 'demo in demos'
+    )
+      a(
+        :href = 'demo.path'
+      )
+        |{{ demo.name }}
 </template>
 
 <style lang="scss" scoped>
