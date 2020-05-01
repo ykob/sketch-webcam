@@ -1,6 +1,11 @@
 <script>
+import ScrollWrap from '@/components/common/ScrollWrap';
+
 export default {
   name: 'Home',
+  components: {
+    ScrollWrap
+  },
   computed: {
     demos() {
       return this.$router.options.routes[1].children.map(demo => {
@@ -22,7 +27,7 @@ export default {
 </script>
 
 <template lang="pug">
-div
+ScrollWrap
   .wrap(
     :style = 'stylesWrap'
     )
