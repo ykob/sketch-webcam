@@ -68,10 +68,10 @@ export default {
     touchmove() {
       const { state } = this.$store;
 
-      if (state.isTouchMoving === true) {
+      if (state.touch.isMoving === true) {
         // Scroll the content of the current page.
         this.anchorY = MathEx.clamp(
-          this.anchorYPrev - state.touchMove.y * 1.5,
+          this.anchorYPrev - state.touch.vMoveDiff.y * 1.5,
           0,
           this.clientHeight - state.resolution.y
         );

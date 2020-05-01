@@ -20,6 +20,9 @@ export default {
     // On global events.
     window.addEventListener('resize', this.resize);
     window.addEventListener('mousemove', this.mousemove);
+    document.addEventListener('touchstart', this.touchstart);
+    document.addEventListener('touchmove', this.touchmove);
+    document.addEventListener('touchend', this.touchend);
 
     // Initialize
     this.resize();
@@ -59,6 +62,21 @@ export default {
         (e.clientX / state.resolution.x) * 2 - 1,
         -(e.clientY / state.resolution.y) * 2 + 1
       );
+    },
+    touchstart(e) {
+      this.$store.commit('touch/start', {
+        x: e.touches[0].clientX,
+        y: e.touches[0].clientY
+      });
+    },
+    touchmove(e) {
+      this.$store.commit('touch/move', {
+        x: e.touches[0].clientX,
+        y: e.touches[0].clientY
+      });
+    },
+    touchend() {
+      this.$store.commit('touch/end');
     }
   }
 };
