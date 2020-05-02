@@ -83,9 +83,9 @@ export default {
 </script>
 
 <template lang="pug">
-  #app
-    router-view
-    Alert
+#app
+  router-view
+  Alert
 </template>
 
 <style lang="scss">
@@ -94,4 +94,9 @@ export default {
 @import '@/assets/scss/foundation/normalize.scss';
 @import '@/assets/scss/foundation/global.scss';
 @import '@/assets/scss/foundation/keyframes.scss';
+
+#app {
+  position: relative;
+  z-index: 10;
+}
 </style>

@@ -22,6 +22,13 @@ export default {
         height: `${resolution.y}px`
       };
     }
+  },
+  methods: {
+    clickDemoLink(e) {
+      e.preventDefault();
+      const href = e.currentTarget.attributes.href.value;
+      this.$router.push(href);
+    }
   }
 };
 </script>
@@ -44,6 +51,7 @@ ScrollWrap
     )
       a(
         :href = 'demo.path'
+        @click = 'clickDemoLink'
       )
         |{{ demo.name }}
 </template>
