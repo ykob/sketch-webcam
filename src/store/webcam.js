@@ -5,12 +5,16 @@ export default {
   namespaced: true,
   state: {
     video: document.createElement('video'),
-    resolution: new Vector2()
+    resolution: new Vector2(),
+    facingMode: ''
   },
   mutations: {
     playVideo(state) {
       // play video.
       state.video.play();
+    },
+    setFacingMode(state, facingMode) {
+      state.facingMode = facingMode;
     },
     setVideoAttr(state, srcObject) {
       // get video stream, and set attributes to video object to play auto on iOS.
@@ -31,7 +35,10 @@ export default {
     }
   },
   actions: {
-    async init({ commit }, facingMode = 'user') {
+    async init({ state, commit }, facingMode = 'user') {
+      if (facingMode === state.facingMode) {
+        return;
+      }
       if (!navigator.mediaDevices) {
         commit('alert/show', 'navigator.mediaDevices is disabled.', {
           root: true
@@ -41,6 +48,7 @@ export default {
 
       let srcObject;
 
+      commit('setFacingMode', facingMode);
       await navigator.mediaDevices
         .getUserMedia({
           audio: false,
