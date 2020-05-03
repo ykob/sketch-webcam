@@ -8,12 +8,16 @@ export default {
   },
   computed: {
     demos() {
-      return this.$router.options.routes[1].children.map(demo => {
-        return {
-          name: demo.name,
-          path: `/demo/${demo.path}`
-        };
-      });
+      return this.$router.options.routes[1].children
+        .filter(demo => {
+          return demo.path !== '';
+        })
+        .map(demo => {
+          return {
+            name: demo.name,
+            path: `/demo/${demo.path}`
+          };
+        });
     },
     stylesWrap() {
       const { resolution } = this.$store.state;
