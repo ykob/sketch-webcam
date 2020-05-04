@@ -35,7 +35,8 @@ export default class Video extends Mesh {
         }
       },
       vertexShader: vs,
-      fragmentShader: fs
+      fragmentShader: fs,
+      depthTest: false
     });
     super(geometry, material);
     this.size = new Vector3();

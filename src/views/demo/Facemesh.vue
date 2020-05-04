@@ -3,9 +3,11 @@ import * as facemesh from '@tensorflow-models/facemesh';
 import store from '@/store';
 
 import DemoTitle from '@/components/common/DemoTitle';
-import Video from '@/components/demo/bodyPix/Video';
+import Video from '@/components/demo/facemesh/Video';
+import Face from '@/components/demo/facemesh/Face';
 
 const video = new Video();
+const face = new Face();
 
 export default {
   name: 'Facemesh',
@@ -22,6 +24,7 @@ export default {
     dispatch('webcam/init').then(async () => {
       this.model = await facemesh.load();
       state.scene.add(video);
+      state.scene.add(face);
 
       commit('setUpdate', this.update);
       commit('setResize', this.resize);
@@ -31,6 +34,7 @@ export default {
   destroyed() {
     const { state, commit } = store;
     state.scene.remove(video);
+    state.scene.remove(face);
     commit('destroyUpdate');
     commit('destroyResize');
   },
@@ -41,12 +45,15 @@ export default {
       this.timeSegment += time;
       if (this.timeSegment >= 1 / 30) {
         const predictions = await this.model.estimateFaces(state.webcam.video);
-        console.log(predictions);
+        if (predictions.length > 0) {
+          face.update(predictions[0]);
+        }
         this.timeSegment = 0;
       }
     },
     resize() {
       video.resize();
+      face.resize();
     }
   }
 };

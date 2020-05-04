@@ -26,12 +26,13 @@ export default {
       // get video resolution with promise.
       let x = state.video.videoWidth;
       let y = state.video.videoHeight;
+      state.resolution.set(x, y);
       if (x > 640) {
         y = (y / x) * 640;
         x = 640;
       }
-      state.resolution.x = state.video.width = x;
-      state.resolution.y = state.video.height = y;
+      state.video.width = x;
+      state.video.height = y;
     }
   },
   actions: {
