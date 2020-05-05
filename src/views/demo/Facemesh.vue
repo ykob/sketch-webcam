@@ -43,7 +43,7 @@ export default {
       const { state } = store;
 
       this.timeSegment += time;
-      if (this.timeSegment >= 1 / 30) {
+      if (this.timeSegment >= 1 / 60) {
         const predictions = await this.model.estimateFaces(state.webcam.video);
         if (predictions.length > 0) {
           face.update(predictions[0]);

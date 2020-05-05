@@ -3,12 +3,14 @@ import {
   BufferGeometry,
   BufferAttribute,
   RawShaderMaterial,
-  DoubleSide,
-  Vector2
+  Vector2,
+  BackSide
 } from 'three';
 import MathEx from 'js-util/MathEx';
 
 import store from '@/store';
+
+import { TRIANGULATION } from '@/const/FACEMESH';
 
 import vs from './glsl/Face.vs';
 import fs from './glsl/Face.fs';
@@ -17,12 +19,17 @@ export default class Face extends Mesh {
   constructor() {
     // Define Geometry
     const geometry = new BufferGeometry();
+    const baPositions = new BufferAttribute(new Float32Array(468 * 3), 3);
+    const baIndices = new BufferAttribute(TRIANGULATION, 1);
+    geometry.setAttribute('position', baPositions);
+    geometry.setIndex(baIndices);
 
     // Define Material
     const material = new RawShaderMaterial({
       vertexShader: vs,
       fragmentShader: fs,
-      side: DoubleSide
+      side: BackSide,
+      flatShading: true
     });
 
     super(geometry, material);
@@ -30,28 +37,20 @@ export default class Face extends Mesh {
     this.imgRatio = new Vector2();
   }
   update(prediction) {
+    console.log(prediction);
     const { scaledMesh } = prediction;
-    if (this.geometry.attributes.position === undefined) {
-      const baPositions = new BufferAttribute(
-        new Float32Array(scaledMesh.length * 3),
-        3
-      );
-      this.geometry.setAttribute('position', baPositions);
-    } else {
-      const { resolution } = store.state.webcam;
-      console.log(prediction);
+    const { resolution } = store.state.webcam;
 
-      for (var i = 0, ul = scaledMesh.length; i < ul; i++) {
-        this.geometry.attributes.position.setXYZ(
-          i,
-          ((scaledMesh[i][0] / -resolution.x + 0.5) * this.size.x) /
-            this.imgRatio.x,
-          ((scaledMesh[i][1] / -resolution.y + 0.5) * this.size.y) /
-            this.imgRatio.y,
-          scaledMesh[i][2] / this.size.y
-        );
-        this.geometry.attributes.position.needsUpdate = true;
-      }
+    for (var i = 0, ul = scaledMesh.length; i < ul; i++) {
+      this.geometry.attributes.position.setXYZ(
+        i,
+        ((scaledMesh[i][0] / -resolution.x + 0.5) * this.size.x) /
+          this.imgRatio.x,
+        ((scaledMesh[i][1] / -resolution.y + 0.5) * this.size.y) /
+          this.imgRatio.y,
+        scaledMesh[i][2] / this.size.y
+      );
+      this.geometry.attributes.position.needsUpdate = true;
     }
   }
   resize() {
