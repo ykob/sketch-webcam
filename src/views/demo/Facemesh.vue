@@ -2,7 +2,7 @@
 import * as facemesh from '@tensorflow-models/facemesh';
 import store from '@/store';
 
-import DemoTitle from '@/components/common/DemoTitle';
+import DemoConsole from '@/components/common/DemoConsole';
 import Video from '@/components/demo/facemesh/Video';
 import Face from '@/components/demo/facemesh/Face';
 
@@ -12,7 +12,7 @@ const face = new Face();
 export default {
   name: 'Facemesh',
   components: {
-    DemoTitle
+    DemoConsole
   },
   data: () => ({
     model: null,
@@ -60,8 +60,8 @@ export default {
 </script>
 
 <template lang="pug">
-DemoTitle(
-  text = 'Facemesh'
+DemoConsole(
+  title = 'Facemesh'
 )
 </template>
 

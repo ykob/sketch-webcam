@@ -2,7 +2,7 @@
 import * as bodyPix from '@tensorflow-models/body-pix';
 import store from '@/store';
 
-import DemoTitle from '@/components/common/DemoTitle';
+import DemoConsole from '@/components/common/DemoConsole';
 import Video from '@/components/demo/bodyPix/Video';
 
 const video = new Video();
@@ -10,7 +10,7 @@ const video = new Video();
 export default {
   name: 'BodyPix',
   components: {
-    DemoTitle
+    DemoConsole
   },
   data: () => ({
     net: null,
@@ -62,8 +62,8 @@ export default {
 </script>
 
 <template lang="pug">
-DemoTitle(
-  text = 'BodyPix'
+DemoConsole(
+  title = 'BodyPix'
 )
 </template>
 

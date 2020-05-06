@@ -96,7 +96,9 @@ export default {
 @import '@/assets/scss/foundation/keyframes.scss';
 
 #app {
-  position: relative;
+  width: 100%;
+  height: 100%;
+  position: absolute;
   z-index: 10;
 }
 </style>
