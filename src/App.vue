@@ -44,12 +44,12 @@ export default {
     resize() {
       const { state, commit } = this.$store;
 
-      commit('changeMediaQuery', state.resolution.x < 768);
       state.resolution.set(document.body.clientWidth, window.innerHeight);
       state.canvas.width = state.resolution.x;
       state.canvas.height = state.resolution.y;
       state.camera.resize();
       state.renderer.setSize(state.resolution.x, state.resolution.y);
+      commit('changeMediaQuery', state.resolution.x < 768);
       if (state.resize !== null) {
         state.resize();
       }

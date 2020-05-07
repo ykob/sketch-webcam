@@ -17,6 +17,11 @@ export default {
       type: String,
       default: ''
     }
+  },
+  computed: {
+    iconSize() {
+      return this.$store.state.isMobile === true ? 16 : 24;
+    }
   }
 };
 </script>
@@ -27,11 +32,17 @@ export default {
     |Demo: {{ title }}
   .demo-console__btns
     Button.demo-console__btn.demo-console__btn--description
-      IconDescription
+      IconDescription(
+        :size = 'iconSize'
+      )
     Button.demo-console__btn.demo-console__btn--tune
-      IconTune
+      IconTune(
+        :size = 'iconSize'
+      )
     Button.demo-console__btn.demo-console__btn--share
-      IconShare
+      IconShare(
+        :size = 'iconSize'
+      )
 </template>
 
 <style lang="scss" scoped>
@@ -77,10 +88,10 @@ export default {
   }
   &__btn {
     &--description {
-      margin-right: 8px;
+      margin-right: 12px;
     }
     &--tune {
-      margin-right: 7px;
+      margin-right: 11px;
     }
   }
 }
