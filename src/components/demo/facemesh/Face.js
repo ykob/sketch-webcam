@@ -37,7 +37,6 @@ export default class Face extends Mesh {
     this.imgRatio = new Vector2();
   }
   update(prediction) {
-    console.log(prediction);
     const { scaledMesh } = prediction;
     const { resolution } = store.state.webcam;
 
