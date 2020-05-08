@@ -1,11 +1,13 @@
 <script>
 import Alert from '@/components/common/Alert.vue';
+import BackHome from '@/components/common/BackHome.vue';
 import SiteTitle from '@/components/common/SiteTitle.vue';
 
 export default {
   name: 'App',
   components: {
     Alert,
+    BackHome,
     SiteTitle
   },
   async created() {
@@ -87,6 +89,7 @@ export default {
 <template lang="pug">
 #app
   SiteTitle
+  BackHome
   router-view
   Alert
 </template>

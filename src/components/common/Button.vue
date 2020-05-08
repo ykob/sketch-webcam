@@ -5,7 +5,9 @@ export default {
 </script>
 
 <template lang="pug">
-button
+button(
+  @click = '$emit("click", $event)'
+)
   slot
 </template>
 
