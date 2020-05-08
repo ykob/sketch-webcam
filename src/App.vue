@@ -1,10 +1,12 @@
 <script>
 import Alert from '@/components/common/Alert.vue';
+import SiteTitle from '@/components/common/SiteTitle.vue';
 
 export default {
   name: 'App',
   components: {
-    Alert
+    Alert,
+    SiteTitle
   },
   async created() {
     const { state } = this.$store;
@@ -84,6 +86,7 @@ export default {
 
 <template lang="pug">
 #app
+  SiteTitle
   router-view
   Alert
 </template>
