@@ -18,12 +18,13 @@ export default {
   text-align: center;
   pointer-events: none;
   position: absolute;
+  z-index: 100;
   @include fontSizeAll(18, 18, 14);
   @include l-more-than-mobile {
     top: 24px;
   }
   @include l-mobile {
-    top: 12px;
+    top: 20px;
   }
 }
 </style>

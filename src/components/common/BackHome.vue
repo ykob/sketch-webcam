@@ -12,6 +12,11 @@ export default {
     click() {
       this.$router.push('/');
     }
+  },
+  computed: {
+    iconSize() {
+      return this.$store.state.isMobile === true ? 20 : 28;
+    }
   }
 };
 </script>
@@ -20,23 +25,29 @@ export default {
 Button.back-home(
   @click = 'click'
 )
-  IconArrowBack
+  IconArrowBack(
+    :size = 'iconSize'
+  )
 </template>
 
 <style lang="scss" scoped>
 .back-home {
-  width: 48px;
-  height: 48px;
   display: flex;
   justify-content: center;
   align-items: center;
   position: absolute;
-  z-index: 10;
+  z-index: 100;
   @include l-more-than-mobile {
-    top: 8px;
-    left: 8px;
+    width: 48px;
+    height: 48px;
+    top: 12px;
+    left: 24px;
   }
   @include l-mobile {
+    width: 40px;
+    height: 40px;
+    top: 8px;
+    left: 8px;
   }
 }
 </style>
