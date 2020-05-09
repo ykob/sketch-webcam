@@ -1,6 +1,7 @@
 <script>
 import Alert from '@/components/common/Alert.vue';
 import BackHome from '@/components/common/BackHome.vue';
+import GradualCover from '@/components/common/GradualCover.vue';
 import SiteTitle from '@/components/common/SiteTitle.vue';
 
 export default {
@@ -8,6 +9,7 @@ export default {
   components: {
     Alert,
     BackHome,
+    GradualCover,
     SiteTitle
   },
   async created() {
@@ -89,8 +91,9 @@ export default {
 <template lang="pug">
 #app
   SiteTitle
-  BackHome
   router-view
+  BackHome
+  GradualCover
   Alert
 </template>
 
