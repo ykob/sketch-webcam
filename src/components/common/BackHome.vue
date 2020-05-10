@@ -24,6 +24,7 @@ export default {
 <template lang="pug">
 Button.back-home(
   @click = 'click'
+  v-if = '$route.name !== "Home"'
 )
   IconArrowBack(
     :size = 'iconSize'

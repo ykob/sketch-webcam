@@ -5,7 +5,9 @@ export default {
 </script>
 
 <template lang="pug">
-.site-title
+.site-title(
+    v-if = '$route.name !== "Home"'
+  )
   |sketch-webcam
 </template>
 
