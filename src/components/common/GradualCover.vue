@@ -5,7 +5,10 @@ export default {
 </script>
 
 <template lang="pug">
-.gradual-cover
+transition(
+  appear
+)
+  .gradual-cover
 </template>
 
 <style lang="scss" scoped>
@@ -22,5 +25,19 @@ export default {
     rgba(#000, 0.3) 0%,
     rgba(#000, 0) 100%
   );
+
+  &.v-enter {
+    opacity: 0;
+  }
+  &.v-enter-to {
+    opacity: 1;
+    transition-duration: 0.4s;
+    transition-property: opacity;
+  }
+  &.v-leave-to {
+    opacity: 0;
+    transition-duration: 0.4s;
+    transition-property: opacity;
+  }
 }
 </style>

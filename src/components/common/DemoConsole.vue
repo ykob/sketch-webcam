@@ -27,22 +27,25 @@ export default {
 </script>
 
 <template lang="pug">
-.demo-console
-  h1.demo-console__title
-    |Demo: {{ title }}
-  .demo-console__btns
-    Button.demo-console__btn.demo-console__btn--description
-      IconDescription(
-        :size = 'iconSize'
-      )
-    Button.demo-console__btn.demo-console__btn--tune
-      IconTune(
-        :size = 'iconSize'
-      )
-    Button.demo-console__btn.demo-console__btn--share
-      IconShare(
-        :size = 'iconSize'
-      )
+transition(
+  appear
+)
+  .demo-console
+    h1.demo-console__title
+      |Demo: {{ title }}
+    .demo-console__btns
+      Button.demo-console__btn.demo-console__btn--description
+        IconDescription(
+          :size = 'iconSize'
+        )
+      Button.demo-console__btn.demo-console__btn--tune
+        IconTune(
+          :size = 'iconSize'
+        )
+      Button.demo-console__btn.demo-console__btn--share
+        IconShare(
+          :size = 'iconSize'
+        )
 </template>
 
 <style lang="scss" scoped>
@@ -70,6 +73,21 @@ export default {
     width: calc(100% - 16px);
     justify-content: space-between;
   }
+
+  &.v-enter {
+    opacity: 0;
+  }
+  &.v-enter-to {
+    opacity: 1;
+    transition-duration: 0.4s;
+    transition-property: opacity;
+  }
+  &.v-leave-to {
+    opacity: 0;
+    transition-duration: 0.4s;
+    transition-property: opacity;
+  }
+
   &__title {
     line-height: 1;
     margin-top: 0;

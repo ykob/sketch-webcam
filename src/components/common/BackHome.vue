@@ -22,13 +22,16 @@ export default {
 </script>
 
 <template lang="pug">
-Button.back-home(
-  @click = 'click'
-  v-if = '$route.name !== "Home"'
+transition(
+  appear
 )
-  IconArrowBack(
-    :size = 'iconSize'
+  Button.back-home(
+    @click = 'click'
+    v-if = '$route.name !== "Home"'
   )
+    IconArrowBack(
+      :size = 'iconSize'
+    )
 </template>
 
 <style lang="scss" scoped>
@@ -49,6 +52,20 @@ Button.back-home(
     height: 40px;
     top: 8px;
     left: 8px;
+  }
+
+  &.v-enter {
+    opacity: 0;
+  }
+  &.v-enter-to {
+    opacity: 1;
+    transition-duration: 0.4s;
+    transition-property: opacity;
+  }
+  &.v-leave-to {
+    opacity: 0;
+    transition-duration: 0.4s;
+    transition-property: opacity;
   }
 }
 </style>

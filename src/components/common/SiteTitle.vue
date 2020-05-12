@@ -5,10 +5,13 @@ export default {
 </script>
 
 <template lang="pug">
-.site-title(
-    v-if = '$route.name !== "Home"'
-  )
-  |sketch-webcam
+transition(
+  appear
+)
+  .site-title(
+      v-if = '$route.name !== "Home"'
+    )
+    |sketch-webcam
 </template>
 
 <style lang="scss" scoped>
@@ -27,6 +30,20 @@ export default {
   }
   @include l-mobile {
     top: 20px;
+  }
+
+  &.v-enter {
+    opacity: 0;
+  }
+  &.v-enter-to {
+    opacity: 1;
+    transition-duration: 0.4s;
+    transition-property: opacity;
+  }
+  &.v-leave-to {
+    opacity: 0;
+    transition-duration: 0.4s;
+    transition-property: opacity;
   }
 }
 </style>

@@ -13,10 +13,13 @@ export default {
 </script>
 
 <template lang="pug">
-.alert(
-  v-if = 'isShown === true'
+transition(
+  appear
 )
-  |{{ text }}
+  .alert(
+    v-if = 'isShown === true'
+  )
+    |{{ text }}
 </template>
 
 <style lang="scss" scoped>
