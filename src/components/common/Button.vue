@@ -13,6 +13,7 @@ button(
 
 <style lang="scss" scoped>
 button {
+  appearance: none;
   padding: 0;
   border: 0;
   background-color: transparent;
