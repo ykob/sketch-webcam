@@ -19,6 +19,8 @@ export default {
   async created() {
     const { state, commit, dispatch } = store;
 
+    state.scene.add(video);
+
     dispatch('webcam/init').then(async () => {
       this.net = await bodyPix.load({
         architecture: 'MobileNetV1',
@@ -26,7 +28,6 @@ export default {
         multiplier: 0.75,
         quantBytes: 4
       });
-      state.scene.add(video);
 
       commit('setUpdate', this.update);
       commit('setResize', this.resize);

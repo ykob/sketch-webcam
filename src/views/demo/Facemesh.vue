@@ -21,10 +21,11 @@ export default {
   async created() {
     const { state, commit, dispatch } = store;
 
+    state.scene.add(video);
+    state.scene.add(face);
+
     dispatch('webcam/init').then(async () => {
       this.model = await facemesh.load();
-      state.scene.add(video);
-      state.scene.add(face);
 
       commit('setUpdate', this.update);
       commit('setResize', this.resize);
