@@ -9,7 +9,7 @@ transition(
   appear
 )
   .site-title(
-      v-if = '$route.name !== "Home"'
+    v-if = '$route.name !== "Home" && $route.name !== null'
     )
     |sketch-webcam
 </template>

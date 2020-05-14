@@ -27,7 +27,7 @@ transition(
 )
   Button.back-home(
     @click = 'click'
-    v-if = '$route.name !== "Home"'
+    v-if = '$route.name !== "Home" && $route.name !== null'
   )
     IconArrowBack(
       :size = 'iconSize'
