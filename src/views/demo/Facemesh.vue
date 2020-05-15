@@ -63,7 +63,7 @@ export default {
 <template lang="pug">
 DemoConsole(
   title = 'Facemesh'
-)
+  )
 </template>
 
 <style lang="scss" scoped></style>

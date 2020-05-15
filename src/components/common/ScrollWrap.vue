@@ -95,7 +95,7 @@ export default {
 div(
   :style = 'styles'
   ref = 'wrap'
-)
+  )
   slot
 </template>
 

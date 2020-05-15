@@ -29,7 +29,7 @@ export default {
 <template lang="pug">
 transition(
   appear
-)
+  )
   .demo-console
     h1.demo-console__title
       |Demo: {{ title }}
@@ -37,15 +37,15 @@ transition(
       Button.demo-console__btn.demo-console__btn--description
         IconDescription(
           :size = 'iconSize'
-        )
+          )
       Button.demo-console__btn.demo-console__btn--tune
         IconTune(
           :size = 'iconSize'
-        )
+          )
       Button.demo-console__btn.demo-console__btn--share
         IconShare(
           :size = 'iconSize'
-        )
+          )
 </template>
 
 <style lang="scss" scoped>

@@ -65,7 +65,7 @@ export default {
 <template lang="pug">
 DemoConsole(
   title = 'BodyPix'
-)
+  )
 </template>
 
 <style lang="scss" scoped></style>

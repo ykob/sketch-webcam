@@ -24,14 +24,14 @@ export default {
 <template lang="pug">
 transition(
   appear
-)
+  )
   Button.back-home(
     @click = 'click'
     v-if = '$route.name !== "Home" && $route.name !== null'
-  )
+    )
     IconArrowBack(
       :size = 'iconSize'
-    )
+      )
 </template>
 
 <style lang="scss" scoped>

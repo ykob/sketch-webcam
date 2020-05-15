@@ -7,7 +7,7 @@ export default {
 <template lang="pug">
 transition(
   appear
-)
+  )
   .site-title(
     v-if = '$route.name !== "Home" && $route.name !== null'
     )

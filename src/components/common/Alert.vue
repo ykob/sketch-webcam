@@ -15,10 +15,10 @@ export default {
 <template lang="pug">
 transition(
   appear
-)
+  )
   .alert(
     v-if = 'isShown === true'
-  )
+    )
     |{{ text }}
 </template>
 

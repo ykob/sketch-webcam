@@ -8,7 +8,9 @@ export default {
 transition(
   appear
 )
-  .gradual-cover
+  .gradual-cover(
+    v-if = '$route.name !== "Home" && $route.name !== null'
+  )
 </template>
 
 <style lang="scss" scoped>
