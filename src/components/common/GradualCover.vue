@@ -7,10 +7,10 @@ export default {
 <template lang="pug">
 transition(
   appear
-)
+  )
   .gradual-cover(
     v-if = '$route.name !== "Home" && $route.name !== null'
-  )
+    )
 </template>
 
 <style lang="scss" scoped>
