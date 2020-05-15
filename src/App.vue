@@ -3,6 +3,7 @@ import Alert from '@/components/common/Alert.vue';
 import BackHome from '@/components/common/BackHome.vue';
 import GradualCover from '@/components/common/GradualCover.vue';
 import SiteTitle from '@/components/common/SiteTitle.vue';
+import Modal from '@/components/common/Modal.vue';
 
 export default {
   name: 'App',
@@ -10,7 +11,8 @@ export default {
     Alert,
     BackHome,
     GradualCover,
-    SiteTitle
+    SiteTitle,
+    Modal
   },
   async created() {
     const { state } = this.$store;
@@ -95,6 +97,7 @@ export default {
   BackHome
   GradualCover
   Alert
+  Modal
 </template>
 
 <style lang="scss">

@@ -5,6 +5,7 @@ import { WebGLRenderer, Vector2, Scene, Clock } from 'three';
 import alert from './alert';
 import touch from './touch';
 import webcam from './webcam';
+import modal from './modal';
 
 import Camera from '@/components/common/Camera';
 
@@ -51,6 +52,7 @@ export default new Vuex.Store({
   modules: {
     alert,
     touch,
-    webcam
+    webcam,
+    modal
   }
 });
