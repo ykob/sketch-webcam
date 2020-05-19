@@ -5,7 +5,10 @@ export default {
     demo: {
       type: Object,
       default: () => {
-        return {};
+        return {
+          path: '',
+          name: ''
+        };
       }
     }
   },

@@ -1,12 +1,12 @@
 <script>
 import ScrollWrap from '@/components/common/ScrollWrap';
-import DemoListItem from '@/components/home/DemoListItem';
+import DemoList from '@/components/home/DemoList';
 
 export default {
   name: 'Home',
   components: {
     ScrollWrap,
-    DemoListItem
+    DemoList
   },
   computed: {
     demos() {
@@ -44,11 +44,9 @@ ScrollWrap
         |Interactive demos with webcam,
         br
         |tensorflow.js models, three.js and Vue-CLI.
-  div
-    DemoListItem(
-      v-for = 'demo in demos'
-      :demo = 'demo'
-    )
+  DemoList(
+    :demos = 'demos'
+  )
 </template>
 
 <style lang="scss" scoped>
