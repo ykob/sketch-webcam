@@ -1,10 +1,12 @@
 <script>
 import ScrollWrap from '@/components/common/ScrollWrap';
+import DemoListItem from '@/components/home/DemoListItem';
 
 export default {
   name: 'Home',
   components: {
-    ScrollWrap
+    ScrollWrap,
+    DemoListItem
   },
   computed: {
     demos() {
@@ -26,13 +28,6 @@ export default {
         height: `${resolution.y}px`
       };
     }
-  },
-  methods: {
-    clickDemoLink(e) {
-      e.preventDefault();
-      const href = e.currentTarget.attributes.href.value;
-      this.$router.push(href);
-    }
   }
 };
 </script>
@@ -49,15 +44,11 @@ ScrollWrap
         |Interactive demos with webcam,
         br
         |tensorflow.js models, three.js and Vue-CLI.
-  ul
-    li(
+  div
+    DemoListItem(
       v-for = 'demo in demos'
+      :demo = 'demo'
     )
-      a(
-        :href = 'demo.path'
-        @click = 'clickDemoLink'
-      )
-        |{{ demo.name }}
 </template>
 
 <style lang="scss" scoped>
