@@ -21,6 +21,7 @@ export default {
 .demo-list
   DemoListItem(
     v-for = 'demo in demos'
+    :key = 'demo.key'
     :demo = 'demo'
   )
 </template>

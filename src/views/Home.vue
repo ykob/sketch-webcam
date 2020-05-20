@@ -16,6 +16,7 @@ export default {
         })
         .map(demo => {
           return {
+            key: `demo-${demo.name}`,
             name: demo.name,
             path: `/demo/${demo.path}`
           };
