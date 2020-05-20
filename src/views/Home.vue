@@ -1,11 +1,13 @@
 <script>
 import ScrollWrap from '@/components/common/ScrollWrap';
+import HomeHeader from '@/components/home/HomeHeader';
 import DemoList from '@/components/home/DemoList';
 
 export default {
   name: 'Home',
   components: {
     ScrollWrap,
+    HomeHeader,
     DemoList
   },
   computed: {
@@ -21,13 +23,6 @@ export default {
             path: `/demo/${demo.path}`
           };
         });
-    },
-    stylesWrap() {
-      const { resolution } = this.$store.state;
-      return {
-        width: `${resolution.x}px`,
-        height: `${resolution.y}px`
-      };
     }
   }
 };
@@ -35,35 +30,10 @@ export default {
 
 <template lang="pug">
 ScrollWrap
-  .wrap(
-    :style = 'stylesWrap'
-    )
-    div
-      h1
-        |sketch-webcam
-      p
-        |Interactive demos with webcam,
-        br
-        |tensorflow.js models, three.js and Vue-CLI.
+  HomeHeader
   DemoList(
     :demos = 'demos'
   )
 </template>
 
-<style lang="scss" scoped>
-.wrap {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-h1 {
-  line-height: 1;
-  margin: 0 0 1em;
-  @include fontSizeAll(28, 28, 21);
-  letter-spacing: 0.3em;
-}
-p {
-  margin: 0;
-}
-</style>
+<style lang="scss" scoped></style>
