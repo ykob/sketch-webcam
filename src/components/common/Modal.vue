@@ -15,6 +15,7 @@ export default {
 .modal {
   width: 100%;
   height: 100%;
+  pointer-events: none;
   position: fixed;
   top: 0;
   left: 0;
@@ -37,6 +38,7 @@ export default {
     position: absolute;
     top: 0;
     left: 0;
+    opacity: 0;
     background-color: rgba(#000, 0.3);
   }
 }
