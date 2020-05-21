@@ -14,16 +14,19 @@ export default {
 </script>
 
 <template lang="pug">
-.home-header(
-  :style = 'styles'
+transition(
+  appear
   )
-  div
-    h1
-      |sketch-webcam
-    p
-      |Interactive demos with webcam,
-      br
-      |tensorflow.js models, three.js and Vue-CLI.
+  .home-header(
+    :style = 'styles'
+    )
+    div
+      h1
+        |sketch-webcam
+      p
+        |Interactive demos with webcam,
+        br
+        |tensorflow.js models, three.js and Vue-CLI.
 </template>
 
 <style lang="scss" scoped>
@@ -32,6 +35,13 @@ export default {
   justify-content: center;
   align-items: center;
   text-align: center;
+  &.v-enter {
+    opacity: 0;
+  }
+  &.v-enter-to {
+    opacity: 1;
+    transition-duration: 1s;
+  }
 }
 h1 {
   line-height: 1;
