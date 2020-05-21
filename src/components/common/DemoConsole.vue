@@ -76,16 +76,19 @@ transition(
 
   &.v-enter {
     opacity: 0;
+    transform: translate3d(0, 16px, 0);
   }
   &.v-enter-to {
     opacity: 1;
     transition-duration: 0.4s;
-    transition-property: opacity;
+    transform: translate3d(0, 0, 0);
+    transition-property: opacity, transform;
   }
   &.v-leave-to {
     opacity: 0;
     transition-duration: 0.4s;
-    transition-property: opacity;
+    transform: translate3d(0, 16px, 0);
+    transition-property: opacity, transform;
   }
 
   &__title {
