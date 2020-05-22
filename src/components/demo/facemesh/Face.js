@@ -36,6 +36,16 @@ export default class Face extends Mesh {
     this.size = new Vector2();
     this.imgRatio = new Vector2();
   }
+  setUv(arr) {
+    const uvs = arr.reduce((pre, current) => {
+      pre.push(...current);
+      return pre;
+    }, []);
+    console.log(uvs);
+    const baUvs = new BufferAttribute(new Float32Array(uvs), 2);
+    this.geometry.setAttribute('uv', baUvs);
+    console.log(this.geometry);
+  }
   update(prediction) {
     const { scaledMesh } = prediction;
     const { resolution } = store.state.webcam;

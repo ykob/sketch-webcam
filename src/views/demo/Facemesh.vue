@@ -16,6 +16,7 @@ export default {
   },
   data: () => ({
     model: null,
+    maxFaces: 5,
     timeSegment: 0
   }),
   async created() {
@@ -25,7 +26,10 @@ export default {
     state.scene.add(face);
 
     dispatch('webcam/init').then(async () => {
-      this.model = await facemesh.load();
+      this.model = await facemesh.load({
+        maxFaces: this.maxFaces
+      });
+      face.setUv(facemesh.FaceMesh.getUVCoords());
 
       commit('setUpdate', this.update);
       commit('setResize', this.resize);
