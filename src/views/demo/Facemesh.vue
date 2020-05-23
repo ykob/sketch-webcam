@@ -3,6 +3,7 @@ import * as facemesh from '@tensorflow-models/facemesh';
 import store from '@/store';
 
 import DemoConsole from '@/components/common/DemoConsole';
+import PromiseTextureLoader from '@/components/common/PromiseTextureLoader';
 import Video from '@/components/demo/facemesh/Video';
 import Face from '@/components/demo/facemesh/Face';
 
@@ -40,6 +41,13 @@ export default {
       commit('setResize', this.resize);
       this.resize();
     });
+    PromiseTextureLoader(require('@/assets/img/tex_facemesh.jpg')).then(
+      response => {
+        this.faces.forEach(face => {
+          face.setTexture(response);
+        });
+      }
+    );
   },
   destroyed() {
     const { state, commit } = store;

@@ -4,7 +4,8 @@ import {
   BufferAttribute,
   RawShaderMaterial,
   Vector2,
-  BackSide
+  BackSide,
+  AdditiveBlending
 } from 'three';
 import MathEx from 'js-util/MathEx';
 
@@ -26,23 +27,23 @@ export default class Face extends Mesh {
 
     // Define Material
     const material = new RawShaderMaterial({
+      uniforms: {
+        texture: {
+          type: 't',
+          value: null
+        }
+      },
       vertexShader: vs,
       fragmentShader: fs,
       side: BackSide,
-      flatShading: true
+      flatShading: true,
+      transparent: true,
+      blending: AdditiveBlending
     });
 
     super(geometry, material);
     this.size = new Vector2();
     this.imgRatio = new Vector2();
-  }
-  setUv(arr) {
-    const uvs = arr.reduce((pre, current) => {
-      pre.push(...current);
-      return pre;
-    }, []);
-    const baUvs = new BufferAttribute(new Float32Array(uvs), 2);
-    this.geometry.setAttribute('uv', baUvs);
   }
   update(prediction) {
     const { scaledMesh } = prediction;
@@ -77,5 +78,17 @@ export default class Face extends Mesh {
       Math.min(1, ((this.size.x / this.size.y) * resolution.y) / resolution.x),
       Math.min(1, ((this.size.y / this.size.x) * resolution.x) / resolution.y)
     );
+  }
+  setUv(arr) {
+    const uvs = arr.reduce((pre, current) => {
+      pre.push(...current);
+      return pre;
+    }, []);
+    const baUvs = new BufferAttribute(new Float32Array(uvs), 2);
+    this.geometry.setAttribute('uv', baUvs);
+  }
+  setTexture(texture) {
+    console.log(texture);
+    this.material.uniforms.texture.value = texture;
   }
 }
