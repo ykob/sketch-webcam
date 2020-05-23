@@ -88,7 +88,6 @@ export default class Face extends Mesh {
     this.geometry.setAttribute('uv', baUvs);
   }
   setTexture(texture) {
-    console.log(texture);
     this.material.uniforms.texture.value = texture;
   }
 }
