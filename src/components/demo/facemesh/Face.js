@@ -28,6 +28,10 @@ export default class Face extends Mesh {
     // Define Material
     const material = new RawShaderMaterial({
       uniforms: {
+        time: {
+          type: 'f',
+          value: 0
+        },
         texture: {
           type: 't',
           value: null
@@ -45,9 +49,11 @@ export default class Face extends Mesh {
     this.size = new Vector2();
     this.imgRatio = new Vector2();
   }
-  update(prediction) {
+  update(time, prediction) {
     const { scaledMesh } = prediction;
     const { resolution } = store.state.webcam;
+
+    this.material.uniforms.time.value += time;
 
     for (var i = 0, ul = scaledMesh.length; i < ul; i++) {
       this.geometry.attributes.position.setXYZ(

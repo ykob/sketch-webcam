@@ -1,4 +1,5 @@
 <script>
+import { RepeatWrapping } from 'three';
 import * as facemesh from '@tensorflow-models/facemesh';
 import store from '@/store';
 
@@ -43,6 +44,8 @@ export default {
     });
     PromiseTextureLoader(require('@/assets/img/tex_facemesh.jpg')).then(
       response => {
+        response.wrapS = RepeatWrapping;
+        response.wrapT = RepeatWrapping;
         this.faces.forEach(face => {
           face.setTexture(response);
         });
@@ -70,7 +73,7 @@ export default {
           const face = this.faces[index];
           if (predictions[index]) {
             face.visible = true;
-            face.update(predictions[index]);
+            face.update(time, predictions[index]);
           } else {
             face.visible = false;
           }
