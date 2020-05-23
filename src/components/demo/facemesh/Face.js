@@ -41,10 +41,8 @@ export default class Face extends Mesh {
       pre.push(...current);
       return pre;
     }, []);
-    console.log(uvs);
     const baUvs = new BufferAttribute(new Float32Array(uvs), 2);
     this.geometry.setAttribute('uv', baUvs);
-    console.log(this.geometry);
   }
   update(prediction) {
     const { scaledMesh } = prediction;
