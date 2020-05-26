@@ -33,7 +33,7 @@ export default {
     dispatch('webcam/init').then(async () => {
       this.model = await facemesh.load({
         maxFaces: this.maxFaces,
-        iouThreshold: 0
+        iouThreshold: 0.1
       });
       this.faces.forEach(face => {
         face.setUv(facemesh.FaceMesh.getUVCoords());
