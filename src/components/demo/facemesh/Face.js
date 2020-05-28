@@ -56,16 +56,16 @@ export default class Face extends Mesh {
     this.material.uniforms.time.value += time;
 
     for (var i = 0, ul = scaledMesh.length; i < ul; i++) {
-      this.geometry.attributes.position.setXYZ(
-        i,
+      const x =
         ((scaledMesh[i][0] / -resolution.x + 0.5) * this.size.x) /
-          this.imgRatio.x,
+        this.imgRatio.x;
+      const y =
         ((scaledMesh[i][1] / -resolution.y + 0.5) * this.size.y) /
-          this.imgRatio.y,
-        scaledMesh[i][2] / this.size.y
-      );
-      this.geometry.attributes.position.needsUpdate = true;
+        this.imgRatio.y;
+      const z = scaledMesh[i][2] / this.size.y;
+      this.geometry.attributes.position.setXYZ(i, x, y, z);
     }
+    this.geometry.attributes.position.needsUpdate = true;
   }
   resize() {
     const { camera } = store.state;
