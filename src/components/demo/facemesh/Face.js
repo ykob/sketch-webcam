@@ -5,7 +5,8 @@ import {
   RawShaderMaterial,
   Vector2,
   BackSide,
-  AdditiveBlending
+  AdditiveBlending,
+  Vector3
 } from 'three';
 import MathEx from 'js-util/MathEx';
 
@@ -56,13 +57,16 @@ export default class Face extends Mesh {
     this.material.uniforms.time.value += time;
 
     for (var i = 0, ul = scaledMesh.length; i < ul; i++) {
-      const x =
-        ((scaledMesh[i][0] / -resolution.x + 0.5) * this.size.x) /
-        this.imgRatio.x;
-      const y =
-        ((scaledMesh[i][1] / -resolution.y + 0.5) * this.size.y) /
-        this.imgRatio.y;
-      const z = scaledMesh[i][2] / this.size.y;
+      const v = new Vector3();
+      v.fromArray(scaledMesh[i]);
+      v.x = v.x - resolution.x * 0.5;
+      v.y = v.y - resolution.y * 0.5;
+
+      const normal = v.clone().normalize();
+
+      const x = ((v.x / -resolution.x) * this.size.x) / this.imgRatio.x;
+      const y = ((v.y / -resolution.y) * this.size.y) / this.imgRatio.y;
+      const z = normal.z;
       this.geometry.attributes.position.setXYZ(i, x, y, z);
     }
     this.geometry.attributes.position.needsUpdate = true;
