@@ -62,10 +62,9 @@ export default class Face extends Mesh {
       v.y = v.y - resolution.y * 0.5;
 
       const normal = v.clone().normalize();
-
       const x = ((v.x / -resolution.x) * this.size.x) / this.imgRatio.x;
       const y = ((v.y / -resolution.y) * this.size.y) / this.imgRatio.y;
-      const z = normal.z;
+      const z = normal.z * (x / normal.x);
       this.geometry.attributes.position.setXYZ(i, x, y, z);
     }
     this.geometry.attributes.position.needsUpdate = true;
