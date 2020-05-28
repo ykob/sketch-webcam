@@ -41,7 +41,6 @@ export default class Face extends Mesh {
       vertexShader: vs,
       fragmentShader: fs,
       side: BackSide,
-      flatShading: true,
       transparent: true,
       blending: AdditiveBlending
     });
