@@ -30,11 +30,9 @@ export default class Face extends Mesh {
     const material = new RawShaderMaterial({
       uniforms: {
         time: {
-          type: 'f',
           value: 0
         },
         texture: {
-          type: 't',
           value: null
         }
       },

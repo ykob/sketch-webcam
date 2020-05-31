@@ -25,15 +25,12 @@ export default class Body extends Mesh {
     const material = new RawShaderMaterial({
       uniforms: {
         resolution: {
-          type: 'v2',
           value: store.state.resolution
         },
         segmentation: {
-          type: 't',
           value: null
         },
         imgRatio: {
-          type: 'v2',
           value: new Vector2()
         }
       },

@@ -22,15 +22,12 @@ export default class Video extends Mesh {
     const material = new RawShaderMaterial({
       uniforms: {
         resolution: {
-          type: 'v2',
           value: store.state.resolution
         },
         video: {
-          type: 't',
           value: new VideoTexture(store.state.webcam.video)
         },
         imgRatio: {
-          type: 'v2',
           value: new Vector2()
         }
       },
