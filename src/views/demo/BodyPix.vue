@@ -1,10 +1,13 @@
 <script>
 import * as bodyPix from '@tensorflow-models/body-pix';
+import { Scene, WebGLRenderTarget } from 'three';
 import store from '@/store';
 
 import DemoConsole from '@/components/common/DemoConsole';
+import Body from '@/components/demo/bodyPix/Body';
 import Video from '@/components/demo/bodyPix/Video';
 
+const body = new Body();
 const video = new Video();
 
 export default {
@@ -14,11 +17,15 @@ export default {
   },
   data: () => ({
     net: null,
-    timeSegment: 0
+    timeSegment: 0,
+    subScene: new Scene(),
+    renderTarget: new WebGLRenderTarget()
   }),
   async created() {
     const { state, commit, dispatch } = store;
 
+    video.start(this.renderTarget.texture);
+    this.subScene.add(body);
     state.scene.add(video);
 
     dispatch('webcam/init').then(async () => {
@@ -36,6 +43,7 @@ export default {
   },
   destroyed() {
     const { state, commit } = store;
+    this.subScene.remove(body);
     state.scene.remove(video);
     commit('destroyUpdate');
     commit('destroyResize');
@@ -51,11 +59,19 @@ export default {
           internalResolution: 'medium',
           segmentationThreshold: 0.5
         });
-        video.updateSegmentation(segmentation);
+        body.updateSegmentation(segmentation);
         this.timeSegment = 0;
       }
+
+      state.renderer.setRenderTarget(this.renderTarget);
+      state.renderer.render(this.subScene, state.camera);
+      state.renderer.setRenderTarget(null);
     },
     resize() {
+      const { resolution } = store.state;
+
+      this.renderTarget.setSize(resolution.x, resolution.y);
+      body.resize();
       video.resize();
     }
   }

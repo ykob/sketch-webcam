@@ -4,16 +4,19 @@ import {
   RawShaderMaterial,
   Vector2,
   Vector3,
-  VideoTexture
+  DataTexture,
+  LuminanceFormat,
+  UnsignedByteType,
+  NearestFilter
 } from 'three';
 import MathEx from 'js-util/MathEx';
 
 import store from '@/store';
 
-import vs from './glsl/Video.vs';
-import fs from './glsl/Video.fs';
+import vs from './glsl/Body.vs';
+import fs from './glsl/Body.fs';
 
-export default class Video extends Mesh {
+export default class Body extends Mesh {
   constructor() {
     // Define Geometry
     const geometry = new PlaneBufferGeometry(1, 1);
@@ -25,11 +28,8 @@ export default class Video extends Mesh {
           type: 'v2',
           value: store.state.resolution
         },
-        video: {
+        segmentation: {
           type: 't',
-          value: new VideoTexture(store.state.webcam.video)
-        },
-        texture: {
           value: null
         },
         imgRatio: {
@@ -43,8 +43,22 @@ export default class Video extends Mesh {
     super(geometry, material);
     this.size = new Vector3();
   }
-  start(texture) {
-    this.material.uniforms.texture.value = texture;
+  updateSegmentation(segmentation) {
+    const texture = this.material.uniforms.segmentation;
+    if (texture.value === null) {
+      texture.value = new DataTexture(
+        segmentation.data,
+        segmentation.width,
+        segmentation.height,
+        LuminanceFormat,
+        UnsignedByteType
+      );
+      texture.value.magFilter = NearestFilter;
+      texture.value.minFilter = NearestFilter;
+    } else {
+      texture.value.image.data.set(segmentation.data);
+    }
+    texture.value.needsUpdate = true;
   }
   resize() {
     const { camera } = store.state;
