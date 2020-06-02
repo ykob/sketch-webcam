@@ -32,7 +32,7 @@ export default {
       this.net = await bodyPix.load({
         architecture: 'MobileNetV1',
         outputStride: 16,
-        multiplier: 0.75,
+        multiplier: 0.5,
         quantBytes: 4
       });
 
@@ -57,7 +57,7 @@ export default {
         const segmentation = await this.net.segmentPerson(state.webcam.video, {
           flipHorizontal: true,
           internalResolution: 'medium',
-          segmentationThreshold: 0.5
+          segmentationThreshold: 0.7
         });
         body.updateSegmentation(segmentation);
         this.timeSegment = 0;

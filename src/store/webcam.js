@@ -27,10 +27,6 @@ export default {
       let x = state.video.videoWidth;
       let y = state.video.videoHeight;
       state.resolution.set(x, y);
-      if (x > 640) {
-        y = (y / x) * 640;
-        x = 640;
-      }
       state.video.width = x;
       state.video.height = y;
     }
