@@ -69,8 +69,16 @@ export default class Body extends Mesh {
     this.size.set(width, height, 1);
     this.scale.copy(this.size);
     this.material.uniforms.imgRatio.value.set(
-      Math.min(1, ((this.size.x / this.size.y) * webcam.resolution.y) / webcam.resolution.x),
-      Math.min(1, ((this.size.y / this.size.x) * webcam.resolution.x) / webcam.resolution.y)
+      Math.min(
+        1,
+        ((this.size.x / this.size.y) * webcam.resolution.y) /
+          webcam.resolution.x
+      ),
+      Math.min(
+        1,
+        ((this.size.y / this.size.x) * webcam.resolution.x) /
+          webcam.resolution.y
+      )
     );
   }
 }
