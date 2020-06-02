@@ -44,8 +44,7 @@ export default class Video extends Mesh {
     this.material.uniforms.texture.value = texture;
   }
   resize() {
-    const { camera } = store.state;
-
+    const { camera, webcam } = store.state;
     const height = Math.abs(
       (camera.position.z - this.position.z) *
         Math.tan(MathEx.radians(camera.fov) / 2) *
@@ -55,11 +54,17 @@ export default class Video extends Mesh {
 
     this.size.set(width, height, 1);
     this.scale.copy(this.size);
-
-    const { resolution } = store.state.webcam;
     this.material.uniforms.imgRatio.value.set(
-      Math.min(1, ((this.size.x / this.size.y) * resolution.y) / resolution.x),
-      Math.min(1, ((this.size.y / this.size.x) * resolution.x) / resolution.y)
+      Math.min(
+        1,
+        ((this.size.x / this.size.y) * webcam.resolution.y) /
+          webcam.resolution.x
+      ),
+      Math.min(
+        1,
+        ((this.size.y / this.size.x) * webcam.resolution.x) /
+          webcam.resolution.y
+      )
     );
   }
 }
