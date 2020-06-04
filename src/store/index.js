@@ -7,7 +7,7 @@ import touch from './touch';
 import webcam from './webcam';
 import modal from './modal';
 
-import Camera from '@/components/common/Camera';
+import Camera from '@/webgl/common/Camera';
 
 Vue.use(Vuex);
 

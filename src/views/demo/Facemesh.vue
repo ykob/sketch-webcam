@@ -4,9 +4,9 @@ import * as facemesh from '@tensorflow-models/facemesh';
 import store from '@/store';
 
 import DemoConsole from '@/components/common/DemoConsole';
-import PromiseTextureLoader from '@/components/common/PromiseTextureLoader';
-import Video from '@/components/demo/facemesh/Video';
-import Face from '@/components/demo/facemesh/Face';
+import PromiseTextureLoader from '@/webgl/common/PromiseTextureLoader';
+import Video from '@/webgl/demo/facemesh/Video';
+import Face from '@/webgl/demo/facemesh/Face';
 
 const video = new Video();
 

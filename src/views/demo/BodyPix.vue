@@ -4,8 +4,8 @@ import { Scene, WebGLRenderTarget } from 'three';
 import store from '@/store';
 
 import DemoConsole from '@/components/common/DemoConsole';
-import Body from '@/components/demo/bodyPix/Body';
-import Video from '@/components/demo/bodyPix/Video';
+import Body from '@/webgl/demo/bodyPix/Body';
+import Video from '@/webgl/demo/bodyPix/Video';
 
 const body = new Body();
 const video = new Video();
