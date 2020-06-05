@@ -4,11 +4,9 @@ import { Scene, WebGLRenderTarget } from 'three';
 import store from '@/store';
 
 import DemoConsole from '@/components/common/DemoConsole';
+import PostEffectBlur from '@/webgl/common/PostEffectBlur';
 import Body from '@/webgl/demo/bodyPix/Body';
 import Video from '@/webgl/demo/bodyPix/Video';
-
-const body = new Body();
-const video = new Video();
 
 export default {
   name: 'BodyPix',
@@ -18,15 +16,21 @@ export default {
   data: () => ({
     net: null,
     timeSegment: 0,
-    subScene: new Scene(),
-    renderTarget: new WebGLRenderTarget()
+    scenePE: new Scene(),
+    body: new Body(),
+    video: new Video(),
+    postEffectBlurX: new PostEffectBlur(),
+    postEffectBlurY: new PostEffectBlur(),
+    renderTarget1: new WebGLRenderTarget(),
+    renderTarget2: new WebGLRenderTarget()
   }),
   async created() {
     const { state, commit, dispatch } = store;
 
-    video.start(this.renderTarget.texture);
-    this.subScene.add(body);
-    state.scene.add(video);
+    this.video.start(this.renderTarget1.texture);
+    this.postEffectBlurX.start(this.renderTarget1.texture, 1, 0);
+    this.postEffectBlurY.start(this.renderTarget2.texture, 0, 1);
+    state.scene.add(this.video);
 
     dispatch('webcam/init').then(async () => {
       this.net = await bodyPix.load({
@@ -43,8 +47,7 @@ export default {
   },
   destroyed() {
     const { state, commit } = store;
-    this.subScene.remove(body);
-    state.scene.remove(video);
+    state.scene.remove(this.video);
     commit('destroyUpdate');
     commit('destroyResize');
   },
@@ -59,20 +62,36 @@ export default {
           internalResolution: 'medium',
           segmentationThreshold: 0.7
         });
-        body.updateSegmentation(segmentation);
+        this.body.updateSegmentation(segmentation);
         this.timeSegment = 0;
       }
 
-      state.renderer.setRenderTarget(this.renderTarget);
-      state.renderer.render(this.subScene, state.camera);
+      // // Render the post effect.
+      this.scenePE.add(this.body);
+      state.renderer.setRenderTarget(this.renderTarget1);
+      state.renderer.render(this.scenePE, state.camera);
+      this.scenePE.remove(this.body);
+
+      this.scenePE.add(this.postEffectBlurX);
+      state.renderer.setRenderTarget(this.renderTarget2);
+      state.renderer.render(this.scenePE, state.camera);
+      this.scenePE.remove(this.postEffectBlurX);
+
+      this.scenePE.add(this.postEffectBlurY);
+      state.renderer.setRenderTarget(this.renderTarget1);
+      state.renderer.render(this.scenePE, state.camera);
+      this.scenePE.remove(this.postEffectBlurY);
+
       state.renderer.setRenderTarget(null);
     },
     resize() {
       const { resolution } = store.state;
-
-      this.renderTarget.setSize(resolution.x, resolution.y);
-      body.resize();
-      video.resize();
+      this.body.resize();
+      this.video.resize();
+      this.postEffectBlurY.resize();
+      this.postEffectBlurX.resize();
+      this.renderTarget1.setSize(resolution.x, resolution.y);
+      this.renderTarget2.setSize(resolution.x, resolution.y);
     }
   }
 };
