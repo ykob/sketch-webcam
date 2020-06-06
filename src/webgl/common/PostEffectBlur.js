@@ -1,23 +1,23 @@
-import * as THREE from 'three';
+import { Mesh, PlaneBufferGeometry, RawShaderMaterial, Vector2 } from 'three';
 
 import store from '@/store';
 
 import vs from './glsl/PostEffect.vs';
 import fs from './glsl/PostEffectBlur.fs';
 
-export default class PostEffectBlur extends THREE.Mesh {
+export default class PostEffectBlur extends Mesh {
   constructor() {
     // Define Geometry
-    const geometry = new THREE.PlaneBufferGeometry(2, 2);
+    const geometry = new PlaneBufferGeometry(2, 2);
 
     // Define Material
-    const material = new THREE.RawShaderMaterial({
+    const material = new RawShaderMaterial({
       uniforms: {
         resolution: {
-          value: new THREE.Vector2()
+          value: new Vector2()
         },
         direction: {
-          value: new THREE.Vector2()
+          value: new Vector2()
         },
         texture: {
           value: null

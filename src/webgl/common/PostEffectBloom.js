@@ -1,17 +1,17 @@
-import * as THREE from 'three';
+import { Mesh, PlaneBufferGeometry, RawShaderMaterial } from 'three';
 
 import store from '@/store';
 
 import vs from './glsl/PostEffect.vs';
 import fs from './glsl/PostEffectBloom.fs';
 
-export default class PostEffectBloom extends THREE.Mesh {
+export default class PostEffectBloom extends Mesh {
   constructor() {
     // Define Geometry
-    const geometry = new THREE.PlaneBufferGeometry(2, 2);
+    const geometry = new PlaneBufferGeometry(2, 2);
 
     // Define Material
-    const material = new THREE.RawShaderMaterial({
+    const material = new RawShaderMaterial({
       uniforms: {
         time: {
           value: 0

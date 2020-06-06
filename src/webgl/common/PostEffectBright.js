@@ -1,15 +1,15 @@
-import * as THREE from 'three';
+import { Mesh, PlaneBufferGeometry, RawShaderMaterial } from 'three';
 
 import vs from './glsl/PostEffect.vs';
 import fs from './glsl/PostEffectBright.fs';
 
-export default class PostEffectBright extends THREE.Mesh {
+export default class PostEffectBright extends Mesh {
   constructor() {
     // Define Geometry
-    const geometry = new THREE.PlaneBufferGeometry(2, 2);
+    const geometry = new PlaneBufferGeometry(2, 2);
 
     // Define Material
-    const material = new THREE.RawShaderMaterial({
+    const material = new RawShaderMaterial({
       uniforms: {
         minBright: {
           value: 0.25
