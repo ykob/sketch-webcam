@@ -7,6 +7,7 @@ import DemoConsole from '@/components/common/DemoConsole';
 import PostEffectBlur from '@/webgl/common/PostEffectBlur';
 import Body from '@/webgl/demo/bodyPix/Body';
 import Video from '@/webgl/demo/bodyPix/Video';
+import VideoBack from '@/webgl/demo/bodyPix/VideoBack';
 
 export default {
   name: 'BodyPix',
@@ -19,6 +20,7 @@ export default {
     scenePE: new Scene(),
     body: new Body(),
     video: new Video(),
+    videoBack: new VideoBack(),
     postEffectBlurX: new PostEffectBlur(),
     postEffectBlurY: new PostEffectBlur(),
     renderTarget1: new WebGLRenderTarget(),
@@ -28,9 +30,11 @@ export default {
     const { state, commit, dispatch } = store;
 
     this.video.start(this.renderTarget1.texture);
+    this.videoBack.start(this.renderTarget1.texture);
     this.postEffectBlurX.start(this.renderTarget1.texture, 1, 0);
     this.postEffectBlurY.start(this.renderTarget2.texture, 0, 1);
     state.scene.add(this.video);
+    state.scene.add(this.videoBack);
 
     dispatch('webcam/init').then(async () => {
       this.net = await bodyPix.load({
@@ -48,6 +52,7 @@ export default {
   destroyed() {
     const { state, commit } = store;
     state.scene.remove(this.video);
+    state.scene.remove(this.videoBack);
     commit('destroyUpdate');
     commit('destroyResize');
   },
@@ -88,6 +93,7 @@ export default {
       const { resolution } = store.state;
       this.body.resize();
       this.video.resize();
+      this.videoBack.resize();
       this.postEffectBlurY.resize();
       this.postEffectBlurX.resize();
       this.renderTarget1.setSize(resolution.x, resolution.y);

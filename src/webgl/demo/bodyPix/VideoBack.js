@@ -11,7 +11,7 @@ import MathEx from 'js-util/MathEx';
 import store from '@/store';
 
 import vs from './glsl/Video.vs';
-import fs from './glsl/Video.fs';
+import fs from './glsl/VideoBack.fs';
 
 export default class Video extends Mesh {
   constructor() {
@@ -43,6 +43,7 @@ export default class Video extends Mesh {
   }
   start(texture) {
     this.material.uniforms.texture.value = texture;
+    this.position.set(0, 0, -50);
   }
   resize() {
     const { camera, webcam } = store.state;
