@@ -16,6 +16,9 @@ export default class PostEffectBlur extends Mesh {
         resolution: {
           value: new Vector2()
         },
+        scale: {
+          value: new Vector2(0.3, 0.3)
+        },
         direction: {
           value: new Vector2()
         },
@@ -35,11 +38,15 @@ export default class PostEffectBlur extends Mesh {
     this.material.uniforms.texture.value = texture;
     this.material.uniforms.direction.value.set(x, y);
   }
+  setScale(x, y) {
+    this.material.uniforms.scale.value.set(x, y);
+  }
   resize() {
     const { resolution } = store.state;
-    this.material.uniforms.resolution.value.set(
-      resolution.x / 3,
-      resolution.y / 3
+    const { uniforms } = this.material;
+    uniforms.resolution.value.set(
+      resolution.x * uniforms.scale.value.x,
+      resolution.y * uniforms.scale.value.y
     );
   }
 }
