@@ -10,11 +10,6 @@ import Body from '@/webgl/demo/bodyPix/Body';
 import Video from '@/webgl/demo/bodyPix/Video';
 import VideoBack from '@/webgl/demo/bodyPix/VideoBack';
 
-const arr = [1, 2, 3, 4, 5, 6];
-const blobs = arr.map(() => {
-  return new Blob();
-});
-
 export default {
   name: 'BodyPix',
   components: {
@@ -24,7 +19,9 @@ export default {
     net: null,
     timeSegment: 0,
     scenePE: new Scene(),
-    blobs: blobs,
+    blobs: Array.apply(null, Array(10)).map(() => {
+      return new Blob();
+    }),
     body: new Body(),
     video: new Video(),
     videoBack: new VideoBack(),
