@@ -4,6 +4,7 @@ import store from '@/store';
 
 import DemoConsole from '@/components/common/DemoConsole';
 import PromiseOBJLoader from '@/webgl/common/PromiseOBJLoader';
+import Glasses from '@/webgl/demo/glasses/Glasses';
 import Video from '@/webgl/demo/glasses/Video';
 
 export default {
@@ -30,7 +31,7 @@ export default {
     ]).then(async response => {
       if (this._isDestroyed !== false) return;
 
-      this.glasses = response[2];
+      this.glasses = new Glasses(response[2].children[0].geometry);
       this.model = response[1];
 
       state.scene.add(this.glasses);
@@ -51,15 +52,17 @@ export default {
   },
   methods: {
     async update(time) {
-      // const { state } = store;
+      const { state } = store;
 
       this.timeSegment += time;
       if (this.timeSegment >= 1 / 60) {
-        // const predictions = await this.model.estimateFaces(state.webcam.video);
+        const predictions = await this.model.estimateFaces(state.webcam.video);
+        this.glasses.update(predictions[0]);
         this.timeSegment = 0;
       }
     },
     resize() {
+      this.glasses.resize();
       this.video.resize();
     }
   }
