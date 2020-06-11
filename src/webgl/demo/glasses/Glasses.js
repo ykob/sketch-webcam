@@ -24,7 +24,7 @@ export default class Glasses extends Mesh {
     const { resolution } = store.state.webcam;
 
     const v = new Vector3();
-    v.fromArray(scaledMesh[19]);
+    v.fromArray(scaledMesh[5]);
     v.x = v.x - resolution.x * 0.5;
     v.y = v.y - resolution.y * 0.5;
 
