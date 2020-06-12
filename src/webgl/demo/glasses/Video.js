@@ -32,11 +32,11 @@ export default class Video extends Mesh {
         }
       },
       vertexShader: vs,
-      fragmentShader: fs,
-      depthTest: false
+      fragmentShader: fs
     });
     super(geometry, material);
     this.size = new Vector3();
+    this.position.z = -2;
   }
   resize() {
     const { camera, webcam } = store.state;
