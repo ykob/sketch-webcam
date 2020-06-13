@@ -71,7 +71,7 @@ export default {
 
 <template lang="pug">
 DemoConsole(
-  title = 'Facemesh'
+  title = 'Glasses'
   )
 </template>
 
