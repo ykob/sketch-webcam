@@ -28,8 +28,7 @@ export default new Vuex.Store({
     clock: new Clock(),
     update: null,
     resize: null,
-    isMobile: false,
-    isEnabledTouch: false
+    isMobile: false
   },
   mutations: {
     setUpdate(state, update) {
