@@ -28,7 +28,7 @@ export default {
         iouThreshold: 0.1
       }),
       PromiseOBJLoader(`${process.env.BASE_URL}obj/Glasses_01.obj`)
-    ]).then(async response => {
+    ]).then(response => {
       if (this._isDestroyed !== false) return;
 
       this.glasses = new Glasses(response[2].children[0].geometry);
