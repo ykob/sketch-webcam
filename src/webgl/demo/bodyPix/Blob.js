@@ -1,13 +1,10 @@
-import { Mesh, BoxBufferGeometry, RawShaderMaterial } from 'three';
+import { Mesh, RawShaderMaterial } from 'three';
 
 import vs from './glsl/Blob.vs';
 import fs from './glsl/Blob.fs';
 
 export default class Blob extends Mesh {
-  constructor() {
-    // Define Geometry
-    const geometry = new BoxBufferGeometry(1.5, 1.5, 1.5);
-
+  constructor(geometry) {
     // Define Material
     const material = new RawShaderMaterial({
       uniforms: {

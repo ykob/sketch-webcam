@@ -5,6 +5,7 @@ import store from '@/store';
 
 import DemoConsole from '@/components/common/DemoConsole';
 import PostEffectBlur from '@/webgl/common/PostEffectBlur';
+import PromiseOBJLoader from '@/webgl/common/PromiseOBJLoader';
 import Blob from '@/webgl/demo/bodyPix/Blob';
 import Body from '@/webgl/demo/bodyPix/Body';
 import Video from '@/webgl/demo/bodyPix/Video';
@@ -20,7 +21,7 @@ export default {
     timeSegment: 0,
     scenePE: new Scene(),
     blobs: Array.apply(null, Array(10)).map(() => {
-      return new Blob();
+      return undefined;
     }),
     body: new Body(),
     video: new Video(),
@@ -33,25 +34,33 @@ export default {
   async created() {
     const { state, commit, dispatch } = store;
 
-    this.video.start(this.renderTarget1.texture);
-    this.videoBack.start(this.renderTarget1.texture);
-    this.postEffectBlurX.start(this.renderTarget1.texture, 1, 0);
-    this.postEffectBlurX.setScale(0.5, 0.5);
-    this.postEffectBlurY.start(this.renderTarget2.texture, 0, 1);
-    this.postEffectBlurY.setScale(0.5, 0.5);
-    this.blobs.forEach(blob => {
-      state.scene.add(blob);
-    });
-    state.scene.add(this.video);
-    state.scene.add(this.videoBack);
-
-    dispatch('webcam/init').then(async () => {
-      this.net = await bodyPix.load({
+    await Promise.all([
+      dispatch('webcam/init'),
+      bodyPix.load({
         architecture: 'MobileNetV1',
         outputStride: 16,
         multiplier: 0.5,
         quantBytes: 4
+      }),
+      PromiseOBJLoader(`${process.env.BASE_URL}obj/star.obj`)
+    ]).then(response => {
+      if (this._isDestroyed !== false) return;
+
+      this.net = response[1];
+      this.video.start(this.renderTarget1.texture);
+      this.videoBack.start(this.renderTarget1.texture);
+      this.postEffectBlurX.start(this.renderTarget1.texture, 1, 0);
+      this.postEffectBlurX.setScale(0.5, 0.5);
+      this.postEffectBlurY.start(this.renderTarget2.texture, 0, 1);
+      this.postEffectBlurY.setScale(0.5, 0.5);
+      this.blobs = this.blobs.map(() => {
+        return new Blob(response[2].children[0].geometry);
       });
+      this.blobs.forEach(blob => {
+        state.scene.add(blob);
+      });
+      state.scene.add(this.video);
+      state.scene.add(this.videoBack);
 
       commit('setUpdate', this.update);
       commit('setResize', this.resize);
@@ -65,6 +74,7 @@ export default {
     this.blobs.forEach(blob => {
       state.scene.remove(blob);
     });
+
     commit('destroyUpdate');
     commit('destroyResize');
   },
