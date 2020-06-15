@@ -18,31 +18,32 @@ export default class Glasses extends Mesh {
     super(geometry, material);
     this.size = new Vector2();
     this.imgRatio = new Vector2();
+    this.scale.set(0, 0, 0);
   }
   update(prediction) {
     const { mesh, scaledMesh } = prediction;
     const { resolution } = store.state.webcam;
 
-    const v = new Vector3();
-    v.fromArray(scaledMesh[5]);
-    v.x = v.x - resolution.x * 0.5;
-    v.y = v.y - resolution.y * 0.5;
-
     const p0 = new Vector3();
+    p0.fromArray(scaledMesh[5]);
+    p0.x = p0.x - resolution.x * 0.5;
+    p0.y = p0.y - resolution.y * 0.5;
+
     const p1 = new Vector3();
     const p2 = new Vector3();
+    const p3 = new Vector3();
 
-    p0.fromArray(mesh[5]);
-    p1.fromArray(mesh[44]);
-    p2.fromArray(mesh[274]);
+    p1.fromArray(mesh[5]);
+    p2.fromArray(mesh[44]);
+    p3.fromArray(mesh[274]);
 
-    const x = p2
+    const x = p3
       .clone()
-      .sub(p1)
+      .sub(p2)
       .normalize();
-    const y = p0
+    const y = p1
       .clone()
-      .sub(p1)
+      .sub(p2)
       .normalize();
     const z = new Vector3().crossVectors(x, y);
     const y2 = new Vector3().crossVectors(x, z).normalize();
@@ -50,13 +51,16 @@ export default class Glasses extends Mesh {
     const rotateMat = new Matrix4().makeBasis(x, y2, z2);
     this.rotation.setFromRotationMatrix(rotateMat);
 
-    const normal = v.clone().normalize();
-    const x3 = ((v.x / -resolution.x) * this.size.x) / this.imgRatio.x;
-    const y3 = ((v.y / -resolution.y) * this.size.y) / this.imgRatio.y;
-    const z3 = normal.z * (x3 / normal.x);
+    const normal = p0.clone().normalize();
+    const x3 = ((p0.x / -resolution.x) * this.size.x) / this.imgRatio.x;
+    const y3 = (((p0.y + 10) / -resolution.y) * this.size.y) / this.imgRatio.y;
+    const z3 = normal.z * (x3 / normal.x) - 3;
     this.position.set(x3, y3, z3);
 
-    const scale = 0.2;
+    const p4 = new Vector3().fromArray(scaledMesh[10]);
+    const p5 = new Vector3().fromArray(scaledMesh[152]);
+
+    const scale = p4.distanceTo(p5) / 1800;
     this.scale.set(scale, scale, scale);
   }
   resize() {

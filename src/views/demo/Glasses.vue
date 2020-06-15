@@ -18,7 +18,7 @@ export default {
     model: null,
     timeSegment: 0
   }),
-  async created() {
+  created() {
     const { state, commit, dispatch } = store;
 
     Promise.all([

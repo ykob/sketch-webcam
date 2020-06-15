@@ -36,7 +36,7 @@ export default class Video extends Mesh {
     });
     super(geometry, material);
     this.size = new Vector3();
-    this.position.z = -2;
+    this.position.z = -5;
   }
   resize() {
     const { camera, webcam } = store.state;
