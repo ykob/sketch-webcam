@@ -34,8 +34,8 @@ transition(
     padding-left: 8 / 100 * 100%;
   }
   @include l-mobile {
-    margin-top: 32px;
-    margin-bottom: 24px;
+    margin-top: 40px;
+    margin-bottom: 40px;
     margin-right: 24px;
     margin-left: 24px;
   }

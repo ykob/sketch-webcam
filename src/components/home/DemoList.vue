@@ -30,8 +30,9 @@ export default {
   :style = 'styles'
   )
   DemoListItem(
-    v-for = 'demo in demos'
+    v-for = 'demo, index in demos'
     :key = 'demo.key'
+    :index = 'demos.length - index'
     :demo = 'demo'
   )
 </template>
