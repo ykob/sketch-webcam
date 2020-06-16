@@ -13,13 +13,18 @@ export default {
     };
   },
   watch: {
+    '$store.state.resolution.x'() {
+      setTimeout(this.resize, 10);
+    },
     '$store.state.resolution.y'() {
       setTimeout(this.resize, 10);
     }
   },
   computed: {
     styles() {
+      const { resolution } = this.$store.state;
       return {
+        minHeight: `${resolution.y}px`,
         transform: `translate3d(0, ${-this.scrollY}px, 0)`
       };
     }
@@ -99,4 +104,8 @@ div(
   slot
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+div {
+  overflow: hidden;
+}
+</style>

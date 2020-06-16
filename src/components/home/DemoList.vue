@@ -13,12 +13,22 @@ export default {
         return [];
       }
     }
+  },
+  computed: {
+    styles() {
+      const { resolution, isMobile } = this.$store.state;
+      return {
+        minHeight: isMobile ? 'auto' : `${resolution.y}px`
+      };
+    }
   }
 };
 </script>
 
 <template lang="pug">
-.demo-list
+.demo-list(
+  :style = 'styles'
+  )
   DemoListItem(
     v-for = 'demo in demos'
     :key = 'demo.key'
@@ -28,17 +38,19 @@ export default {
 
 <style lang="scss" scoped>
 .demo-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
   box-sizing: border-box;
   @include l-more-than-mobile {
-    max-width: 1000px;
-    padding-right: 100px;
-    padding-left: 100px;
-    margin-right: auto;
-    margin-left: auto;
+    margin-left: 50%;
+    padding-right: 8%;
+    padding-left: 4%;
   }
   @include l-mobile {
-    margin-right: 16px;
-    margin-left: 16px;
+    margin-right: 24px;
+    margin-left: 24px;
   }
 }
 </style>

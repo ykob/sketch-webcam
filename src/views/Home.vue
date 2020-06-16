@@ -29,11 +29,17 @@ export default {
 </script>
 
 <template lang="pug">
-ScrollWrap
-  HomeHeader
-  DemoList(
-    :demos = 'demos'
-  )
+div
+  HomeHeader(
+    v-if = '!$store.state.isMobile'
+    )
+  ScrollWrap
+    HomeHeader(
+      v-if = '$store.state.isMobile'
+      )
+    DemoList(
+      :demos = 'demos'
+      )
 </template>
 
 <style lang="scss" scoped></style>

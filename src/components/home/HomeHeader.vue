@@ -1,15 +1,6 @@
 <script>
 export default {
-  name: 'HomeHeader',
-  computed: {
-    styles() {
-      const { resolution } = this.$store.state;
-      return {
-        width: `${resolution.x}px`,
-        height: `${resolution.y}px`
-      };
-    }
-  }
+  name: 'HomeHeader'
 };
 </script>
 
@@ -17,9 +8,7 @@ export default {
 transition(
   appear
   )
-  .home-header(
-    :style = 'styles'
-    )
+  .home-header
     div
       h1
         |sketch-webcam
@@ -31,10 +20,25 @@ transition(
 
 <style lang="scss" scoped>
 .home-header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+  box-sizing: border-box;
+  @include l-more-than-mobile {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-right: 4 / 100 * 100%;
+    padding-left: 8 / 100 * 100%;
+  }
+  @include l-mobile {
+    margin-top: 32px;
+    margin-bottom: 24px;
+    margin-right: 24px;
+    margin-left: 24px;
+  }
   &.v-enter {
     opacity: 0;
   }
@@ -45,9 +49,9 @@ transition(
 }
 h1 {
   line-height: 1;
-  margin: 0 0 1em;
-  @include fontSizeAll(28, 28, 21);
-  letter-spacing: 0.3em;
+  margin: 0 0 0.3em;
+  @include fontSizeAll(42, 42, 28);
+  letter-spacing: 0.12em;
 }
 p {
   margin: 0;
