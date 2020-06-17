@@ -31,10 +31,10 @@ export default {
     renderTarget1: new WebGLRenderTarget(),
     renderTarget2: new WebGLRenderTarget()
   }),
-  async created() {
+  created() {
     const { state, commit, dispatch } = store;
 
-    await Promise.all([
+    Promise.all([
       dispatch('webcam/init'),
       bodyPix.load({
         architecture: 'MobileNetV1',

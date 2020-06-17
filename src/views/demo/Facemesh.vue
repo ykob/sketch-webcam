@@ -8,54 +8,50 @@ import PromiseTextureLoader from '@/webgl/common/PromiseTextureLoader';
 import Video from '@/webgl/demo/facemesh/Video';
 import Face from '@/webgl/demo/facemesh/Face';
 
-const video = new Video();
-
 export default {
   name: 'Facemesh',
   components: {
     DemoConsole
   },
   data: () => ({
-    faces: [],
+    video: new Video(),
+    faces: Array.apply(null, Array(10)).map(() => {
+      return new Face();
+    }),
     model: null,
     maxFaces: 5,
     timeSegment: 0
   }),
-  async created() {
+  created() {
     const { state, commit, dispatch } = store;
 
-    for (let index = 0; index < 10; index++) {
-      this.faces[index] = new Face();
-      state.scene.add(this.faces[index]);
-    }
-    state.scene.add(video);
-
-    dispatch('webcam/init').then(async () => {
-      this.model = await facemesh.load({
+    Promise.all([
+      dispatch('webcam/init'),
+      facemesh.load({
         maxFaces: this.maxFaces,
         iouThreshold: 0.1
-      });
+      }),
+      PromiseTextureLoader(require('@/assets/img/tex_facemesh.jpg'))
+    ]).then(response => {
+      this.model = response[1];
+
+      response[2].wrapS = RepeatWrapping;
+      response[2].wrapT = RepeatWrapping;
       this.faces.forEach(face => {
         face.setUv(facemesh.FaceMesh.getUVCoords());
+        face.setTexture(response[2]);
+        state.scene.add(face);
       });
+      state.scene.add(this.video);
 
       commit('setUpdate', this.update);
       commit('setResize', this.resize);
       this.resize();
     });
-    PromiseTextureLoader(require('@/assets/img/tex_facemesh.jpg')).then(
-      response => {
-        response.wrapS = RepeatWrapping;
-        response.wrapT = RepeatWrapping;
-        this.faces.forEach(face => {
-          face.setTexture(response);
-        });
-      }
-    );
   },
   destroyed() {
     const { state, commit } = store;
-    state.scene.remove(video);
+    state.scene.remove(this.video);
     this.faces.forEach(face => {
       state.scene.remove(face);
     });
@@ -83,7 +79,7 @@ export default {
       }
     },
     resize() {
-      video.resize();
+      this.video.resize();
       this.faces.forEach(face => {
         face.resize();
       });
