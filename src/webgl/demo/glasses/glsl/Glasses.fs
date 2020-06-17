@@ -8,5 +8,5 @@ void main() {
   vec3 normal = normalize(cross(dFdx(vPosition), dFdy(vPosition)));
   float diff = dot(normal, light);
 
-  gl_FragColor = vec4(vec3(0.15) + diff * 0.15, 1.0);
+  gl_FragColor = vec4(vec3(0.5) + diff * 0.5, 1.0);
 }
