@@ -2,8 +2,9 @@
 import Alert from '@/components/common/Alert.vue';
 import BackHome from '@/components/common/BackHome.vue';
 import GradualCover from '@/components/common/GradualCover.vue';
-import SiteTitle from '@/components/common/SiteTitle.vue';
 import Modal from '@/components/common/Modal.vue';
+import Processing from '@/components/common/Processing.vue';
+import SiteTitle from '@/components/common/SiteTitle.vue';
 
 export default {
   name: 'App',
@@ -11,8 +12,9 @@ export default {
     Alert,
     BackHome,
     GradualCover,
-    SiteTitle,
-    Modal
+    Modal,
+    Processing,
+    SiteTitle
   },
   async created() {
     const { state } = this.$store;
@@ -96,6 +98,7 @@ export default {
   router-view
   BackHome
   GradualCover
+  Processing
   Alert
   Modal
 </template>
