@@ -25,6 +25,7 @@ export default {
   created() {
     const { state, commit, dispatch } = store;
 
+    commit('processing/show');
     Promise.all([
       dispatch('webcam/init'),
       facemesh.load({
@@ -47,6 +48,7 @@ export default {
       commit('setUpdate', this.update);
       commit('setResize', this.resize);
       this.resize();
+      commit('processing/hide');
     });
   },
   destroyed() {

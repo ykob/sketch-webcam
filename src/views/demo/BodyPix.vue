@@ -34,6 +34,7 @@ export default {
   created() {
     const { state, commit, dispatch } = store;
 
+    commit('processing/show');
     Promise.all([
       dispatch('webcam/init'),
       bodyPix.load({
@@ -65,6 +66,7 @@ export default {
       commit('setUpdate', this.update);
       commit('setResize', this.resize);
       this.resize();
+      commit('processing/hide');
     });
   },
   destroyed() {
@@ -77,6 +79,7 @@ export default {
 
     commit('destroyUpdate');
     commit('destroyResize');
+    commit('processing/hide');
   },
   methods: {
     async update(time) {
