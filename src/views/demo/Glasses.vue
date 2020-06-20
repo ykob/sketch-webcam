@@ -2,7 +2,7 @@
 import * as facemesh from '@tensorflow-models/facemesh';
 import store from '@/store';
 
-import DemoConsole from '@/components/common/DemoConsole';
+import DemoConsole from '@/components/demo/DemoConsole';
 import PromiseOBJLoader from '@/webgl/common/PromiseOBJLoader';
 import Glasses from '@/webgl/demo/glasses/Glasses';
 import Video from '@/webgl/demo/glasses/Video';

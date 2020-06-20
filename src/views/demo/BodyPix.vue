@@ -3,7 +3,7 @@ import * as bodyPix from '@tensorflow-models/body-pix';
 import { Scene, WebGLRenderTarget } from 'three';
 import store from '@/store';
 
-import DemoConsole from '@/components/common/DemoConsole';
+import DemoConsole from '@/components/demo/DemoConsole';
 import PostEffectBlur from '@/webgl/common/PostEffectBlur';
 import PromiseOBJLoader from '@/webgl/common/PromiseOBJLoader';
 import Blob from '@/webgl/demo/bodyPix/Blob';

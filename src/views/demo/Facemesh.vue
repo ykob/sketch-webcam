@@ -3,7 +3,7 @@ import { RepeatWrapping } from 'three';
 import * as facemesh from '@tensorflow-models/facemesh';
 import store from '@/store';
 
-import DemoConsole from '@/components/common/DemoConsole';
+import DemoConsole from '@/components/demo/DemoConsole';
 import PromiseTextureLoader from '@/webgl/common/PromiseTextureLoader';
 import Video from '@/webgl/demo/facemesh/Video';
 import Face from '@/webgl/demo/facemesh/Face';
