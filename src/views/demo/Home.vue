@@ -1,11 +1,12 @@
 <script>
 export default {
-  name: 'DemoHome'
+  name: 'DemoHome',
+  beforeCreate() {
+    this.$router.replace('/');
+  }
 };
 </script>
 
-<template lang="pug">
-h1 Demo Home
-</template>
+<template lang="pug"></template>
 
 <style lang="scss" scoped></style>
