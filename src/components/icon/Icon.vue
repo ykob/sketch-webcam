@@ -9,9 +9,16 @@ export default {
     color: {
       type: String,
       default: '#fff'
+    },
+    viewBox: {
+      type: Number,
+      default: 24
     }
   },
   computed: {
+    viewBoxStr() {
+      return `0 0 ${this.viewBox} ${this.viewBox}`;
+    },
     styles() {
       return {
         width: `${this.size}px`,
@@ -23,16 +30,15 @@ export default {
 };
 </script>
 
-<template>
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
-    width="18px"
-    height="18px"
-    :style="styles"
-  >
-    <slot />
-  </svg>
+<template lang="pug">
+  svg(
+    xmlns = 'http://www.w3.org/2000/svg'
+    width = '18px'
+    height = '18px'
+    :viewBox = 'viewBoxStr'
+    :style = 'styles'
+    )
+    slot
 </template>
 
 <style lang="scss" scoped>
