@@ -16,6 +16,18 @@ export default {
     title: {
       type: String,
       default: ''
+    },
+    clickDescription: {
+      type: Function,
+      default: null
+    },
+    clickTune: {
+      type: Function,
+      default: null
+    },
+    clickShare: {
+      type: Function,
+      default: null
     }
   },
   computed: {
@@ -34,15 +46,21 @@ transition(
     h1.demo-console__title
       |Demo: {{ title }}
     .demo-console__btns
-      Button.demo-console__btn.demo-console__btn--description
+      Button.demo-console__btn.demo-console__btn--description(
+        v-if = 'clickDescription'
+        )
         IconDescription(
           :size = 'iconSize'
           )
-      Button.demo-console__btn.demo-console__btn--tune
+      Button.demo-console__btn.demo-console__btn--tune(
+        v-if = 'clickTune'
+        )
         IconTune(
           :size = 'iconSize'
           )
-      Button.demo-console__btn.demo-console__btn--share
+      Button.demo-console__btn.demo-console__btn--share(
+        v-if = 'clickShare'
+        )
         IconShare(
           :size = 'iconSize'
           )
