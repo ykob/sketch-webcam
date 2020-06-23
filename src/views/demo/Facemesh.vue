@@ -4,6 +4,7 @@ import * as facemesh from '@tensorflow-models/facemesh';
 import store from '@/store';
 
 import DemoConsole from '@/components/demo/DemoConsole';
+import DemoShareLinks from '@/components/demo/DemoShareLinks';
 import PromiseTextureLoader from '@/webgl/common/PromiseTextureLoader';
 import Video from '@/webgl/demo/facemesh/Video';
 import Face from '@/webgl/demo/facemesh/Face';
@@ -11,7 +12,8 @@ import Face from '@/webgl/demo/facemesh/Face';
 export default {
   name: 'Facemesh',
   components: {
-    DemoConsole
+    DemoConsole,
+    DemoShareLinks
   },
   data: () => ({
     video: new Video(),
@@ -20,7 +22,8 @@ export default {
     }),
     model: null,
     maxFaces: 5,
-    timeSegment: 0
+    timeSegment: 0,
+    isShownShareLinks: false
   }),
   created() {
     const { state, commit, dispatch } = store;
@@ -85,15 +88,23 @@ export default {
       this.faces.forEach(face => {
         face.resize();
       });
+    },
+    toggleShareLinks() {
+      this.isShownShareLinks = !this.isShownShareLinks;
     }
   }
 };
 </script>
 
 <template lang="pug">
-DemoConsole(
-  title = 'Facemesh'
-  )
+div
+  DemoConsole(
+    title = 'Facemesh'
+    :clickShare = 'toggleShareLinks'
+    )
+  DemoShareLinks(
+    :isShown = 'isShownShareLinks'
+    )
 </template>
 
 <style lang="scss" scoped></style>

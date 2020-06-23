@@ -32,7 +32,7 @@ export default {
   },
   computed: {
     iconSize() {
-      return this.$store.state.isMobile === true ? 16 : 24;
+      return this.$store.state.isMobile === true ? 20 : 24;
     }
   }
 };
@@ -45,25 +45,25 @@ transition(
   .demo-console
     h1.demo-console__title
       |Demo: {{ title }}
-    .demo-console__btns
-      Button.demo-console__btn.demo-console__btn--description(
-        v-if = 'clickDescription'
+    Button.demo-console__btn.demo-console__btn--description(
+      v-if = 'clickDescription'
+      )
+      IconDescription(
+        :size = 'iconSize'
         )
-        IconDescription(
-          :size = 'iconSize'
-          )
-      Button.demo-console__btn.demo-console__btn--tune(
-        v-if = 'clickTune'
+    Button.demo-console__btn.demo-console__btn--tune(
+      v-if = 'clickTune'
+      )
+      IconTune(
+        :size = 'iconSize'
         )
-        IconTune(
-          :size = 'iconSize'
-          )
-      Button.demo-console__btn.demo-console__btn--share(
-        v-if = 'clickShare'
+    Button.demo-console__btn.demo-console__btn--share(
+      v-if = 'clickShare'
+      @click = 'clickShare'
+      )
+      IconShare(
+        :size = 'iconSize'
         )
-        IconShare(
-          :size = 'iconSize'
-          )
 </template>
 
 <style lang="scss" scoped>
@@ -78,13 +78,17 @@ transition(
   line-height: 1;
   background-color: rgba(#000, 0.8);
   @include l-more-than-mobile {
+    height: 48px;
     margin: 16px;
-    padding: 16px 24px;
+    padding-right: 16px;
+    padding-left: 24px;
     border-radius: 8px;
   }
   @include l-mobile {
+    height: 40px;
     margin: 8px;
-    padding: 12px 16px;
+    padding-right: 8px;
+    padding-left: 16px;
     border-radius: 4px;
   }
   @include l-mobile-p {
@@ -122,10 +126,12 @@ transition(
       margin-right: 24px;
     }
   }
-  &__btns {
-    display: flex;
-  }
   &__btn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     &--description {
       margin-right: 12px;
     }
