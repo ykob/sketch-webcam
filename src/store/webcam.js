@@ -37,7 +37,7 @@ export default {
         return;
       }
       if (!navigator.mediaDevices) {
-        commit('alert/show', 'navigator.mediaDevices is disabled.', {
+        commit('modal/show', 'navigator.mediaDevices is disabled.', {
           root: true
         });
         throw new Error('navigator.mediaDevices is disabled.');
@@ -58,7 +58,7 @@ export default {
           srcObject = stream;
         })
         .catch(() => {
-          commit('alert/show', "It's not allowed to use WebCam.", {
+          commit('modal/show', "It's not allowed to use WebCam.", {
             root: true
           });
           throw new Error("It's not allowed to use WebCam.");

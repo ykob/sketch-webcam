@@ -1,5 +1,4 @@
 <script>
-import Alert from '@/components/common/Alert.vue';
 import BackHome from '@/components/common/BackHome.vue';
 import GradualCover from '@/components/common/GradualCover.vue';
 import Modal from '@/components/common/Modal.vue';
@@ -9,7 +8,6 @@ import SiteTitle from '@/components/common/SiteTitle.vue';
 export default {
   name: 'App',
   components: {
-    Alert,
     BackHome,
     GradualCover,
     Modal,
@@ -99,7 +97,6 @@ export default {
   BackHome
   GradualCover
   Processing
-  Alert
   Modal
 </template>
 

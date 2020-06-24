@@ -2,7 +2,6 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import { WebGLRenderer, Vector2, Scene, Clock } from 'three';
 
-import alert from './alert';
 import touch from './touch';
 import webcam from './webcam';
 import processing from './processing';
@@ -50,7 +49,6 @@ export default new Vuex.Store({
   },
   actions: {},
   modules: {
-    alert,
     touch,
     webcam,
     processing,
