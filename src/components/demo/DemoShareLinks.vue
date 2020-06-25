@@ -13,9 +13,6 @@ export default {
     }
   },
   computed: {
-    iconSize() {
-      return this.$store.state.isMobile === true ? 28 : 32;
-    },
     hrefTwitter() {
       return `https://twitter.com/intent/tweet?text=${this.$route.path}`;
     }
@@ -35,7 +32,7 @@ transition(
       target = '_blank'
       )
       IconTwitter.demo-share-links__icon-twitter(
-        :size = 'iconSize'
+        :size = '24'
         )
 </template>
 
@@ -53,21 +50,12 @@ transition(
   &__btn {
     width: 40px;
     height: 40px;
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: relative;
     border-radius: 50%;
     background-color: rgba(#000, 0.8);
-  }
-  &__icon-twitter {
-    position: absolute;
-    @include l-more-than-mobile {
-      top: 4px;
-      left: 5px;
-    }
-    @include l-mobile {
-      top: 6px;
-      left: 7px;
-    }
   }
 }
 </style>
