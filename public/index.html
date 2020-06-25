@@ -6,6 +6,17 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title><%= htmlWebpackPlugin.options.title %></title>
+    <meta name=”description” content="<%= VUE_APP_DESCRIPTION %>">
+    <meta property="og:title" content="<%= VUE_APP_WEBSITE_NAME %>">
+    <meta property="og:site_name" content="<%= VUE_APP_WEBSITE_NAME %>">
+    <meta property="og:type" content="website">
+    <meta property="og:description" content="<%= VUE_APP_DESCRIPTION %>">
+    <meta property="og:url" content="<%= VUE_APP_DOMAIN %>">
+    <meta property="og:image" content="<%= VUE_APP_DOMAIN %>/img/ogp_image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<%= VUE_APP_WEBSITE_NAME %>">
+    <meta name="twitter:description" content="<%= VUE_APP_DESCRIPTION %>">
+    <meta name="twitter:image" content="<%= VUE_APP_DOMAIN %>/img/ogp_image.png">
   </head>
   <body>
     <noscript>
