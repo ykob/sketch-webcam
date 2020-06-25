@@ -45,7 +45,6 @@ export default {
   align-items: flex-start;
   box-sizing: border-box;
   @include l-more-than-mobile {
-    margin-left: 50%;
     padding-right: 8%;
     padding-left: 4%;
   }

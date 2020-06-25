@@ -29,11 +29,11 @@ export default {
 </script>
 
 <template lang="pug">
-div
+.home
   HomeHeader(
     v-if = '!$store.state.isMobile'
-    )
-  ScrollWrap
+    )  
+  ScrollWrap.home__demo-list
     HomeHeader(
       v-if = '$store.state.isMobile'
       )
@@ -42,4 +42,15 @@ div
       )
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.home {
+  &__demo-list {
+    @include l-more-than-mobile {
+      width: 50%;
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+  }
+}
+</style>
