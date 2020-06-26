@@ -51,6 +51,7 @@ export default {
     state.scene.remove(this.video);
     commit('destroyUpdate');
     commit('destroyResize');
+    commit('processing/hide');
   },
   methods: {
     async update(time) {
