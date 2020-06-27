@@ -1,5 +1,6 @@
 <script>
 import Button from '@/components/common/Button';
+import DemoShareLinks from '@/components/demo/DemoShareLinks';
 import IconDescription from '@/components/icon/IconDescription';
 import IconShare from '@/components/icon/IconShare';
 import IconTune from '@/components/icon/IconTune';
@@ -8,6 +9,7 @@ export default {
   name: 'DemoConsole',
   components: {
     Button,
+    DemoShareLinks,
     IconDescription,
     IconShare,
     IconTune
@@ -24,46 +26,55 @@ export default {
     clickTune: {
       type: Function,
       default: null
-    },
-    clickShare: {
-      type: Function,
-      default: null
     }
   },
+  data: () => ({
+    isShownShareLinks: false
+  }),
   computed: {
     iconSize() {
       return this.$store.state.isMobile === true ? 20 : 24;
+    }
+  },
+  methods: {
+    toggleShareLinks() {
+      this.isShownShareLinks = !this.isShownShareLinks;
     }
   }
 };
 </script>
 
 <template lang="pug">
-transition(
-  appear
-  )
-  .demo-console
-    h1.demo-console__title
-      |Demo: {{ title }}
-    Button.demo-console__btn.demo-console__btn--description(
-      v-if = 'clickDescription'
+div
+  transition(
+    appear
+    )
+    .demo-console(
+      key = 'demo-console'
       )
-      IconDescription(
-        :size = 'iconSize'
+      h1.demo-console__title
+        |Demo: {{ title }}
+      Button.demo-console__btn.demo-console__btn--description(
+        v-if = 'clickDescription'
         )
-    Button.demo-console__btn.demo-console__btn--tune(
-      v-if = 'clickTune'
-      )
-      IconTune(
-        :size = 'iconSize'
+        IconDescription(
+          :size = 'iconSize'
+          )
+      Button.demo-console__btn.demo-console__btn--tune(
+        v-if = 'clickTune'
         )
-    Button.demo-console__btn.demo-console__btn--share(
-      v-if = 'clickShare'
-      @click = 'clickShare'
-      )
-      IconShare(
-        :size = 'iconSize'
+        IconTune(
+          :size = 'iconSize'
+          )
+      Button.demo-console__btn.demo-console__btn--share(
+        @click = 'toggleShareLinks'
         )
+        IconShare(
+          :size = 'iconSize'
+          )
+  DemoShareLinks(
+    :isShown = 'isShownShareLinks'
+    )
 </template>
 
 <style lang="scss" scoped>
