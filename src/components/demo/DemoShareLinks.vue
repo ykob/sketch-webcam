@@ -13,8 +13,11 @@ export default {
     }
   },
   computed: {
+    url() {
+      return `${process.env.VUE_APP_DOMAIN}${this.$route.path}`;
+    },
     hrefTwitter() {
-      return `https://twitter.com/intent/tweet?text=${this.$route.path}`;
+      return `https://twitter.com/intent/tweet?text=${this.url}`;
     }
   }
 };
