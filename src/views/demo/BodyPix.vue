@@ -13,6 +13,9 @@ import VideoBack from '@/webgl/demo/bodyPix/VideoBack';
 
 export default {
   name: 'BodyPix',
+  metaInfo: {
+    title: 'BodyPix / '
+  },
   components: {
     DemoConsole
   },

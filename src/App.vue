@@ -7,6 +7,10 @@ import SiteTitle from '@/components/common/SiteTitle.vue';
 
 export default {
   name: 'App',
+  metaInfo: {
+    title: '',
+    titleTemplate: `%s${process.env.VUE_APP_WEBSITE_NAME}`
+  },
   components: {
     BackHome,
     GradualCover,

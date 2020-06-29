@@ -10,6 +10,9 @@ import Face from '@/webgl/demo/facemesh/Face';
 
 export default {
   name: 'Facemesh',
+  metaInfo: {
+    title: 'Facemesh / '
+  },
   components: {
     DemoConsole
   },

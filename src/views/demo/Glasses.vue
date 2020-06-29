@@ -9,6 +9,9 @@ import Video from '@/webgl/demo/glasses/Video';
 
 export default {
   name: 'Glasses',
+  metaInfo: {
+    title: 'Glasses / '
+  },
   components: {
     DemoConsole
   },
