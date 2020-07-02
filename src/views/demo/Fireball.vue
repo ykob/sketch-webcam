@@ -3,6 +3,7 @@ import * as posenet from '@tensorflow-models/posenet';
 import store from '@/store';
 
 import DemoConsole from '@/components/demo/DemoConsole';
+import KeyPoints from '@/webgl/demo/fireball/KeyPoints';
 import Video from '@/webgl/demo/fireball/Video';
 
 export default {
@@ -16,7 +17,8 @@ export default {
   data: () => ({
     net: null,
     timeSegment: 0,
-    video: new Video()
+    video: new Video(),
+    keyPoints: new KeyPoints()
   }),
   created() {
     const { state, commit, dispatch } = store;
@@ -36,6 +38,7 @@ export default {
       this.net = response[1];
 
       state.scene.add(this.video);
+      state.scene.add(this.keyPoints);
 
       commit('setUpdate', this.update);
       commit('setResize', this.resize);
@@ -46,6 +49,7 @@ export default {
   destroyed() {
     const { state, commit } = store;
     state.scene.remove(this.video);
+    state.scene.remove(this.keyPoints);
 
     commit('destroyUpdate');
     commit('destroyResize');
