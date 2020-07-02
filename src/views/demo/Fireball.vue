@@ -1,13 +1,9 @@
 <script>
-import * as bodyPix from '@tensorflow-models/body-pix';
-import { Scene, WebGLRenderTarget } from 'three';
+import * as posenet from '@tensorflow-models/posenet';
 import store from '@/store';
 
 import DemoConsole from '@/components/demo/DemoConsole';
-import PostEffectBlur from '@/webgl/common/PostEffectBlur';
-import Body from '@/webgl/demo/bodyPix/Body';
-import Video from '@/webgl/demo/bodyPix/Video';
-import VideoBack from '@/webgl/demo/bodyPix/VideoBack';
+import Video from '@/webgl/demo/fireball/Video';
 
 export default {
   name: 'Fireball',
@@ -20,14 +16,7 @@ export default {
   data: () => ({
     net: null,
     timeSegment: 0,
-    scenePE: new Scene(),
-    body: new Body(),
-    video: new Video(),
-    videoBack: new VideoBack(),
-    postEffectBlurX: new PostEffectBlur(),
-    postEffectBlurY: new PostEffectBlur(),
-    renderTarget1: new WebGLRenderTarget(),
-    renderTarget2: new WebGLRenderTarget()
+    video: new Video()
   }),
   created() {
     const { state, commit, dispatch } = store;
@@ -35,7 +24,7 @@ export default {
     commit('processing/show');
     Promise.all([
       dispatch('webcam/init'),
-      bodyPix.load({
+      posenet.load({
         architecture: 'MobileNetV1',
         outputStride: 16,
         multiplier: 0.5,
@@ -45,15 +34,8 @@ export default {
       if (this._isDestroyed !== false) return;
 
       this.net = response[1];
-      this.video.start(this.renderTarget1.texture);
-      this.videoBack.start(this.renderTarget1.texture);
-      this.postEffectBlurX.start(this.renderTarget1.texture, 1, 0);
-      this.postEffectBlurX.setScale(0.5, 0.5);
-      this.postEffectBlurY.start(this.renderTarget2.texture, 0, 1);
-      this.postEffectBlurY.setScale(0.5, 0.5);
 
       state.scene.add(this.video);
-      state.scene.add(this.videoBack);
 
       commit('setUpdate', this.update);
       commit('setResize', this.resize);
@@ -64,7 +46,6 @@ export default {
   destroyed() {
     const { state, commit } = store;
     state.scene.remove(this.video);
-    state.scene.remove(this.videoBack);
 
     commit('destroyUpdate');
     commit('destroyResize');
@@ -76,42 +57,17 @@ export default {
 
       this.timeSegment += time;
       if (this.timeSegment >= 1 / 60) {
-        const segmentation = await this.net.segmentPerson(state.webcam.video, {
+        const pose = await this.net.estimateSinglePose(state.webcam.video, {
           flipHorizontal: true,
           internalResolution: 'low',
           segmentationThreshold: 0.8
         });
-        this.body.updateSegmentation(segmentation);
+        console.log(pose);
         this.timeSegment = 0;
       }
-
-      // // Render the post effect.
-      this.scenePE.add(this.body);
-      state.renderer.setRenderTarget(this.renderTarget1);
-      state.renderer.render(this.scenePE, state.camera);
-      this.scenePE.remove(this.body);
-
-      this.scenePE.add(this.postEffectBlurX);
-      state.renderer.setRenderTarget(this.renderTarget2);
-      state.renderer.render(this.scenePE, state.camera);
-      this.scenePE.remove(this.postEffectBlurX);
-
-      this.scenePE.add(this.postEffectBlurY);
-      state.renderer.setRenderTarget(this.renderTarget1);
-      state.renderer.render(this.scenePE, state.camera);
-      this.scenePE.remove(this.postEffectBlurY);
-
-      state.renderer.setRenderTarget(null);
     },
     resize() {
-      const { resolution } = store.state;
-      this.body.resize();
       this.video.resize();
-      this.videoBack.resize();
-      this.postEffectBlurY.resize();
-      this.postEffectBlurX.resize();
-      this.renderTarget1.setSize(resolution.x, resolution.y);
-      this.renderTarget2.setSize(resolution.x, resolution.y);
     }
   }
 };
