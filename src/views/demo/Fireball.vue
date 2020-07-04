@@ -29,7 +29,7 @@ export default {
       posenet.load({
         architecture: 'MobileNetV1',
         outputStride: 16,
-        multiplier: 0.5,
+        multiplier: 0.75,
         quantBytes: 4
       })
     ]).then(response => {
@@ -61,11 +61,7 @@ export default {
 
       this.timeSegment += time;
       if (this.timeSegment >= 1 / 60) {
-        const pose = await this.net.estimateSinglePose(state.webcam.video, {
-          flipHorizontal: true,
-          internalResolution: 'low',
-          segmentationThreshold: 0.8
-        });
+        const pose = await this.net.estimateSinglePose(state.webcam.video);
         this.keyPoints.update(pose.keypoints);
         this.timeSegment = 0;
       }

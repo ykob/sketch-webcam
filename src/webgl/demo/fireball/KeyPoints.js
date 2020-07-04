@@ -35,7 +35,7 @@ export default class KeyPoints extends Points {
       v.x = v.x - resolution.x * 0.5;
       v.y = v.y - resolution.y * 0.5;
 
-      const x = ((v.x / resolution.x) * this.size.x) / this.imgRatio.x;
+      const x = ((v.x / -resolution.x) * this.size.x) / this.imgRatio.x;
       const y = ((v.y / -resolution.y) * this.size.y) / this.imgRatio.y;
       this.geometry.attributes.position.setXYZ(index, x, y, 0);
     }
