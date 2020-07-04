@@ -66,12 +66,13 @@ export default {
           internalResolution: 'low',
           segmentationThreshold: 0.8
         });
-        console.log(pose);
+        this.keyPoints.update(pose.keypoints);
         this.timeSegment = 0;
       }
     },
     resize() {
       this.video.resize();
+      this.keyPoints.resize();
     }
   }
 };
