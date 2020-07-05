@@ -2,12 +2,15 @@ import {
   Vector2,
   Points,
   BufferGeometry,
-  PointsMaterial,
-  BufferAttribute
+  BufferAttribute,
+  RawShaderMaterial
 } from 'three';
 import MathEx from 'js-util/MathEx';
 
 import store from '@/store';
+
+import vs from './glsl/KeyPoints.vs';
+import fs from './glsl/KeyPoints.fs';
 
 export default class KeyPoints extends Points {
   constructor() {
@@ -16,9 +19,15 @@ export default class KeyPoints extends Points {
 
     geometry.setAttribute('position', baPositions);
 
-    const material = new PointsMaterial({
-      color: 0xff3300,
-      size: 2
+    const material = new RawShaderMaterial({
+      uniforms: {
+        pixelRatio: {
+          value: store.state.pixelRatio
+        }
+      },
+      vertexShader: vs,
+      fragmentShader: fs,
+      transparent: true
     });
 
     super(geometry, material);
@@ -58,5 +67,7 @@ export default class KeyPoints extends Points {
       Math.min(1, ((this.size.x / this.size.y) * resolution.y) / resolution.x),
       Math.min(1, ((this.size.y / this.size.x) * resolution.x) / resolution.y)
     );
+
+    this.material.uniforms.pixelRatio.value = store.state.pixelRatio;
   }
 }
