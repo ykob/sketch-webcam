@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import { WebGLRenderer, Vector2, Scene, Clock } from 'three';
+import UAParser from 'ua-parser-js';
 
 import touch from './touch';
 import webcam from './webcam';
@@ -12,6 +13,7 @@ import Camera from '@/webgl/common/Camera';
 Vue.use(Vuex);
 
 const canvas = document.createElement('canvas');
+const ua = UAParser();
 
 export default new Vuex.Store({
   state: {
@@ -28,7 +30,8 @@ export default new Vuex.Store({
     clock: new Clock(),
     update: null,
     resize: null,
-    isMobile: false
+    isMobile: false,
+    pixelRatio: ua.os.name === 'iOS' || ua.os.name === 'Android' ? 2 : 1
   },
   mutations: {
     setUpdate(state, update) {
