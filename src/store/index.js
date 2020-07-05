@@ -31,7 +31,7 @@ export default new Vuex.Store({
     update: null,
     resize: null,
     isMobile: false,
-    pixelRatio: ua.os.name === 'iOS' || ua.os.name === 'Android' ? 2 : 1
+    pixelRatio: 1
   },
   mutations: {
     setUpdate(state, update) {
@@ -48,6 +48,10 @@ export default new Vuex.Store({
     },
     changeMediaQuery(state, bool) {
       state.isMobile = bool;
+    },
+    setPixelRatio(state) {
+      state.pixelRatio =
+        ua.os.name === 'iOS' || ua.os.name === 'Android' ? 2 : 1;
     }
   },
   actions: {},

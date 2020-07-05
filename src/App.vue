@@ -59,9 +59,11 @@ export default {
       state.resolution.set(document.body.clientWidth, window.innerHeight);
       state.canvas.width = state.resolution.x;
       state.canvas.height = state.resolution.y;
+      commit('changeMediaQuery', state.resolution.x < 768);
+      commit('setPixelRatio');
       state.camera.resize();
       state.renderer.setSize(state.resolution.x, state.resolution.y);
-      commit('changeMediaQuery', state.resolution.x < 768);
+      state.renderer.setPixelRatio(state.pixelRatio);
       if (state.resize !== null) {
         state.resize();
       }
