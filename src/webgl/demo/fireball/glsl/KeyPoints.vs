@@ -1,9 +1,12 @@
 attribute vec3 position;
+attribute float opacity;
 
 uniform mat4 projectionMatrix;
 uniform mat4 viewMatrix;
 uniform mat4 modelMatrix;
 uniform float pixelRatio;
+
+varying float vOpacity;
 
 void main() {
   // Coordinate transformation
@@ -12,6 +15,8 @@ void main() {
 
   // Define the point size.
   float pointSize = 12.0 * pixelRatio;
+
+  vOpacity = opacity;
 
   gl_Position = projectionMatrix * mvPosition;
   gl_PointSize = pointSize;

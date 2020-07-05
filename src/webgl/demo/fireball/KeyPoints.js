@@ -16,8 +16,10 @@ export default class KeyPoints extends Points {
   constructor() {
     const geometry = new BufferGeometry();
     const baPositions = new BufferAttribute(new Float32Array(17 * 3), 3);
+    const baOpacities = new BufferAttribute(new Float32Array(17), 1);
 
     geometry.setAttribute('position', baPositions);
+    geometry.setAttribute('opacity', baOpacities);
 
     const material = new RawShaderMaterial({
       uniforms: {
@@ -47,8 +49,12 @@ export default class KeyPoints extends Points {
       const x = ((v.x / -resolution.x) * this.size.x) / this.imgRatio.x;
       const y = ((v.y / -resolution.y) * this.size.y) / this.imgRatio.y;
       this.geometry.attributes.position.setXYZ(index, x, y, 0);
+
+      const a = keyPoints[index].score > 0.5 ? 1 : 0;
+      this.geometry.attributes.opacity.setX(index, a);
     }
     this.geometry.attributes.position.needsUpdate = true;
+    this.geometry.attributes.opacity.needsUpdate = true;
   }
   resize() {
     const { camera } = store.state;
