@@ -63,11 +63,16 @@ export default class KeyPointsGroup extends Group {
       const y1 = this.points.geometry.attributes.position.getY(i1);
       const x2 = this.points.geometry.attributes.position.getX(i2);
       const y2 = this.points.geometry.attributes.position.getY(i2);
-
       this.line.geometry.attributes.position.setXYZ(index * 2, x1, y1, 0);
       this.line.geometry.attributes.position.setXYZ(index * 2 + 1, x2, y2, 0);
+
+      const a1 = keyPoints[i1].score > 0.5 ? 1 : 0;
+      const a2 = keyPoints[i2].score > 0.5 ? 1 : 0;
+      this.line.geometry.attributes.opacity.setX(index * 2, a1 * a2);
+      this.line.geometry.attributes.opacity.setX(index * 2 + 1, a1 * a2);
     }
     this.line.geometry.attributes.position.needsUpdate = true;
+    this.line.geometry.attributes.opacity.needsUpdate = true;
   }
   resize() {
     const { camera } = store.state;
