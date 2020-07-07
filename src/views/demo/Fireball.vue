@@ -29,7 +29,7 @@ export default {
       posenet.load({
         architecture: 'MobileNetV1',
         outputStride: 16,
-        multiplier: 0.75,
+        multiplier: 1,
         quantBytes: 4
       })
     ]).then(response => {

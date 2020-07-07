@@ -4,19 +4,39 @@ import MathEx from 'js-util/MathEx';
 import store from '@/store';
 
 import KeyPoints from './KeyPoints';
+import KeyPointsLine from './KeyPointsLine';
+
+const LINE_INDICES = [
+  [5, 6],
+  [5, 7],
+  [5, 11],
+  [6, 8],
+  [6, 12],
+  [7, 9],
+  [8, 10],
+  [11, 12],
+  [11, 13],
+  [12, 14],
+  [13, 15],
+  [14, 16]
+];
 
 export default class KeyPointsGroup extends Group {
   constructor() {
     super();
 
     this.points = new KeyPoints();
+    this.line = new KeyPointsLine();
     this.size = new Vector2();
     this.imgRatio = new Vector2();
 
     this.add(this.points);
+    this.add(this.line);
   }
   update(keyPoints) {
     const { resolution } = store.state.webcam;
+
+    // update the points geometry.
     for (let index = 0; index < 17; index++) {
       const v = new Vector2(
         keyPoints[index].position.x,
@@ -34,6 +54,20 @@ export default class KeyPointsGroup extends Group {
     }
     this.points.geometry.attributes.position.needsUpdate = true;
     this.points.geometry.attributes.opacity.needsUpdate = true;
+
+    // update the line geometry.
+    for (let index = 0; index < LINE_INDICES.length; index++) {
+      const i1 = LINE_INDICES[index][0];
+      const i2 = LINE_INDICES[index][1];
+      const x1 = this.points.geometry.attributes.position.getX(i1);
+      const y1 = this.points.geometry.attributes.position.getY(i1);
+      const x2 = this.points.geometry.attributes.position.getX(i2);
+      const y2 = this.points.geometry.attributes.position.getY(i2);
+
+      this.line.geometry.attributes.position.setXYZ(index * 2, x1, y1, 0);
+      this.line.geometry.attributes.position.setXYZ(index * 2 + 1, x2, y2, 0);
+    }
+    this.line.geometry.attributes.position.needsUpdate = true;
   }
   resize() {
     const { camera } = store.state;
@@ -54,5 +88,6 @@ export default class KeyPointsGroup extends Group {
     );
 
     this.points.material.uniforms.pixelRatio.value = store.state.pixelRatio;
+    this.line.material.uniforms.pixelRatio.value = store.state.pixelRatio;
   }
 }
