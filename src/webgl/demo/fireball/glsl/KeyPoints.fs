@@ -11,7 +11,7 @@ void main() {
   float opacity = (1.0 - smoothstep(0.8, 1.0, radius)) * vOpacity;
 
   // Define Colors
-  vec3 color = vec3(1.0);
+  vec3 color = vec3(1.0, 0.3, 0.2);
 
   gl_FragColor = vec4(color, opacity);
 }
