@@ -3,7 +3,7 @@ import * as posenet from '@tensorflow-models/posenet';
 import store from '@/store';
 
 import DemoConsole from '@/components/demo/DemoConsole';
-import KeyPoints from '@/webgl/demo/fireball/KeyPoints';
+import KeyPointsGroup from '@/webgl/demo/fireball/KeyPointsGroup';
 import Video from '@/webgl/demo/fireball/Video';
 
 export default {
@@ -18,7 +18,7 @@ export default {
     net: null,
     timeSegment: 0,
     video: new Video(),
-    keyPoints: new KeyPoints()
+    keyPoints: new KeyPointsGroup()
   }),
   created() {
     const { state, commit, dispatch } = store;
