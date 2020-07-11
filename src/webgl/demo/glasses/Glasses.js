@@ -33,9 +33,9 @@ export default class Glasses extends Mesh {
     const p2 = new Vector3();
     const p3 = new Vector3();
 
-    p1.fromArray(mesh[151]);
-    p2.fromArray(mesh[126]);
-    p3.fromArray(mesh[355]);
+    p1.fromArray(mesh[5]);
+    p2.fromArray(mesh[44]);
+    p3.fromArray(mesh[274]);
 
     const x = p3
       .clone()
@@ -57,10 +57,18 @@ export default class Glasses extends Mesh {
     const z3 = normal.z * (x3 / normal.x) - 2;
     this.position.set(x3, y3, z3);
 
-    const p4 = new Vector3().fromArray(scaledMesh[127]);
-    const p5 = new Vector3().fromArray(scaledMesh[356]);
+    const p4 = new Vector3().fromArray(scaledMesh[10]);
+    const x4 = ((p4.x / -resolution.x) * this.size.x) / this.imgRatio.x;
+    const y4 = ((p4.y / -resolution.y) * this.size.y) / this.imgRatio.y;
+    const z4 = normal.z * (x4 / normal.x);
+    const p4a = new Vector3(x4, y4, z4);
+    const p5 = new Vector3().fromArray(scaledMesh[152]);
+    const x5 = ((p5.x / -resolution.x) * this.size.x) / this.imgRatio.x;
+    const y5 = ((p5.y / -resolution.y) * this.size.y) / this.imgRatio.y;
+    const z5 = normal.z * (x5 / normal.x);
+    const p5a = new Vector3(x5, y5, z5);
 
-    const scale = p4.distanceTo(p5) / 1200;
+    const scale = p4a.distanceTo(p5a) / 40;
     this.scale.set(scale, scale, scale);
   }
   resize() {
