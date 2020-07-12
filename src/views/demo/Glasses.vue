@@ -63,7 +63,12 @@ export default {
       this.timeSegment += time;
       if (this.timeSegment >= 1 / 60) {
         const predictions = await this.model.estimateFaces(state.webcam.video);
-        this.glasses.update(predictions[0]);
+        if (predictions.length > 0) {
+          this.glasses.update(predictions[0]);
+          this.glasses.visible = true;
+        } else {
+          this.glasses.visible = false;
+        }
         this.timeSegment = 0;
       }
     },
