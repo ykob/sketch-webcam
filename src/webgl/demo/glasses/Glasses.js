@@ -62,6 +62,7 @@ export default class Glasses extends Mesh {
     const y4 = ((p4.y / -resolution.y) * this.size.y) / this.imgRatio.y;
     const z4 = normal.z * (x4 / normal.x);
     const p4a = new Vector3(x4, y4, z4);
+
     const p5 = new Vector3().fromArray(scaledMesh[152]);
     const x5 = ((p5.x / -resolution.x) * this.size.x) / this.imgRatio.x;
     const y5 = ((p5.y / -resolution.y) * this.size.y) / this.imgRatio.y;
