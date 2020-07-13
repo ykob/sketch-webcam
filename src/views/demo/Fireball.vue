@@ -4,6 +4,7 @@ import store from '@/store';
 
 import DemoConsole from '@/components/demo/DemoConsole';
 import KeyPointsGroup from '@/webgl/demo/fireball/KeyPointsGroup';
+import FireBall from '@/webgl/demo/fireball/FireBall';
 import Video from '@/webgl/demo/fireball/Video';
 
 export default {
@@ -17,6 +18,7 @@ export default {
   data: () => ({
     net: null,
     timeSegment: 0,
+    fireBall: new FireBall(),
     video: new Video(),
     keyPoints: new KeyPointsGroup()
   }),
@@ -37,8 +39,9 @@ export default {
 
       this.net = response[1];
 
-      state.scene.add(this.video);
+      state.scene.add(this.fireBall);
       state.scene.add(this.keyPoints);
+      state.scene.add(this.video);
 
       commit('setUpdate', this.update);
       commit('setResize', this.resize);
@@ -48,8 +51,9 @@ export default {
   },
   destroyed() {
     const { state, commit } = store;
-    state.scene.remove(this.video);
+    state.scene.remove(this.fireBall);
     state.scene.remove(this.keyPoints);
+    state.scene.remove(this.video);
 
     commit('destroyUpdate');
     commit('destroyResize');
@@ -63,6 +67,7 @@ export default {
       if (this.timeSegment >= 1 / 60) {
         const pose = await this.net.estimateSinglePose(state.webcam.video);
         this.keyPoints.update(pose.keypoints);
+        this.fireBall.update(this.keyPoints.points.geometry.attributes);
         this.timeSegment = 0;
       }
     },
