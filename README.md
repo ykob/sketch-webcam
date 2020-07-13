@@ -2,6 +2,7 @@
 
 ## Using Models
 
+- [tfjs-models/posenet](https://github.com/tensorflow/tfjs-models/tree/master/posenet)
 - [tfjs-models/facemesh](https://github.com/tensorflow/tfjs-models/tree/master/facemesh)
 - [tfjs-models/body-pix](https://github.com/tensorflow/tfjs-models/tree/master/body-pix)
 
