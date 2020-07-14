@@ -18,6 +18,9 @@ export default class FireBall extends Group {
     this.p6 = new Vector3();
     this.core = new FireBallCore();
 
+    this.power = 0;
+    this.a = new Vector3();
+
     this.add(this.core);
   }
   update({ position, opacity }) {
@@ -44,8 +47,10 @@ export default class FireBall extends Group {
       const a = l
         .clone()
         .sub(this.position)
-        .divideScalar(20);
-      this.position.add(a);
+        .multiplyScalar(0.03);
+      this.a.add(a);
     }
+    this.a.add(this.a.clone().multiplyScalar(-0.08));
+    this.position.add(this.a);
   }
 }
