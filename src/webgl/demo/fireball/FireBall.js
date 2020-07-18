@@ -24,6 +24,7 @@ export default class FireBall extends Group {
 
     this.power = 0;
     this.a = new Vector3();
+    this.sa = 0;
 
     this.add(this.core);
   }
@@ -65,8 +66,9 @@ export default class FireBall extends Group {
     this.position.add(this.a);
 
     // calculate scale
-    const scale =
+    const d =
       (this.p5.distanceTo(this.p11) + this.p6.distanceTo(this.p12)) * 0.1;
-    this.scale.set(scale, scale, scale);
+    this.sa += (d - this.sa) * 0.1;
+    this.scale.set(this.sa, this.sa, this.sa);
   }
 }
