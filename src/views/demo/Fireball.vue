@@ -67,7 +67,7 @@ export default {
       if (this.timeSegment >= 1 / 60) {
         const pose = await this.net.estimateSinglePose(state.webcam.video);
         this.keyPoints.update(pose.keypoints);
-        this.fireBall.update(this.keyPoints.points.geometry.attributes);
+        this.fireBall.update(time, this.keyPoints.points.geometry.attributes);
         this.timeSegment = 0;
       }
     },

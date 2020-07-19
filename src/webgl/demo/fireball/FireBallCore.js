@@ -17,5 +17,9 @@ export default class FireBallCore extends Mesh {
 
     super(geometry, material);
   }
-  update() {}
+  update(_time, power) {
+    console.log(power);
+    const scale = power * 0.02;
+    this.scale.set(scale, scale, scale);
+  }
 }

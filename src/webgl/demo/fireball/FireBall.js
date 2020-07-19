@@ -28,7 +28,7 @@ export default class FireBall extends Group {
 
     this.add(this.core);
   }
-  update({ position, opacity }) {
+  update(time, { position, opacity }) {
     this.a1 = opacity.getX(9);
     this.a2 = opacity.getX(10);
     this.p5.set(position.getX(5), position.getY(5), 0);
@@ -53,6 +53,11 @@ export default class FireBall extends Group {
         .divideScalar(3)
     );
 
+    // basis distance.
+    const d1 =
+      ((this.p5.distanceTo(this.p11) + this.p6.distanceTo(this.p12)) / 2) * 0.1;
+    const d2 = this.p9a.distanceTo(this.p10a) * 0.1;
+
     // calculate position and acceleration.
     if (this.a1 * this.a2 > 0) {
       const l = this.p9a.clone().lerp(this.p10a, 0.5);
@@ -65,10 +70,18 @@ export default class FireBall extends Group {
     this.a.add(this.a.clone().multiplyScalar(-0.08));
     this.position.add(this.a);
 
-    // calculate scale
-    const d =
-      (this.p5.distanceTo(this.p11) + this.p6.distanceTo(this.p12)) * 0.1;
-    this.sa += (d - this.sa) * 0.1;
+    // calculate scale.
+    this.sa += (d1 - this.sa) * 0.1;
     this.scale.set(this.sa, this.sa, this.sa);
+
+    // calculate power.
+    if (d2 / d1 < 1) {
+      this.power = Math.min(100, this.power + 1);
+    } else {
+      this.power = Math.max(0, this.power - 5);
+    }
+
+    // update the children.
+    this.core.update(time, this.power);
   }
 }
