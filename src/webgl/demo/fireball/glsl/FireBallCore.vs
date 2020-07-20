@@ -4,9 +4,13 @@ uniform mat4 projectionMatrix;
 uniform mat4 viewMatrix;
 uniform mat4 modelMatrix;
 
+varying vec3 vPosition;
+
 void main() {
   // Coordinate transformation
-  vec4 mvPosition = viewMatrix * modelMatrix * vec4(position, 1.0);
+  vec4 mPosition = modelMatrix * vec4(position, 1.0);
 
-  gl_Position = projectionMatrix * mvPosition;
+  vPosition = mPosition.xyz;
+
+  gl_Position = projectionMatrix * viewMatrix * mPosition;
 }

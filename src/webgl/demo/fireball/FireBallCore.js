@@ -12,14 +12,19 @@ export default class FireBallCore extends Mesh {
     const material = new RawShaderMaterial({
       vertexShader: vs,
       fragmentShader: fs,
+      flatShading: true,
       transparent: true
     });
 
     super(geometry, material);
+
+    this.rotateTime = 0;
   }
-  update(_time, power) {
-    console.log(power);
+  update(time, power) {
     const scale = power * 0.02;
     this.scale.set(scale, scale, scale);
+
+    this.rotateTime += time;
+    this.rotation.set(this.rotateTime, this.rotateTime, this.rotateTime);
   }
 }
