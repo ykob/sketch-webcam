@@ -59,12 +59,17 @@ export default class FireBall extends Group {
     const d2 = this.p9a.distanceTo(this.p10a) * 0.1;
 
     // calculate position and acceleration.
-    if (this.a1 * this.a2 > 0) {
+    if (this.a1 * this.a2 > 0 && d2 / d1 < 1) {
       const l = this.p9a.clone().lerp(this.p10a, 0.5);
       const a = l
         .clone()
         .sub(this.position)
         .multiplyScalar(0.03);
+
+      if (this.power === 0) {
+        this.a.set(0, 0, 0);
+        this.position.copy(l);
+      }
       this.a.add(a);
     }
     this.a.add(this.a.clone().multiplyScalar(-0.08));
