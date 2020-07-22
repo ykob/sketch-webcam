@@ -2,7 +2,6 @@
 import BackHome from '@/components/common/BackHome.vue';
 import GradualCover from '@/components/common/GradualCover.vue';
 import Modal from '@/components/common/Modal.vue';
-import Processing from '@/components/common/Processing.vue';
 import SiteTitle from '@/components/common/SiteTitle.vue';
 
 export default {
@@ -15,7 +14,6 @@ export default {
     BackHome,
     GradualCover,
     Modal,
-    Processing,
     SiteTitle
   },
   async created() {
@@ -102,7 +100,6 @@ export default {
   router-view
   BackHome
   GradualCover
-  Processing
   Modal
 </template>
 

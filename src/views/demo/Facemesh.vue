@@ -4,6 +4,7 @@ import * as facemesh from '@tensorflow-models/facemesh';
 import store from '@/store';
 
 import DemoConsole from '@/components/demo/DemoConsole';
+import DemoOutline from '@/components/demo/DemoOutline';
 import PromiseTextureLoader from '@/webgl/common/PromiseTextureLoader';
 import Video from '@/webgl/demo/facemesh/Video';
 import Face from '@/webgl/demo/facemesh/Face';
@@ -14,9 +15,11 @@ export default {
     title: 'Facemesh / '
   },
   components: {
-    DemoConsole
+    DemoConsole,
+    DemoOutline
   },
   data: () => ({
+    isLoaded: false,
     video: new Video(),
     faces: Array.apply(null, Array(10)).map(() => {
       return new Face();
@@ -53,6 +56,8 @@ export default {
       commit('setResize', this.resize);
       this.resize();
       commit('processing/hide');
+
+      this.isLoaded = true;
     });
   },
   destroyed() {
@@ -96,9 +101,15 @@ export default {
 </script>
 
 <template lang="pug">
-DemoConsole(
-  title = 'Facemesh'
-  )
+div
+  DemoOutline(
+    v-if = 'isLoaded === false'
+    :title = '$route.name'
+    :description = '$route.meta.description'
+    )
+  DemoConsole(
+    :title = '$route.name'
+    )
 </template>
 
 <style lang="scss" scoped></style>

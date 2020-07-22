@@ -3,6 +3,7 @@ import * as facemesh from '@tensorflow-models/facemesh';
 import store from '@/store';
 
 import DemoConsole from '@/components/demo/DemoConsole';
+import DemoOutline from '@/components/demo/DemoOutline';
 import PromiseOBJLoader from '@/webgl/common/PromiseOBJLoader';
 import Glasses from '@/webgl/demo/glasses/Glasses';
 import Video from '@/webgl/demo/glasses/Video';
@@ -13,9 +14,11 @@ export default {
     title: 'Glasses / '
   },
   components: {
-    DemoConsole
+    DemoConsole,
+    DemoOutline
   },
   data: () => ({
+    isLoaded: false,
     video: new Video(),
     glasses: null,
     model: null,
@@ -45,6 +48,8 @@ export default {
       commit('setResize', this.resize);
       this.resize();
       commit('processing/hide');
+
+      this.isLoaded = true;
     });
   },
   destroyed() {
@@ -81,9 +86,15 @@ export default {
 </script>
 
 <template lang="pug">
-DemoConsole(
-  title = 'Glasses'
-  )
+div
+  DemoOutline(
+    v-if = 'isLoaded === false'
+    :title = '$route.name'
+    :description = '$route.meta.description'
+    )
+  DemoConsole(
+    :title = '$route.name'
+    )
 </template>
 
 <style lang="scss" scoped></style>

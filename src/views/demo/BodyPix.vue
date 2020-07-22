@@ -4,6 +4,7 @@ import { Scene, WebGLRenderTarget } from 'three';
 import store from '@/store';
 
 import DemoConsole from '@/components/demo/DemoConsole';
+import DemoOutline from '@/components/demo/DemoOutline';
 import PostEffectBlur from '@/webgl/common/PostEffectBlur';
 import PromiseOBJLoader from '@/webgl/common/PromiseOBJLoader';
 import Blob from '@/webgl/demo/bodyPix/Blob';
@@ -17,9 +18,11 @@ export default {
     title: 'BodyPix / '
   },
   components: {
-    DemoConsole
+    DemoConsole,
+    DemoOutline
   },
   data: () => ({
+    isLoaded: false,
     net: null,
     timeSegment: 0,
     scenePE: new Scene(),
@@ -70,6 +73,8 @@ export default {
       commit('setResize', this.resize);
       this.resize();
       commit('processing/hide');
+
+      this.isLoaded = true;
     });
   },
   destroyed() {
@@ -136,9 +141,15 @@ export default {
 </script>
 
 <template lang="pug">
-DemoConsole(
-  title = 'BodyPix'
-  )
+div
+  DemoOutline(
+    v-if = 'isLoaded === false'
+    :title = '$route.name'
+    :description = '$route.meta.description'
+    )
+  DemoConsole(
+    :title = '$route.name'
+    )
 </template>
 
 <style lang="scss" scoped></style>

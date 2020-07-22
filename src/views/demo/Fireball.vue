@@ -3,6 +3,7 @@ import * as posenet from '@tensorflow-models/posenet';
 import store from '@/store';
 
 import DemoConsole from '@/components/demo/DemoConsole';
+import DemoOutline from '@/components/demo/DemoOutline';
 import KeyPointsGroup from '@/webgl/demo/fireball/KeyPointsGroup';
 import FireBall from '@/webgl/demo/fireball/FireBall';
 import Video from '@/webgl/demo/fireball/Video';
@@ -13,9 +14,11 @@ export default {
     title: 'Fireball / '
   },
   components: {
+    DemoOutline,
     DemoConsole
   },
   data: () => ({
+    isLoaded: false,
     net: null,
     timeSegment: 0,
     fireBall: new FireBall(),
@@ -47,6 +50,8 @@ export default {
       commit('setResize', this.resize);
       this.resize();
       commit('processing/hide');
+
+      this.isLoaded = true;
     });
   },
   destroyed() {
@@ -80,9 +85,15 @@ export default {
 </script>
 
 <template lang="pug">
-DemoConsole(
-  title = 'Fireball'
-  )
+div
+  DemoOutline(
+    v-if = 'isLoaded === false'
+    :title = '$route.name'
+    :description = '$route.meta.description'
+    )
+  DemoConsole(
+    :title = '$route.name'
+    )
 </template>
 
 <style lang="scss" scoped></style>

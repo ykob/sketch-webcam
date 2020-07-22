@@ -25,19 +25,31 @@ const routes = [
         component: () =>
           import(
             /* webpackChunkName: "fireball" */ '../views/demo/Fireball.vue'
-          )
+          ),
+        meta: {
+          description:
+            'You can use a spell "Fireball" by bringing your palms close together.'
+        }
       },
       {
         path: 'glasses',
         name: 'Glasses',
         component: () =>
-          import(/* webpackChunkName: "glasses" */ '../views/demo/Glasses.vue')
+          import(/* webpackChunkName: "glasses" */ '../views/demo/Glasses.vue'),
+        meta: {
+          description:
+            'You can use a spell "Fireball" by bringing your palms close together.'
+        }
       },
       {
         path: 'body-pix',
         name: 'BodyPix',
         component: () =>
-          import(/* webpackChunkName: "bodypix" */ '../views/demo/BodyPix.vue')
+          import(/* webpackChunkName: "bodypix" */ '../views/demo/BodyPix.vue'),
+        meta: {
+          description:
+            'You can use a spell "Fireball" by bringing your palms close together.'
+        }
       },
       {
         path: 'facemesh',
@@ -45,7 +57,11 @@ const routes = [
         component: () =>
           import(
             /* webpackChunkName: "facemesh" */ '../views/demo/Facemesh.vue'
-          )
+          ),
+        meta: {
+          description:
+            'You can use a spell "Fireball" by bringing your palms close together.'
+        }
       }
     ]
   }
