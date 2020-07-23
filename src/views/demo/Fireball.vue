@@ -39,12 +39,10 @@ export default {
         quantBytes: 4
       })
     ]).then(async response => {
-      if (this._isDestroyed !== false) return;
-
       const time = Math.max(100, 2000 - Date.now() + timeStart);
       await sleep(time);
-      this.isLoaded = true;
-      await sleep(500);
+
+      if (this._isDestroyed !== false) return;
 
       this.net = response[1];
 
@@ -55,6 +53,8 @@ export default {
       commit('setUpdate', this.update);
       commit('setResize', this.resize);
       this.resize();
+
+      this.isLoaded = true;
     });
   },
   destroyed() {

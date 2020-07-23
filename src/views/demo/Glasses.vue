@@ -37,12 +37,10 @@ export default {
       }),
       PromiseOBJLoader(`${process.env.BASE_URL}obj/Glasses_01.obj`)
     ]).then(async response => {
-      if (this._isDestroyed !== false) return;
-
       const time = Math.max(100, 2000 - Date.now() + timeStart);
       await sleep(time);
-      this.isLoaded = true;
-      await sleep(500);
+
+      if (this._isDestroyed !== false) return;
 
       this.glasses = new Glasses(response[2].children[0].geometry);
       this.model = response[1];

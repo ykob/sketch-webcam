@@ -52,12 +52,10 @@ export default {
       }),
       PromiseOBJLoader(`${process.env.BASE_URL}obj/star.obj`)
     ]).then(async response => {
-      if (this._isDestroyed !== false) return;
-
       const time = Math.max(100, 2000 - Date.now() + timeStart);
       await sleep(time);
-      this.isLoaded = true;
-      await sleep(500);
+
+      if (this._isDestroyed !== false) return;
 
       this.net = response[1];
       this.video.start(this.renderTarget1.texture);
@@ -78,6 +76,8 @@ export default {
       commit('setUpdate', this.update);
       commit('setResize', this.resize);
       this.resize();
+
+      this.isLoaded = true;
     });
   },
   destroyed() {
