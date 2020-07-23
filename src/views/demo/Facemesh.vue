@@ -1,6 +1,7 @@
 <script>
 import { RepeatWrapping } from 'three';
 import * as facemesh from '@tensorflow-models/facemesh';
+import sleep from 'js-util/sleep';
 import store from '@/store';
 
 import DemoConsole from '@/components/demo/DemoConsole';
@@ -31,8 +32,8 @@ export default {
   }),
   created() {
     const { state, commit, dispatch } = store;
+    const timeStart = Date.now();
 
-    commit('processing/show');
     Promise.all([
       dispatch('webcam/init'),
       facemesh.load({
@@ -40,7 +41,12 @@ export default {
         iouThreshold: 0.1
       }),
       PromiseTextureLoader(require('@/assets/img/tex_facemesh.jpg'))
-    ]).then(response => {
+    ]).then(async response => {
+      const time = Math.max(100, 2000 - Date.now() + timeStart);
+      await sleep(time);
+      this.isLoaded = true;
+      await sleep(500);
+
       this.model = response[1];
 
       response[2].wrapS = RepeatWrapping;
@@ -55,9 +61,6 @@ export default {
       commit('setUpdate', this.update);
       commit('setResize', this.resize);
       this.resize();
-      commit('processing/hide');
-
-      this.isLoaded = true;
     });
   },
   destroyed() {

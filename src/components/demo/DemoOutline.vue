@@ -68,5 +68,58 @@ transition(
       margin-bottom: 24px;
     }
   }
+  &.v-enter {
+    opacity: 0.9999;
+  }
+  &.v-enter & {
+    &__title {
+      opacity: 0;
+      transform: translate3d(0, 10px, 0);
+    }
+    &__description {
+      opacity: 0;
+      transform: translate3d(0, 10px, 0);
+    }
+  }
+  &.v-enter-to {
+    opacity: 1;
+    transition-duration: 2s;
+    transition-property: opacity;
+  }
+  &.v-enter-to & {
+    &__title {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+      transition-duration: 1s;
+      transition-property: opacity, transform;
+    }
+    &__description {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+      transition-duration: 1s;
+      transition-delay: 0.1s;
+      transition-property: opacity, transform;
+    }
+  }
+  &.v-leave-to {
+    opacity: 0.9999;
+    transition-duration: 2s;
+    transition-property: opacity;
+  }
+  &.v-leave-to & {
+    &__title {
+      opacity: 0;
+      transform: translate3d(0, -10px, 0);
+      transition-duration: 1s;
+      transition-property: opacity, transform;
+    }
+    &__description {
+      opacity: 0;
+      transform: translate3d(0, -10px, 0);
+      transition-duration: 1s;
+      transition-delay: 0.1s;
+      transition-property: opacity, transform;
+    }
+  }
 }
 </style>

@@ -1,5 +1,6 @@
 <script>
 import * as facemesh from '@tensorflow-models/facemesh';
+import sleep from 'js-util/sleep';
 import store from '@/store';
 
 import DemoConsole from '@/components/demo/DemoConsole';
@@ -26,8 +27,8 @@ export default {
   }),
   created() {
     const { state, commit, dispatch } = store;
+    const timeStart = Date.now();
 
-    commit('processing/show');
     Promise.all([
       dispatch('webcam/init'),
       facemesh.load({
@@ -35,8 +36,13 @@ export default {
         iouThreshold: 0.1
       }),
       PromiseOBJLoader(`${process.env.BASE_URL}obj/Glasses_01.obj`)
-    ]).then(response => {
+    ]).then(async response => {
       if (this._isDestroyed !== false) return;
+
+      const time = Math.max(100, 2000 - Date.now() + timeStart);
+      await sleep(time);
+      this.isLoaded = true;
+      await sleep(500);
 
       this.glasses = new Glasses(response[2].children[0].geometry);
       this.model = response[1];
@@ -47,7 +53,6 @@ export default {
       commit('setUpdate', this.update);
       commit('setResize', this.resize);
       this.resize();
-      commit('processing/hide');
 
       this.isLoaded = true;
     });

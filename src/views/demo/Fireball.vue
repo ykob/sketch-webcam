@@ -1,5 +1,6 @@
 <script>
 import * as posenet from '@tensorflow-models/posenet';
+import sleep from 'js-util/sleep';
 import store from '@/store';
 
 import DemoConsole from '@/components/demo/DemoConsole';
@@ -27,8 +28,8 @@ export default {
   }),
   created() {
     const { state, commit, dispatch } = store;
+    const timeStart = Date.now();
 
-    commit('processing/show');
     Promise.all([
       dispatch('webcam/init'),
       posenet.load({
@@ -37,8 +38,13 @@ export default {
         multiplier: 1,
         quantBytes: 4
       })
-    ]).then(response => {
+    ]).then(async response => {
       if (this._isDestroyed !== false) return;
+
+      const time = Math.max(100, 2000 - Date.now() + timeStart);
+      await sleep(time);
+      this.isLoaded = true;
+      await sleep(500);
 
       this.net = response[1];
 
@@ -49,9 +55,6 @@ export default {
       commit('setUpdate', this.update);
       commit('setResize', this.resize);
       this.resize();
-      commit('processing/hide');
-
-      this.isLoaded = true;
     });
   },
   destroyed() {
