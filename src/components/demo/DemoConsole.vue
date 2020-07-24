@@ -129,7 +129,6 @@ div
     margin-top: 0;
     margin-bottom: 0;
     @include fontSizeAll(16, 16, 13);
-    text-transform: uppercase;
     @include l-more-than-mobile {
       margin-right: 40px;
     }
