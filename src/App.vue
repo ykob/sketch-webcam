@@ -110,6 +110,8 @@ export default {
 @import '@/assets/scss/foundation/global.scss';
 @import '@/assets/scss/foundation/keyframes.scss';
 
+@import '@/assets/scss/util/index.scss';
+
 #app {
   width: 100%;
   height: 100%;

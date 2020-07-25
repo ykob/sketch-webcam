@@ -1,0 +1,15 @@
+.page {
+  &.page-enter {
+    opacity: 0.9999;
+  }
+  &.page-enter-to {
+    opacity: 1;
+    transition-duration: 2s;
+    transition-property: opacity;
+  }
+  &.page-leave-to {
+    opacity: 0.9999;
+    transition-duration: 2s;
+    transition-property: opacity;
+  }
+}

@@ -29,28 +29,30 @@ export default {
 </script>
 
 <template lang="pug">
-.home
-  HomeHeader(
-    v-if = '!$store.state.isMobile'
-    )  
-  ScrollWrap.home__demo-list
+transition(
+  name = 'page'
+  appear
+  )
+  .page
     HomeHeader(
-      v-if = '$store.state.isMobile'
-      )
-    DemoList(
-      :demos = 'demos'
-      )
+      v-if = '!$store.state.isMobile'
+      )  
+    ScrollWrap.home-demolist
+      HomeHeader(
+        v-if = '$store.state.isMobile'
+        )
+      DemoList(
+        :demos = 'demos'
+        )
 </template>
 
 <style lang="scss" scoped>
-.home {
-  &__demo-list {
-    @include l-more-than-mobile {
-      width: 50%;
-      position: absolute;
-      top: 0;
-      right: 0;
-    }
+.home-demolist {
+  @include l-more-than-mobile {
+    width: 50%;
+    position: absolute;
+    top: 0;
+    right: 0;
   }
 }
 </style>

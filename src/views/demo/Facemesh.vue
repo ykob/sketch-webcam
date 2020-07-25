@@ -106,15 +106,19 @@ export default {
 </script>
 
 <template lang="pug">
-div
-  DemoOutline(
-    v-if = 'isLoaded === false'
-    :title = '$route.name'
-    :description = '$route.meta.description'
-    )
-  DemoConsole(
-    :title = '$route.name'
-    )
+transition(
+  name = 'page'
+  appear
+  )
+  .page
+    DemoOutline(
+      v-if = 'isLoaded === false'
+      :title = '$route.name'
+      :description = '$route.meta.description'
+      )
+    DemoConsole(
+      :title = '$route.name'
+      )
 </template>
 
 <style lang="scss" scoped></style>
