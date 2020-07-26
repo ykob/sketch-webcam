@@ -72,6 +72,13 @@ transition(
   &.v-enter-to {
     opacity: 1;
     transition-duration: 1s;
+    transition-property: opacity;
+  }
+  .page-leave-to &,
+  &.v-leave-to {
+    opacity: 0;
+    transition-duration: 1s;
+    transition-property: opacity;
   }
   &__title {
     line-height: 1;

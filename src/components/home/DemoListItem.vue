@@ -83,7 +83,7 @@ transition(
 
   &.v-enter {
     opacity: 0;
-    transform: translate3d(0, 10px, 0);
+    transform: translate3d(0, 16px, 0);
   }
   &.v-enter-to {
     opacity: 1;
@@ -91,9 +91,10 @@ transition(
     transition-duration: 1s;
     transition-property: opacity, transform;
   }
+  .page-leave-to &,
   &.v-leave-to {
     opacity: 0;
-    transform: translate3d(0, -10px, 0);
+    transform: translate3d(0, -16px, 0);
     transition-duration: 1s;
     transition-property: opacity, transform;
   }

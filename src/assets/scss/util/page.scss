@@ -8,6 +8,7 @@
     transition-property: opacity;
   }
   &.page-leave-to {
+    pointer-events: none;
     opacity: 0.9999;
     transition-duration: 2s;
     transition-property: opacity;

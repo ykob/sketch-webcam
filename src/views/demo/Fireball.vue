@@ -99,6 +99,7 @@ transition(
       :description = '$route.meta.description'
       )
     DemoConsole(
+      v-if = 'isLoaded === true'
       :title = '$route.name'
       )
 </template>

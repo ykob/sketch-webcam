@@ -16,6 +16,7 @@ export default {
 
 <template lang="pug">
 transition(
+  name = 'outline'
   appear
   )
   .demo-outline
@@ -92,10 +93,10 @@ transition(
       animation-iteration-count: infinite;
     }
   }
-  &.v-enter {
+  &.outline-enter {
     opacity: 0.9999;
   }
-  &.v-enter & {
+  .outline-enter & {
     &__title {
       opacity: 0;
       transform: translate3d(0, 16px, 0);
@@ -109,12 +110,12 @@ transition(
       transform: scale(0.5);
     }
   }
-  &.v-enter-to {
+  &.outline-enter-to {
     opacity: 1;
     transition-duration: 2s;
     transition-property: opacity;
   }
-  &.v-enter-to & {
+  .outline-enter-to & {
     &__title {
       opacity: 1;
       transform: translate3d(0, 0, 0);
@@ -139,12 +140,13 @@ transition(
       transition-property: opacity, transform;
     }
   }
-  &.v-leave-to {
+  &.outline-leave-to {
     opacity: 0.9999;
     transition-duration: 2s;
     transition-property: opacity;
   }
-  &.v-leave-to & {
+  .page-leave-to &,
+  .outline-leave-to & {
     &__title {
       opacity: 0;
       transform: translate3d(0, -16px, 0);

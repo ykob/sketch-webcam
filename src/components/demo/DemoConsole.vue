@@ -117,6 +117,7 @@ div
     transform: translate3d(0, 0, 0);
     transition-property: opacity, transform;
   }
+  .page-leave-to &,
   &.v-leave-to {
     opacity: 0;
     transition-duration: 0.4s;
