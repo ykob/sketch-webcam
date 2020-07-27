@@ -9,6 +9,12 @@ import KeyPointsGroup from '@/webgl/demo/fireball/KeyPointsGroup';
 import FireBall from '@/webgl/demo/fireball/FireBall';
 import Video from '@/webgl/demo/fireball/Video';
 
+const fireBall = new FireBall();
+const video = new Video();
+const keyPoints = new KeyPointsGroup();
+let net = null;
+let timeSegment = 0;
+
 export default {
   name: 'Fireball',
   metaInfo: {
@@ -19,12 +25,7 @@ export default {
     DemoConsole
   },
   data: () => ({
-    isLoaded: false,
-    net: null,
-    timeSegment: 0,
-    fireBall: new FireBall(),
-    video: new Video(),
-    keyPoints: new KeyPointsGroup()
+    isLoaded: false
   }),
   created() {
     const { state, commit, dispatch } = store;
@@ -44,11 +45,11 @@ export default {
 
       if (this._isDestroyed !== false) return;
 
-      this.net = response[1];
+      net = response[1];
 
-      state.scene.add(this.fireBall);
-      state.scene.add(this.keyPoints);
-      state.scene.add(this.video);
+      state.scene.add(fireBall);
+      state.scene.add(keyPoints);
+      state.scene.add(video);
 
       commit('setUpdate', this.update);
       commit('setResize', this.resize);
@@ -59,9 +60,9 @@ export default {
   },
   destroyed() {
     const { state, commit } = store;
-    state.scene.remove(this.fireBall);
-    state.scene.remove(this.keyPoints);
-    state.scene.remove(this.video);
+    state.scene.remove(fireBall);
+    state.scene.remove(keyPoints);
+    state.scene.remove(video);
 
     commit('destroyUpdate');
     commit('destroyResize');
@@ -71,17 +72,17 @@ export default {
     async update(time) {
       const { state } = store;
 
-      this.timeSegment += time;
-      if (this.timeSegment >= 1 / 60) {
-        const pose = await this.net.estimateSinglePose(state.webcam.video);
-        this.keyPoints.update(pose.keypoints);
-        this.fireBall.update(time, this.keyPoints.points.geometry.attributes);
-        this.timeSegment = 0;
+      timeSegment += time;
+      if (timeSegment >= 1 / 60) {
+        const pose = await net.estimateSinglePose(state.webcam.video);
+        keyPoints.update(pose.keypoints);
+        fireBall.update(time, keyPoints.points.geometry.attributes);
+        timeSegment = 0;
       }
     },
     resize() {
-      this.video.resize();
-      this.keyPoints.resize();
+      video.resize();
+      keyPoints.resize();
     }
   }
 };

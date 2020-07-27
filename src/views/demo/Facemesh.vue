@@ -10,6 +10,16 @@ import PromiseTextureLoader from '@/webgl/common/PromiseTextureLoader';
 import Video from '@/webgl/demo/facemesh/Video';
 import Face from '@/webgl/demo/facemesh/Face';
 
+console.log(DemoConsole);
+
+const MAX_FACES = 5;
+const video = new Video();
+const faces = Array.apply(null, Array(10)).map(() => {
+  return new Face();
+});
+let model;
+let timeSegment = 0;
+
 export default {
   name: 'Facemesh',
   metaInfo: {
@@ -21,13 +31,6 @@ export default {
   },
   data: () => ({
     isLoaded: false,
-    video: new Video(),
-    faces: Array.apply(null, Array(10)).map(() => {
-      return new Face();
-    }),
-    model: null,
-    maxFaces: 5,
-    timeSegment: 0,
     isShownShareLinks: false
   }),
   created() {
@@ -37,7 +40,7 @@ export default {
     Promise.all([
       dispatch('webcam/init'),
       facemesh.load({
-        maxFaces: this.maxFaces,
+        maxFaces: MAX_FACES,
         iouThreshold: 0.1
       }),
       PromiseTextureLoader(require('@/assets/img/tex_facemesh.jpg'))
@@ -47,16 +50,16 @@ export default {
 
       if (this._isDestroyed !== false) return;
 
-      this.model = response[1];
+      model = response[1];
 
       response[2].wrapS = RepeatWrapping;
       response[2].wrapT = RepeatWrapping;
-      this.faces.forEach(face => {
+      faces.forEach(face => {
         face.setUv(facemesh.FaceMesh.getUVCoords());
         face.setTexture(response[2]);
         state.scene.add(face);
       });
-      state.scene.add(this.video);
+      state.scene.add(video);
 
       commit('setUpdate', this.update);
       commit('setResize', this.resize);
@@ -67,11 +70,10 @@ export default {
   },
   destroyed() {
     const { state, commit } = store;
-    state.scene.remove(this.video);
-    this.faces.forEach(face => {
+    state.scene.remove(video);
+    faces.forEach(face => {
       state.scene.remove(face);
     });
-    this.faces = [];
     commit('destroyUpdate');
     commit('destroyResize');
     commit('processing/hide');
@@ -80,11 +82,11 @@ export default {
     async update(time) {
       const { state } = store;
 
-      this.timeSegment += time;
-      if (this.timeSegment >= 1 / 60) {
-        const predictions = await this.model.estimateFaces(state.webcam.video);
-        for (let index = 0; index < this.faces.length; index++) {
-          const face = this.faces[index];
+      timeSegment += time;
+      if (timeSegment >= 1 / 60) {
+        const predictions = await model.estimateFaces(state.webcam.video);
+        for (let index = 0; index < faces.length; index++) {
+          const face = faces[index];
           if (predictions[index]) {
             face.visible = true;
             face.update(time, predictions[index]);
@@ -92,12 +94,12 @@ export default {
             face.visible = false;
           }
         }
-        this.timeSegment = 0;
+        timeSegment = 0;
       }
     },
     resize() {
-      this.video.resize();
-      this.faces.forEach(face => {
+      video.resize();
+      faces.forEach(face => {
         face.resize();
       });
     }

@@ -9,6 +9,11 @@ import PromiseOBJLoader from '@/webgl/common/PromiseOBJLoader';
 import Glasses from '@/webgl/demo/glasses/Glasses';
 import Video from '@/webgl/demo/glasses/Video';
 
+const video = new Video();
+let glasses;
+let model;
+let timeSegment = 0;
+
 export default {
   name: 'Glasses',
   metaInfo: {
@@ -19,11 +24,7 @@ export default {
     DemoOutline
   },
   data: () => ({
-    isLoaded: false,
-    video: new Video(),
-    glasses: null,
-    model: null,
-    timeSegment: 0
+    isLoaded: false
   }),
   created() {
     const { state, commit, dispatch } = store;
@@ -42,11 +43,11 @@ export default {
 
       if (this._isDestroyed !== false) return;
 
-      this.glasses = new Glasses(response[2].children[0].geometry);
-      this.model = response[1];
+      glasses = new Glasses(response[2].children[0].geometry);
+      model = response[1];
 
-      state.scene.add(this.glasses);
-      state.scene.add(this.video);
+      state.scene.add(glasses);
+      state.scene.add(video);
 
       commit('setUpdate', this.update);
       commit('setResize', this.resize);
@@ -58,8 +59,8 @@ export default {
   destroyed() {
     const { state, commit } = store;
 
-    state.scene.remove(this.glasses);
-    state.scene.remove(this.video);
+    state.scene.remove(glasses);
+    state.scene.remove(video);
     commit('destroyUpdate');
     commit('destroyResize');
     commit('processing/hide');
@@ -68,21 +69,21 @@ export default {
     async update(time) {
       const { state } = store;
 
-      this.timeSegment += time;
-      if (this.timeSegment >= 1 / 60) {
-        const predictions = await this.model.estimateFaces(state.webcam.video);
+      timeSegment += time;
+      if (timeSegment >= 1 / 60) {
+        const predictions = await model.estimateFaces(state.webcam.video);
         if (predictions.length > 0) {
-          this.glasses.update(predictions[0]);
-          this.glasses.visible = true;
+          glasses.update(predictions[0]);
+          glasses.visible = true;
         } else {
-          this.glasses.visible = false;
+          glasses.visible = false;
         }
-        this.timeSegment = 0;
+        timeSegment = 0;
       }
     },
     resize() {
-      this.glasses.resize();
-      this.video.resize();
+      glasses.resize();
+      video.resize();
     }
   }
 };
