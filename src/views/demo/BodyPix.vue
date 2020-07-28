@@ -2,7 +2,6 @@
 import * as bodyPix from '@tensorflow-models/body-pix';
 import { Scene, WebGLRenderTarget } from 'three';
 import sleep from 'js-util/sleep';
-import store from '@/store';
 
 import DemoConsole from '@/components/demo/DemoConsole';
 import DemoOutline from '@/components/demo/DemoOutline';
@@ -40,7 +39,7 @@ export default {
     isLoaded: false
   }),
   created() {
-    const { state, commit, dispatch } = store;
+    const { state, commit, dispatch } = this.$store;
     const timeStart = Date.now();
 
     Promise.all([
@@ -82,7 +81,7 @@ export default {
     });
   },
   destroyed() {
-    const { state, commit } = store;
+    const { state, commit } = this.$store;
     state.scene.remove(video);
     state.scene.remove(videoBack);
     blobs.forEach(blob => {
@@ -95,7 +94,7 @@ export default {
   },
   methods: {
     async update(time) {
-      const { state } = store;
+      const { state } = this.$store;
 
       timeSegment += time;
       if (timeSegment >= 1 / 60) {
@@ -131,7 +130,7 @@ export default {
       state.renderer.setRenderTarget(null);
     },
     resize() {
-      const { resolution } = store.state;
+      const { resolution } = this.$store.state;
       body.resize();
       video.resize();
       videoBack.resize();

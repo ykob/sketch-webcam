@@ -2,7 +2,6 @@
 import { RepeatWrapping } from 'three';
 import * as facemesh from '@tensorflow-models/facemesh';
 import sleep from 'js-util/sleep';
-import store from '@/store';
 
 import DemoConsole from '@/components/demo/DemoConsole';
 import DemoOutline from '@/components/demo/DemoOutline';
@@ -34,7 +33,7 @@ export default {
     isShownShareLinks: false
   }),
   created() {
-    const { state, commit, dispatch } = store;
+    const { state, commit, dispatch } = this.$store;
     const timeStart = Date.now();
 
     Promise.all([
@@ -69,7 +68,7 @@ export default {
     });
   },
   destroyed() {
-    const { state, commit } = store;
+    const { state, commit } = this.$store;
     state.scene.remove(video);
     faces.forEach(face => {
       state.scene.remove(face);
@@ -80,7 +79,7 @@ export default {
   },
   methods: {
     async update(time) {
-      const { state } = store;
+      const { state } = this.$store;
 
       timeSegment += time;
       if (timeSegment >= 1 / 60) {
