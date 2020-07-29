@@ -32,8 +32,7 @@ export default {
     Promise.all([
       dispatch('webcam/init'),
       facemesh.load({
-        maxFaces: 1,
-        iouThreshold: 0.1
+        maxFaces: 1
       }),
       PromiseOBJLoader(`${process.env.BASE_URL}obj/Glasses_01.obj`)
     ]).then(async response => {
