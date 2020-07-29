@@ -18,6 +18,11 @@ export default class Glasses extends Mesh {
     super(geometry, material);
     this.size = new Vector2();
     this.imgRatio = new Vector2();
+    this.a = new Vector3();
+    this.anchor = new Vector3();
+    this.sv = 0;
+    this.sa = 0;
+
     this.scale.set(0, 0, 0);
   }
   update(prediction) {
@@ -55,7 +60,14 @@ export default class Glasses extends Mesh {
     const x3 = ((p0.x / -resolution.x) * this.size.x) / this.imgRatio.x;
     const y3 = (((p0.y + 10) / -resolution.y) * this.size.y) / this.imgRatio.y;
     const z3 = normal.z * (x3 / normal.x) - 2;
-    this.position.set(x3, y3, z3);
+    this.anchor.set(x3, y3, z3);
+    const a = this.anchor
+      .clone()
+      .sub(this.position)
+      .multiplyScalar(0.4);
+    this.a.add(a);
+    this.a.add(this.a.clone().multiplyScalar(-0.4));
+    this.position.add(this.a);
 
     const p4 = new Vector3().fromArray(scaledMesh[10]);
     const x4 = ((p4.x / -resolution.x) * this.size.x) / this.imgRatio.x;
@@ -69,8 +81,12 @@ export default class Glasses extends Mesh {
     const z5 = normal.z * (x5 / normal.x);
     const p5a = new Vector3(x5, y5, z5);
 
-    const scale = p4a.distanceTo(p5a) / 40;
-    this.scale.set(scale, scale, scale);
+    const sv = p4a.distanceTo(p5a) / 40;
+    this.sa += (sv - this.sv) * 0.1;
+    this.sa += this.sa * -0.4;
+    this.sa = Math.min(this.sa, 1);
+    this.sv += this.sa;
+    this.scale.set(this.sv, this.sv, this.sv);
   }
   resize() {
     const { camera } = store.state;
