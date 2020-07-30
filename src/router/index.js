@@ -38,7 +38,7 @@ const routes = [
           import(/* webpackChunkName: "glasses" */ '../views/demo/Glasses.vue'),
         meta: {
           description:
-            'You can use a spell "Fireball" by bringing your palms close together.'
+            'You can try on the glasses on the Web.'
         }
       },
       {
