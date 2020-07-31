@@ -60,7 +60,7 @@ const routes = [
           ),
         meta: {
           description:
-            'You can use a spell "Fireball" by bringing your palms close together.'
+            'Stick the distorted color effect to your face.'
         }
       }
     ]
