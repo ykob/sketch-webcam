@@ -29,6 +29,7 @@ export default {
 
     // On global events.
     window.addEventListener('resize', this.resize);
+    window.addEventListener('deviceorientation', this.resize);
     window.addEventListener('mousemove', this.mousemove);
     document.addEventListener('touchstart', this.touchstart);
     document.addEventListener('touchmove', this.touchmove);
