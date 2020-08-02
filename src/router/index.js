@@ -37,8 +37,7 @@ const routes = [
         component: () =>
           import(/* webpackChunkName: "glasses" */ '../views/demo/Glasses.vue'),
         meta: {
-          description:
-            'You can try on a glasses on the Web.'
+          description: 'You can try on a glasses on the Web.'
         }
       },
       {
@@ -47,8 +46,7 @@ const routes = [
         component: () =>
           import(/* webpackChunkName: "bodypix" */ '../views/demo/BodyPix.vue'),
         meta: {
-          description:
-            'Orbiting stars pass behind you.'
+          description: 'Orbiting stars pass behind you.'
         }
       },
       {
@@ -59,8 +57,7 @@ const routes = [
             /* webpackChunkName: "facemesh" */ '../views/demo/Facemesh.vue'
           ),
         meta: {
-          description:
-            'Stick the distorted color effect to your face.'
+          description: 'Stick the distorted color effect to your face.'
         }
       }
     ]
