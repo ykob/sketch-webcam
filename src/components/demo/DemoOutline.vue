@@ -1,6 +1,11 @@
 <script>
+import ButtonPlayVideo from '@/components/common/ButtonPlayVideo';
+
 export default {
   name: 'DemoOutline',
+  components: {
+    ButtonPlayVideo
+  },
   props: {
     title: {
       type: String,
@@ -9,6 +14,10 @@ export default {
     description: {
       type: String,
       default: ''
+    },
+    isLoaded: {
+      type: Boolean,
+      default: false
     }
   }
 };
@@ -24,7 +33,13 @@ transition(
       |{{ title }}
     p.demo-outline__description
       |{{ description }}
-    .demo-outline__processing-marker
+    ButtonPlayVideo(
+      v-if = 'isLoaded === true'
+      @click = '$emit("click", $event)'
+      )
+    .demo-outline__processing-marker(
+      v-else
+      )
 </template>
 
 <style lang="scss" scoped>

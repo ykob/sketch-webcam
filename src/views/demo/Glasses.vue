@@ -23,7 +23,8 @@ export default {
     DemoOutline
   },
   data: () => ({
-    isLoaded: false
+    isLoaded: false,
+    isStarted: false
   }),
   created() {
     const { state, commit } = this.$store;
@@ -52,6 +53,9 @@ export default {
       this.resize();
 
       this.isLoaded = true;
+      if (state.webcam.isPlaying === true) {
+        this.isStarted = true;
+      }
     });
   },
   destroyed() {
@@ -66,6 +70,8 @@ export default {
   methods: {
     async update(time) {
       const { state } = this.$store;
+
+      if (this.isStarted === false) return;
 
       timeSegment += time;
       if (timeSegment >= 1 / 60) {
@@ -86,7 +92,7 @@ export default {
     start() {
       const { commit } = this.$store;
 
-      this.isLoaded = true;
+      this.isStarted = true;
       commit('webcam/playVideo');
     }
   }
@@ -100,12 +106,14 @@ transition(
   )
   .page
     DemoOutline(
-      v-if = 'isLoaded === false'
+      v-if = 'isStarted === false'
       :title = '$route.name'
       :description = '$route.meta.description'
+      :isLoaded = 'isLoaded'
+      @click = 'start'
       )
     DemoConsole(
-      v-if = 'isLoaded === true'
+      v-if = 'isStarted === true'
       :title = '$route.name'
       )
 </template>

@@ -9,17 +9,14 @@ export default {
     video,
     resolution: new Vector2(),
     facingMode: '',
-    videoTexture: null
-  },
-  getters: {
-    isPlaying(state) {
-      return !state.video.paused;
-    }
+    videoTexture: null,
+    isPlaying: false
   },
   mutations: {
-    playVideo() {
+    playVideo(state) {
       // play video.
       video.play();
+      state.isPlaying = true;
     },
     setFacingMode(state, facingMode) {
       state.facingMode = facingMode;

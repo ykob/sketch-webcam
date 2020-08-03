@@ -28,6 +28,7 @@ export default {
   },
   data: () => ({
     isLoaded: false,
+    isStarted: false,
     isShownShareLinks: false
   }),
   async created() {
@@ -57,12 +58,16 @@ export default {
       });
       state.scene.add(video);
       video.start();
+      video.visible = false;
 
       commit('setUpdate', this.update);
       commit('setResize', this.resize);
       this.resize();
 
       this.isLoaded = true;
+      if (state.webcam.isPlaying === true) {
+        this.isStarted = true;
+      }
     });
   },
   destroyed() {
@@ -79,10 +84,11 @@ export default {
     async update(time) {
       const { state } = this.$store;
 
-      if (this.isLoaded === false) return;
+      if (this.isStarted === false) return;
 
       timeSegment += time;
       if (timeSegment >= 1 / 60) {
+        video.visible = true;
         const predictions = await model.estimateFaces(state.webcam.video);
         for (let index = 0; index < faces.length; index++) {
           const face = faces[index];
@@ -105,7 +111,7 @@ export default {
     start() {
       const { commit } = this.$store;
 
-      this.isLoaded = true;
+      this.isStarted = true;
       commit('webcam/playVideo');
     }
   }
@@ -119,12 +125,14 @@ transition(
   )
   .page
     DemoOutline(
-      v-if = 'isLoaded === false'
+      v-if = 'isStarted === false'
       :title = '$route.name'
       :description = '$route.meta.description'
+      :isLoaded = 'isLoaded'
+      @click = 'start'
       )
     DemoConsole(
-      v-if = 'isLoaded === true'
+      v-if = 'isStarted === true'
       :title = '$route.name'
       )
 </template>
