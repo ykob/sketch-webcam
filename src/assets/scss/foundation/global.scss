@@ -15,7 +15,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-feature-settings: 'palt';
-  background-color: #1b191c;
+  background-color: $color-bg;
   @include fontSizeAll(14, 14, 12);
   letter-spacing: 0.16em;
 }
