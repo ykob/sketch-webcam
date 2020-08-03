@@ -9,8 +9,6 @@ import PromiseTextureLoader from '@/webgl/common/PromiseTextureLoader';
 import Video from '@/webgl/demo/facemesh/Video';
 import Face from '@/webgl/demo/facemesh/Face';
 
-console.log(DemoConsole);
-
 const MAX_FACES = 5;
 const video = new Video();
 const faces = Array.apply(null, Array(10)).map(() => {
