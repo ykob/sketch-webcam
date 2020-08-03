@@ -26,11 +26,10 @@ export default {
     isLoaded: false
   }),
   created() {
-    const { state, commit, dispatch } = this.$store;
+    const { state, commit } = this.$store;
     const timeStart = Date.now();
 
     Promise.all([
-      dispatch('webcam/init'),
       facemesh.load({
         maxFaces: 1
       }),
@@ -41,9 +40,10 @@ export default {
 
       if (this._isDestroyed !== false) return;
 
-      glasses = new Glasses(response[2].children[0].geometry);
-      model = response[1];
+      glasses = new Glasses(response[1].children[0].geometry);
+      model = response[0];
 
+      video.start();
       state.scene.add(glasses);
       state.scene.add(video);
 
@@ -82,6 +82,12 @@ export default {
     resize() {
       glasses.resize();
       video.resize();
+    },
+    start() {
+      const { commit } = this.$store;
+
+      this.isLoaded = true;
+      commit('webcam/playVideo');
     }
   }
 };

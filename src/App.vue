@@ -16,8 +16,8 @@ export default {
     Modal,
     SiteTitle
   },
-  async created() {
-    const { state } = this.$store;
+  created() {
+    const { state, dispatch } = this.$store;
 
     // append canvas and add styles to it.
     document.body.append(state.canvas);
@@ -40,6 +40,8 @@ export default {
     state.camera.start();
     this.update();
     state.clock.start();
+
+    dispatch('webcam/init');
   },
   methods: {
     update() {
@@ -98,7 +100,9 @@ export default {
 <template lang="pug">
 #app
   SiteTitle
-  router-view
+  router-view(
+    v-if = '$store.state.webcam.videoTexture !== null'
+    )
   BackHome
   GradualCover
   Modal

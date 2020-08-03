@@ -3,8 +3,7 @@ import {
   PlaneBufferGeometry,
   RawShaderMaterial,
   Vector2,
-  Vector3,
-  VideoTexture
+  Vector3
 } from 'three';
 import MathEx from 'js-util/MathEx';
 
@@ -25,7 +24,7 @@ export default class Video extends Mesh {
           value: store.state.resolution
         },
         video: {
-          value: new VideoTexture(store.state.webcam.video)
+          value: null
         },
         texture: {
           value: null
@@ -42,6 +41,7 @@ export default class Video extends Mesh {
     this.size = new Vector3();
   }
   start(texture) {
+    this.material.uniforms.video.value = store.state.webcam.videoTexture;
     this.material.uniforms.texture.value = texture;
     this.position.set(0, 0, -50);
   }

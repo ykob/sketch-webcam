@@ -1,34 +1,40 @@
-import { Vector2 } from 'three';
+import { Vector2, VideoTexture } from 'three';
 import sleep from 'js-util/sleep';
+
+const video = document.createElement('video');
 
 export default {
   namespaced: true,
   state: {
-    video: document.createElement('video'),
+    video,
     resolution: new Vector2(),
-    facingMode: ''
+    facingMode: '',
+    videoTexture: null
   },
   mutations: {
-    playVideo(state) {
+    playVideo() {
       // play video.
-      state.video.play();
+      video.play();
     },
     setFacingMode(state, facingMode) {
       state.facingMode = facingMode;
     },
-    setVideoAttr(state, srcObject) {
+    setVideoAttr(_state, srcObject) {
       // get video stream, and set attributes to video object to play auto on iOS.
-      state.video.srcObject = srcObject;
-      state.video.setAttribute('playsinline', true);
-      state.video.setAttribute('controls', true);
+      video.srcObject = srcObject;
+      video.setAttribute('playsinline', true);
+      video.setAttribute('controls', true);
     },
     setResolution(state) {
       // get video resolution with promise.
-      let x = state.video.videoWidth;
-      let y = state.video.videoHeight;
+      let x = video.videoWidth;
+      let y = video.videoHeight;
       state.resolution.set(x, y);
-      state.video.width = x;
-      state.video.height = y;
+      video.width = x;
+      video.height = y;
+    },
+    createVideoTexture(state) {
+      state.videoTexture = new VideoTexture(video);
     }
   },
   actions: {
@@ -64,9 +70,9 @@ export default {
           throw new Error("It's not allowed to use WebCam.");
         });
       commit('setVideoAttr', srcObject);
-      commit('playVideo', srcObject);
       await sleep(1000);
       commit('setResolution');
+      commit('createVideoTexture');
 
       return;
     }

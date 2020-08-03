@@ -3,6 +3,7 @@ import * as bodyPix from '@tensorflow-models/body-pix';
 import { Scene, WebGLRenderTarget } from 'three';
 import sleep from 'js-util/sleep';
 
+import BtnEnableWebCam from '@/components/common/BtnEnableWebCam';
 import DemoConsole from '@/components/demo/DemoConsole';
 import DemoOutline from '@/components/demo/DemoOutline';
 import PostEffectBlur from '@/webgl/common/PostEffectBlur';
@@ -32,6 +33,7 @@ export default {
     title: 'BodyPix / '
   },
   components: {
+    BtnEnableWebCam,
     DemoConsole,
     DemoOutline
   },
@@ -39,11 +41,10 @@ export default {
     isLoaded: false
   }),
   created() {
-    const { state, commit, dispatch } = this.$store;
+    const { state, commit } = this.$store;
     const timeStart = Date.now();
 
     Promise.all([
-      dispatch('webcam/init'),
       bodyPix.load({
         architecture: 'MobileNetV1',
         outputStride: 16,
@@ -57,7 +58,7 @@ export default {
 
       if (this._isDestroyed !== false) return;
 
-      net = response[1];
+      net = response[0];
       video.start(renderTarget1.texture);
       videoBack.start(renderTarget1.texture);
       postEffectBlurX.start(renderTarget1.texture, 1, 0);
@@ -65,7 +66,7 @@ export default {
       postEffectBlurY.start(renderTarget2.texture, 0, 1);
       postEffectBlurY.setScale(0.5, 0.5);
       blobs = blobs.map(() => {
-        return new Blob(response[2].children[0].geometry);
+        return new Blob(response[1].children[0].geometry);
       });
       blobs.forEach(blob => {
         state.scene.add(blob);
@@ -138,6 +139,12 @@ export default {
       postEffectBlurX.resize();
       renderTarget1.setSize(resolution.x, resolution.y);
       renderTarget2.setSize(resolution.x, resolution.y);
+    },
+    start() {
+      const { commit } = this.$store;
+
+      this.isLoaded = true;
+      commit('webcam/playVideo');
     }
   }
 };

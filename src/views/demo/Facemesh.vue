@@ -30,12 +30,11 @@ export default {
     isLoaded: false,
     isShownShareLinks: false
   }),
-  created() {
-    const { state, commit, dispatch } = this.$store;
+  async created() {
+    const { state, commit } = this.$store;
     const timeStart = Date.now();
 
     Promise.all([
-      dispatch('webcam/init'),
       facemesh.load({
         maxFaces: MAX_FACES,
         iouThreshold: 0.1
@@ -47,16 +46,17 @@ export default {
 
       if (this._isDestroyed !== false) return;
 
-      model = response[1];
+      model = response[0];
 
-      response[2].wrapS = RepeatWrapping;
-      response[2].wrapT = RepeatWrapping;
+      response[1].wrapS = RepeatWrapping;
+      response[1].wrapT = RepeatWrapping;
       faces.forEach(face => {
         face.setUv(facemesh.FaceMesh.getUVCoords());
-        face.setTexture(response[2]);
+        face.setTexture(response[1]);
         state.scene.add(face);
       });
       state.scene.add(video);
+      video.start();
 
       commit('setUpdate', this.update);
       commit('setResize', this.resize);
@@ -79,6 +79,8 @@ export default {
     async update(time) {
       const { state } = this.$store;
 
+      if (this.isLoaded === false) return;
+
       timeSegment += time;
       if (timeSegment >= 1 / 60) {
         const predictions = await model.estimateFaces(state.webcam.video);
@@ -99,6 +101,12 @@ export default {
       faces.forEach(face => {
         face.resize();
       });
+    },
+    start() {
+      const { commit } = this.$store;
+
+      this.isLoaded = true;
+      commit('webcam/playVideo');
     }
   }
 };
@@ -121,4 +129,9 @@ transition(
       )
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+button {
+  position: absolute;
+  top: 50%;
+}
+</style>

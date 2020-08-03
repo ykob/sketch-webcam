@@ -27,11 +27,10 @@ export default {
     isLoaded: false
   }),
   created() {
-    const { state, commit, dispatch } = this.$store;
+    const { state, commit } = this.$store;
     const timeStart = Date.now();
 
     Promise.all([
-      dispatch('webcam/init'),
       posenet.load({
         architecture: 'MobileNetV1',
         outputStride: 16,
@@ -44,8 +43,9 @@ export default {
 
       if (this._isDestroyed !== false) return;
 
-      net = response[1];
+      net = response[0];
 
+      video.start();
       state.scene.add(fireBall);
       state.scene.add(keyPoints);
       state.scene.add(video);
@@ -82,6 +82,12 @@ export default {
     resize() {
       video.resize();
       keyPoints.resize();
+    },
+    start() {
+      const { commit } = this.$store;
+
+      this.isLoaded = true;
+      commit('webcam/playVideo');
     }
   }
 };
