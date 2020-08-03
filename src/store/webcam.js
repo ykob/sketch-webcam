@@ -11,6 +11,11 @@ export default {
     facingMode: '',
     videoTexture: null
   },
+  getters: {
+    isPlaying(state) {
+      return !state.video.paused;
+    }
+  },
   mutations: {
     playVideo() {
       // play video.
