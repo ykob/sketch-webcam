@@ -13,7 +13,7 @@ button(
 
 <style lang="scss" scoped>
 button {
-  width: 240px;
+  width: 180px;
   height: 40px;
   display: block;
   appearance: none;
