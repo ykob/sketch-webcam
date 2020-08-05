@@ -34,13 +34,19 @@ transition(
         |{{ title }}
       p.demo-outline__description
         |{{ description }}
-      ButtonPlayVideo.demo-outline__play-btn(
+      template(
         v-if = 'isLoaded === true'
-        @click = '$emit("click", $event)'
         )
-      .demo-outline__processing-marker(
+        transition
+          ButtonPlayVideo.demo-outline__play-btn(
+            @click = '$emit("click", $event)'
+            )
+      template(
         v-else
         )
+        transition
+          .demo-outline__processing-marker
+            span
 </template>
 
 <style lang="scss" scoped>
@@ -64,7 +70,7 @@ transition(
       padding-bottom: 64px;
     }
     @include l-mobile {
-      padding-bottom: 56px;
+      padding-bottom: 48px;
     }
   }
   &__title {
@@ -89,6 +95,18 @@ transition(
     left: 0;
     margin-right: auto;
     margin-left: auto;
+    &.v-enter {
+      opacity: 0;
+      transform: translate3d(0, 16px, 0);
+    }
+    &.v-enter-to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+      transition-duration: 1s;
+      transition-delay: 0.6s;
+      transition-timing-function: $easeOutCubic;
+      transition-property: opacity, transform;
+    }
   }
   @keyframes rotateLoop {
     0% {
@@ -113,7 +131,7 @@ transition(
       width: 24px;
       height: 24px;
     }
-    &:before {
+    span {
       width: 100%;
       height: 100%;
       content: '';
@@ -123,7 +141,13 @@ transition(
       animation-duration: 3s;
       animation-timing-function: $easeInOutSine;
       animation-iteration-count: infinite;
-      animation-play-state: running;
+    }
+    &.v-leave-to {
+      opacity: 0;
+      transform: scale(1.5);
+      transition-duration: 1s;
+      transition-timing-function: $easeOutCubic;
+      transition-property: opacity, transform;
     }
   }
   &.outline-enter {
@@ -131,8 +155,7 @@ transition(
   }
   .outline-enter & {
     &__title,
-    &__description,
-    &__play-btn {
+    &__description {
       opacity: 0;
       transform: translate3d(0, 16px, 0);
     }
@@ -148,8 +171,7 @@ transition(
   }
   .outline-enter-to & {
     &__title,
-    &__description,
-    &__play-btn {
+    &__description {
       opacity: 1;
       transform: translate3d(0, 0, 0);
       transition-duration: 1s;
@@ -159,13 +181,13 @@ transition(
     &__description {
       transition-delay: 0.1s;
     }
-    &__play-btn {
-      transition-delay: 0.2s;
-    }
     &__processing-marker {
       opacity: 1;
       transform: scale(1);
+      transition-duration: 1s;
       transition-delay: 0.2s;
+      transition-timing-function: $easeOutCubic;
+      transition-property: opacity, transform;
     }
   }
   &.outline-leave-to {
