@@ -29,17 +29,18 @@ transition(
   appear
   )
   .demo-outline
-    h1.demo-outline__title
-      |{{ title }}
-    p.demo-outline__description
-      |{{ description }}
-    ButtonPlayVideo(
-      v-if = 'isLoaded === true'
-      @click = '$emit("click", $event)'
-      )
-    .demo-outline__processing-marker(
-      v-else
-      )
+    .demo-outline__in
+      h1.demo-outline__title
+        |{{ title }}
+      p.demo-outline__description
+        |{{ description }}
+      ButtonPlayVideo.demo-outline__play-btn(
+        v-if = 'isLoaded === true'
+        @click = '$emit("click", $event)'
+        )
+      .demo-outline__processing-marker(
+        v-else
+        )
 </template>
 
 <style lang="scss" scoped>
@@ -51,11 +52,20 @@ transition(
   top: 0;
   left: 0;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   @include l-mobile {
     padding: 8px;
+  }
+  &__in {
+    position: relative;
+    text-align: center;
+    @include l-more-than-mobile {
+      padding-bottom: 64px;
+    }
+    @include l-mobile {
+      padding-bottom: 56px;
+    }
   }
   &__title {
     line-height: 1;
@@ -71,13 +81,14 @@ transition(
   &__description {
     max-width: 480px;
     margin: 0;
-    text-align: center;
-    @include l-more-than-mobile {
-      margin-bottom: 32px;
-    }
-    @include l-mobile {
-      margin-bottom: 16px;
-    }
+  }
+  &__play-btn {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin-right: auto;
+    margin-left: auto;
   }
   @keyframes rotateLoop {
     0% {
@@ -88,6 +99,12 @@ transition(
     }
   }
   &__processing-marker {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin-right: auto;
+    margin-left: auto;
     @include l-more-than-mobile {
       width: 32px;
       height: 32px;
@@ -106,17 +123,16 @@ transition(
       animation-duration: 3s;
       animation-timing-function: $easeInOutSine;
       animation-iteration-count: infinite;
+      animation-play-state: running;
     }
   }
   &.outline-enter {
     opacity: 0.9999;
   }
   .outline-enter & {
-    &__title {
-      opacity: 0;
-      transform: translate3d(0, 16px, 0);
-    }
-    &__description {
+    &__title,
+    &__description,
+    &__play-btn {
       opacity: 0;
       transform: translate3d(0, 16px, 0);
     }
@@ -131,7 +147,9 @@ transition(
     transition-property: opacity;
   }
   .outline-enter-to & {
-    &__title {
+    &__title,
+    &__description,
+    &__play-btn {
       opacity: 1;
       transform: translate3d(0, 0, 0);
       transition-duration: 1s;
@@ -139,20 +157,15 @@ transition(
       transition-property: opacity, transform;
     }
     &__description {
-      opacity: 1;
-      transform: translate3d(0, 0, 0);
-      transition-duration: 1s;
       transition-delay: 0.1s;
-      transition-timing-function: $easeOutCubic;
-      transition-property: opacity, transform;
+    }
+    &__play-btn {
+      transition-delay: 0.2s;
     }
     &__processing-marker {
       opacity: 1;
       transform: scale(1);
-      transition-duration: 1s;
       transition-delay: 0.2s;
-      transition-timing-function: $easeOutCubic;
-      transition-property: opacity, transform;
     }
   }
   &.outline-leave-to {
@@ -162,7 +175,9 @@ transition(
   }
   .page-leave-to &,
   .outline-leave-to & {
-    &__title {
+    &__title,
+    &__description,
+    &__play-btn {
       opacity: 0;
       transform: translate3d(0, -16px, 0);
       transition-duration: 1s;
@@ -170,16 +185,14 @@ transition(
       transition-property: opacity, transform;
     }
     &__description {
-      opacity: 0;
-      transform: translate3d(0, -16px, 0);
-      transition-duration: 1s;
       transition-delay: 0.06s;
-      transition-timing-function: $easeOutCubic;
-      transition-property: opacity, transform;
+    }
+    &__play-btn {
+      transition-delay: 0.12s;
     }
     &__processing-marker {
       opacity: 0;
-      transform: scale(0.5);
+      transform: scale(1.25);
       transition-duration: 1s;
       transition-delay: 0.12s;
       transition-timing-function: $easeOutCubic;
