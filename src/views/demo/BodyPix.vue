@@ -7,12 +7,15 @@ import DemoConsole from '@/components/demo/DemoConsole';
 import DemoOutline from '@/components/demo/DemoOutline';
 import PostEffectBlur from '@/webgl/common/PostEffectBlur';
 import PromiseOBJLoader from '@/webgl/common/PromiseOBJLoader';
+import View from '@/webgl/common/View';
 import Blob from '@/webgl/demo/bodyPix/Blob';
 import Body from '@/webgl/demo/bodyPix/Body';
 import Video from '@/webgl/demo/bodyPix/Video';
 import VideoBack from '@/webgl/demo/bodyPix/VideoBack';
 
+const sceneView = new Scene();
 const scenePE = new Scene();
+const view = new View();
 const body = new Body();
 const video = new Video();
 const videoBack = new VideoBack();
@@ -20,6 +23,7 @@ const postEffectBlurX = new PostEffectBlur();
 const postEffectBlurY = new PostEffectBlur();
 const renderTarget1 = new WebGLRenderTarget();
 const renderTarget2 = new WebGLRenderTarget();
+const renderTarget3 = new WebGLRenderTarget();
 let net = null;
 let blobs = Array.apply(null, Array(10)).map(() => {
   return undefined;
@@ -58,6 +62,7 @@ export default {
       if (this._isDestroyed !== false) return;
 
       net = response[0];
+      view.start(renderTarget3.texture);
       video.start(renderTarget1.texture);
       videoBack.start(renderTarget1.texture);
       postEffectBlurX.start(renderTarget1.texture, 1, 0);
@@ -68,10 +73,11 @@ export default {
         return new Blob(response[1].children[0].geometry);
       });
       blobs.forEach(blob => {
-        state.scene.add(blob);
+        sceneView.add(blob);
       });
-      state.scene.add(video);
-      state.scene.add(videoBack);
+      sceneView.add(video);
+      sceneView.add(videoBack);
+      state.scene.add(view);
 
       commit('setUpdate', this.update);
       commit('setResize', this.resize);
@@ -85,12 +91,8 @@ export default {
   },
   destroyed() {
     const { state, commit } = this.$store;
-    state.scene.remove(video);
-    state.scene.remove(videoBack);
-    blobs.forEach(blob => {
-      state.scene.remove(blob);
-    });
 
+    state.scene.remove(view);
     commit('destroyUpdate');
     commit('destroyResize');
   },
@@ -131,6 +133,9 @@ export default {
       state.renderer.render(scenePE, state.camera);
       scenePE.remove(postEffectBlurY);
 
+      state.renderer.setRenderTarget(renderTarget3);
+      state.renderer.render(sceneView, state.camera);
+
       state.renderer.setRenderTarget(null);
     },
     resize() {
@@ -142,6 +147,7 @@ export default {
       postEffectBlurX.resize();
       renderTarget1.setSize(resolution.x, resolution.y);
       renderTarget2.setSize(resolution.x, resolution.y);
+      renderTarget3.setSize(resolution.x, resolution.y);
     },
     start() {
       const { commit } = this.$store;
