@@ -16,9 +16,6 @@ export default class PostEffectBloom extends Mesh {
         time: {
           value: 0
         },
-        resolution: {
-          value: store.state.resolution
-        },
         texture1: {
           value: null
         },
@@ -33,8 +30,6 @@ export default class PostEffectBloom extends Mesh {
     // Create Object3D
     super(geometry, material);
     this.name = 'PostEffectBloom';
-    this.isShaking = false;
-    this.isFadeOut = false;
   }
   start(texture1, texture2) {
     this.material.uniforms.texture1.value = texture1;
