@@ -5,7 +5,6 @@ import UAParser from 'ua-parser-js';
 
 import touch from './touch';
 import webcam from './webcam';
-import processing from './processing';
 import modal from './modal';
 
 import Camera from '@/webgl/common/Camera';
@@ -58,7 +57,6 @@ export default new Vuex.Store({
   modules: {
     touch,
     webcam,
-    processing,
     modal
   }
 });

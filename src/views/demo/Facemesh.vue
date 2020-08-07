@@ -78,7 +78,6 @@ export default {
     });
     commit('destroyUpdate');
     commit('destroyResize');
-    commit('processing/hide');
   },
   methods: {
     async update(time) {
