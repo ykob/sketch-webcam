@@ -12,7 +12,7 @@ import store from '@/store';
 import vs from './glsl/Video.vs';
 import fs from './glsl/VideoBack.fs';
 
-export default class Video extends Mesh {
+export default class VideoBack extends Mesh {
   constructor() {
     // Define Geometry
     const geometry = new PlaneBufferGeometry(1, 1);
