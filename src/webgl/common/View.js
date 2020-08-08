@@ -19,19 +19,34 @@ export default class View extends Mesh {
         resolution: {
           value: store.state.resolution
         },
-        texture: {
+        texture1: {
+          value: null
+        },
+        texture2: {
           value: null
         }
       },
       vertexShader: vs,
-      fragmentShader: fs
+      fragmentShader: fs,
+      transparent: true
     });
 
     // Create Object3D
     super(geometry, material);
     this.name = 'View';
   }
-  start(texture) {
-    this.material.uniforms.texture.value = texture;
+  start(texture1, texture2) {
+    this.material.uniforms.texture1.value = texture1;
+    this.material.uniforms.texture2.value = texture2;
+  }
+  update(t) {
+    const { time } = this.material.uniforms;
+
+    time.value += t;
+  }
+  reset() {
+    const { time } = this.material.uniforms;
+
+    time.value = 0;
   }
 }

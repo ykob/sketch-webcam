@@ -7,6 +7,7 @@ import DemoConsole from '@/components/demo/DemoConsole';
 import DemoOutline from '@/components/demo/DemoOutline';
 import PostEffectBlur from '@/webgl/common/PostEffectBlur';
 import PromiseOBJLoader from '@/webgl/common/PromiseOBJLoader';
+import PromiseTextureLoader from '@/webgl/common/PromiseTextureLoader';
 import View from '@/webgl/common/View';
 import Blob from '@/webgl/demo/bodyPix/Blob';
 import Body from '@/webgl/demo/bodyPix/Body';
@@ -48,6 +49,7 @@ export default {
     const timeStart = Date.now();
 
     Promise.all([
+      PromiseTextureLoader(require('@/assets/img/view.jpg')),
       bodyPix.load({
         architecture: 'MobileNetV1',
         outputStride: 16,
@@ -61,8 +63,8 @@ export default {
 
       if (this._isDestroyed !== false) return;
 
-      net = response[0];
-      view.start(renderTarget3.texture);
+      net = response[1];
+      view.start(renderTarget3.texture, response[0]);
       video.start(renderTarget1.texture);
       videoBack.start(renderTarget1.texture);
       postEffectBlurX.start(renderTarget1.texture, 1, 0);
@@ -70,7 +72,7 @@ export default {
       postEffectBlurY.start(renderTarget2.texture, 0, 1);
       postEffectBlurY.setScale(0.5, 0.5);
       blobs = blobs.map(() => {
-        return new Blob(response[1].children[0].geometry);
+        return new Blob(response[2].children[0].geometry);
       });
       blobs.forEach(blob => {
         sceneView.add(blob);
@@ -92,6 +94,10 @@ export default {
   destroyed() {
     const { state, commit } = this.$store;
 
+    blobs.forEach(blob => {
+      sceneView.remove(blob);
+    });
+    view.reset();
     state.scene.remove(view);
     commit('destroyUpdate');
     commit('destroyResize');
@@ -113,6 +119,7 @@ export default {
         timeSegment = 0;
       }
 
+      view.update(time);
       blobs.forEach(blob => {
         blob.update(time);
       });
