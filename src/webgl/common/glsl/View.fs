@@ -1,6 +1,7 @@
 precision highp float;
 
-uniform float time;
+uniform float timeShow;
+uniform float timeHide;
 uniform vec2 resolution;
 uniform sampler2D texture1;
 uniform sampler2D texture2;
@@ -19,7 +20,8 @@ void main() {
 
   vec3 color = texture2D(texture1, vUv).rgb;
   vec2 fadeColor = texture2D(texture2, updateUv).rg;
-  float opacity = (time - (fadeColor.r + fadeColor.g) * 0.5) / 0.1;
+  float opacity1 = (timeShow - (fadeColor.r + fadeColor.g) * 0.5) / 0.1;
+  float opacity2 = 1.0 - (timeHide - (fadeColor.r + fadeColor.g) * 0.5) / 0.1;
 
-  gl_FragColor = vec4(color, opacity);
+  gl_FragColor = vec4(color, opacity1 * opacity2);
 }

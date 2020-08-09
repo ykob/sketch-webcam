@@ -89,15 +89,17 @@ export default {
       if (state.webcam.isPlaying === true) {
         this.isStarted = true;
       }
+      await sleep(500);
+      view.show();
     });
   },
-  destroyed() {
+  async destroyed() {
     const { state, commit } = this.$store;
 
+    await view.hide();
     blobs.forEach(blob => {
       sceneView.remove(blob);
     });
-    view.reset();
     state.scene.remove(view);
     commit('destroyUpdate');
     commit('destroyResize');
