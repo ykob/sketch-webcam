@@ -1,14 +1,20 @@
 <script>
+import { Scene, WebGLRenderTarget } from 'three';
 import * as facemesh from '@tensorflow-models/facemesh';
 import sleep from 'js-util/sleep';
 
 import DemoConsole from '@/components/demo/DemoConsole';
 import DemoOutline from '@/components/demo/DemoOutline';
 import PromiseOBJLoader from '@/webgl/common/PromiseOBJLoader';
+import PromiseTextureLoader from '@/webgl/common/PromiseTextureLoader';
+import View from '@/webgl/common/View';
 import Glasses from '@/webgl/demo/glasses/Glasses';
 import Video from '@/webgl/demo/glasses/Video';
 
+const sceneView = new Scene();
+const view = new View();
 const video = new Video();
+const renderTarget1 = new WebGLRenderTarget();
 let glasses;
 let model;
 let timeSegment = 0;
@@ -31,6 +37,7 @@ export default {
     const timeStart = Date.now();
 
     Promise.all([
+      PromiseTextureLoader(require('@/assets/img/view.jpg')),
       facemesh.load({
         maxFaces: 1
       }),
@@ -41,36 +48,34 @@ export default {
 
       if (this._isDestroyed !== false) return;
 
-      glasses = new Glasses(response[1].children[0].geometry);
-      model = response[0];
-
+      model = response[1];
+      view.start(renderTarget1.texture, response[0]);
+      glasses = new Glasses(response[2].children[0].geometry);
       video.start();
-      state.scene.add(glasses);
-      state.scene.add(video);
+      state.scene.add(view);
+      sceneView.add(glasses);
+      sceneView.add(video);
 
       commit('setUpdate', this.update);
       commit('setResize', this.resize);
       this.resize();
 
       this.isLoaded = true;
-      if (state.webcam.isPlaying === true) {
-        this.isStarted = true;
-      }
     });
   },
-  destroyed() {
+  async destroyed() {
     const { state, commit } = this.$store;
 
-    state.scene.remove(glasses);
-    state.scene.remove(video);
+    await view.hide();
+    state.scene.remove(view);
+    sceneView.remove(glasses);
+    sceneView.remove(video);
     commit('destroyUpdate');
     commit('destroyResize');
   },
   methods: {
     async update(time) {
       const { state } = this.$store;
-
-      if (this.isStarted === false) return;
 
       timeSegment += time;
       if (timeSegment >= 1 / 60) {
@@ -83,16 +88,29 @@ export default {
         }
         timeSegment = 0;
       }
+
+      view.update(time);
+
+      // Render the post effect.
+      state.renderer.setRenderTarget(renderTarget1);
+      state.renderer.render(sceneView, state.camera);
+
+      state.renderer.setRenderTarget(null);
     },
     resize() {
+      const { resolution } = this.$store.state;
+
       glasses.resize();
       video.resize();
+      renderTarget1.setSize(resolution.x, resolution.y);
     },
-    start() {
+    async start() {
       const { commit } = this.$store;
 
       this.isStarted = true;
       commit('webcam/playVideo');
+      await sleep(200);
+      view.show();
     }
   }
 };

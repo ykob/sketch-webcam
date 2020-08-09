@@ -59,8 +59,8 @@ export default {
       PromiseOBJLoader(`${process.env.BASE_URL}obj/star.obj`)
     ]).then(async response => {
       const time = Math.max(100, 2000 - Date.now() + timeStart);
-      await sleep(time);
 
+      await sleep(time);
       if (this._isDestroyed !== false) return;
 
       net = response[1];
@@ -86,29 +86,22 @@ export default {
       this.resize();
 
       this.isLoaded = true;
-      if (state.webcam.isPlaying === true) {
-        this.isStarted = true;
-      }
-      await sleep(500);
-      view.show();
     });
   },
   async destroyed() {
     const { state, commit } = this.$store;
 
     await view.hide();
+    state.scene.remove(view);
     blobs.forEach(blob => {
       sceneView.remove(blob);
     });
-    state.scene.remove(view);
     commit('destroyUpdate');
     commit('destroyResize');
   },
   methods: {
     async update(time) {
       const { state } = this.$store;
-
-      if (this.isStarted === false) return;
 
       timeSegment += time;
       if (timeSegment >= 1 / 60) {
@@ -126,7 +119,7 @@ export default {
         blob.update(time);
       });
 
-      // // Render the post effect.
+      // Render the post effect.
       scenePE.add(body);
       state.renderer.setRenderTarget(renderTarget1);
       state.renderer.render(scenePE, state.camera);
@@ -149,6 +142,7 @@ export default {
     },
     resize() {
       const { resolution } = this.$store.state;
+
       body.resize();
       video.resize();
       videoBack.resize();
@@ -158,11 +152,13 @@ export default {
       renderTarget2.setSize(resolution.x, resolution.y);
       renderTarget3.setSize(resolution.x, resolution.y);
     },
-    start() {
+    async start() {
       const { commit } = this.$store;
 
       this.isStarted = true;
       commit('webcam/playVideo');
+      await sleep(200);
+      view.show();
     }
   }
 };

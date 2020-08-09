@@ -47,6 +47,8 @@ export default class View extends Mesh {
     this.material.uniforms.texture2.value = texture2;
   }
   show() {
+    if (this.isShown === true) return;
+
     const { timeShow, timeHide } = this.material.uniforms;
 
     timeShow.value = 0;
@@ -55,11 +57,15 @@ export default class View extends Mesh {
     this.isHidden = false;
   }
   async hide() {
-    const { timeHide } = this.material.uniforms;
+    const { timeShow, timeHide } = this.material.uniforms;
 
     timeHide.value = 0;
     this.isHidden = true;
     await sleep(1100);
+    this.isShown = false;
+    this.isHidden = false;
+    timeShow.value = 0;
+    timeHide.value = 0;
     return;
   }
   update(time) {
@@ -70,12 +76,6 @@ export default class View extends Mesh {
     }
     if (this.isHidden === true) {
       timeHide.value += time;
-    }
-    if (timeHide.value >= 1.1) {
-      this.isShown = false;
-      this.isHidden = false;
-      timeShow.value = 0;
-      timeHide.value = 0;
     }
   }
 }

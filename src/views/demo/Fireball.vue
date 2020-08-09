@@ -1,16 +1,22 @@
 <script>
+import { Scene, WebGLRenderTarget } from 'three';
 import * as posenet from '@tensorflow-models/posenet';
 import sleep from 'js-util/sleep';
 
 import DemoConsole from '@/components/demo/DemoConsole';
 import DemoOutline from '@/components/demo/DemoOutline';
+import PromiseTextureLoader from '@/webgl/common/PromiseTextureLoader';
+import View from '@/webgl/common/View';
 import KeyPointsGroup from '@/webgl/demo/fireball/KeyPointsGroup';
 import FireBall from '@/webgl/demo/fireball/FireBall';
 import Video from '@/webgl/demo/fireball/Video';
 
+const sceneView = new Scene();
+const view = new View();
 const fireBall = new FireBall();
 const video = new Video();
 const keyPoints = new KeyPointsGroup();
+const renderTarget1 = new WebGLRenderTarget();
 let net = null;
 let timeSegment = 0;
 
@@ -32,6 +38,7 @@ export default {
     const timeStart = Date.now();
 
     Promise.all([
+      PromiseTextureLoader(require('@/assets/img/view.jpg')),
       posenet.load({
         architecture: 'MobileNetV1',
         outputStride: 16,
@@ -44,37 +51,35 @@ export default {
 
       if (this._isDestroyed !== false) return;
 
-      net = response[0];
-
+      net = response[1];
+      view.start(renderTarget1.texture, response[0]);
       video.start();
-      state.scene.add(fireBall);
-      state.scene.add(keyPoints);
-      state.scene.add(video);
+      state.scene.add(view);
+      sceneView.add(fireBall);
+      sceneView.add(keyPoints);
+      sceneView.add(video);
 
       commit('setUpdate', this.update);
       commit('setResize', this.resize);
       this.resize();
 
       this.isLoaded = true;
-      if (state.webcam.isPlaying === true) {
-        this.isStarted = true;
-      }
     });
   },
-  destroyed() {
+  async destroyed() {
     const { state, commit } = this.$store;
-    state.scene.remove(fireBall);
-    state.scene.remove(keyPoints);
-    state.scene.remove(video);
 
+    await view.hide();
+    state.scene.remove(view);
+    sceneView.remove(fireBall);
+    sceneView.remove(keyPoints);
+    sceneView.remove(video);
     commit('destroyUpdate');
     commit('destroyResize');
   },
   methods: {
     async update(time) {
       const { state } = this.$store;
-
-      if (this.isStarted === false) return;
 
       timeSegment += time;
       if (timeSegment >= 1 / 60) {
@@ -83,16 +88,29 @@ export default {
         fireBall.update(time, keyPoints.points.geometry.attributes);
         timeSegment = 0;
       }
+
+      view.update(time);
+
+      // Render the post effect.
+      state.renderer.setRenderTarget(renderTarget1);
+      state.renderer.render(sceneView, state.camera);
+
+      state.renderer.setRenderTarget(null);
     },
     resize() {
+      const { resolution } = this.$store.state;
+
       video.resize();
       keyPoints.resize();
+      renderTarget1.setSize(resolution.x, resolution.y);
     },
-    start() {
+    async start() {
       const { commit } = this.$store;
 
       this.isStarted = true;
       commit('webcam/playVideo');
+      await sleep(200);
+      view.show();
     }
   }
 };

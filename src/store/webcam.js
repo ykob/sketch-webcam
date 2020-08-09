@@ -9,14 +9,12 @@ export default {
     video,
     resolution: new Vector2(),
     facingMode: '',
-    videoTexture: null,
-    isPlaying: false
+    videoTexture: null
   },
   mutations: {
-    playVideo(state) {
+    playVideo() {
       // play video.
       video.play();
-      state.isPlaying = true;
     },
     setFacingMode(state, facingMode) {
       state.facingMode = facingMode;
@@ -75,6 +73,8 @@ export default {
       await sleep(1000);
       commit('setResolution');
       commit('createVideoTexture');
+      video.play();
+      video.pause();
 
       return;
     }
