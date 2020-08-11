@@ -61,7 +61,7 @@ export default class View extends Mesh {
 
     timeHide.value = 0;
     this.isHidden = true;
-    await sleep(1100);
+    await sleep(1500);
     this.isShown = false;
     this.isHidden = false;
     timeShow.value = 0;

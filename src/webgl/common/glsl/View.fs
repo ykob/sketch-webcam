@@ -20,10 +20,10 @@ void main() {
 
   vec3 color = texture2D(texture1, vUv).rgb;
   vec2 fadeColor = texture2D(texture2, updateUv).rg;
-  float colorStrength1 = 1.0 - min(1.0, (timeShow - (fadeColor.r + fadeColor.g) * 0.5) / 0.3);
-  float colorStrength2 = clamp((timeHide - (fadeColor.r + fadeColor.g) * 0.5) / 0.3, 0.0, 1.0);
-  float opacity1 = (timeShow - 0.05 - (fadeColor.r + fadeColor.g) * 0.5) / 0.15;
-  float opacity2 = 1.0 - (timeHide - 0.05 - (fadeColor.r + fadeColor.g) * 0.5) / 0.15;
+  float colorStrength1 = 1.0 - min(1.0, (timeShow - (fadeColor.r + fadeColor.g) * 0.5) / 0.4);
+  float colorStrength2 = clamp((timeHide - (fadeColor.r + fadeColor.g) * 0.5) / 0.4, 0.0, 1.0);
+  float opacity1 = (timeShow - (fadeColor.r + fadeColor.g) * 0.5) / 0.2;
+  float opacity2 = 1.0 - (timeHide - (fadeColor.r + fadeColor.g) * 0.5) / 0.2;
 
   gl_FragColor = vec4(color - colorStrength1 - colorStrength2, opacity1 * opacity2);
 }
