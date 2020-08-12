@@ -37,7 +37,7 @@ const routes = [
         component: () =>
           import(/* webpackChunkName: "glasses" */ '../views/demo/Glasses.vue'),
         meta: {
-          description: 'You can try on a glasses on the Web.'
+          description: 'You can try on glasses on the Web.'
         }
       },
       {
