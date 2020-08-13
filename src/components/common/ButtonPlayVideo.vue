@@ -13,8 +13,6 @@ button(
 
 <style lang="scss" scoped>
 button {
-  width: 180px;
-  height: 40px;
   display: block;
   appearance: none;
   padding: 0;
@@ -22,6 +20,14 @@ button {
   border-radius: 20px;
   color: $color-bg;
   background-color: $color-link;
+  @include l-more-than-mobile {
+    width: 180px;
+    height: 40px;
+  }
+  @include l-mobile {
+    width: 150px;
+    height: 32px;
+  }
   &:focus {
     outline: 0;
     box-shadow: 0 0 0 1px rgba(#fff, 0.6);

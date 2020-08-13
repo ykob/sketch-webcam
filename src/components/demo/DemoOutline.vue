@@ -118,7 +118,6 @@ transition(
   }
   &__processing-marker {
     position: absolute;
-    bottom: 0;
     right: 0;
     left: 0;
     margin-right: auto;
@@ -126,10 +125,12 @@ transition(
     @include l-more-than-mobile {
       width: 32px;
       height: 32px;
+      bottom: 0;
     }
     @include l-mobile {
       width: 24px;
       height: 24px;
+      bottom: 4px;
     }
     span {
       width: 100%;
