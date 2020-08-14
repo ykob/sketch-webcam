@@ -59,6 +59,7 @@ export default class View extends Mesh {
   async hide() {
     const { timeShow, timeHide } = this.material.uniforms;
 
+    if (this.isShown === false) return;
     timeHide.value = 0;
     this.isHidden = true;
     await sleep(1500);
