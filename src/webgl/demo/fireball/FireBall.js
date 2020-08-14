@@ -1,4 +1,4 @@
-import { Group, Vector3 } from 'three';
+import { Group, Vector3, RepeatWrapping } from 'three';
 
 // import store from '@/store';
 
@@ -27,6 +27,10 @@ export default class FireBall extends Group {
     this.sa = 0;
 
     this.add(this.core);
+  }
+  start(texture) {
+    texture.wrapS = RepeatWrapping;
+    this.core.start(texture);
   }
   update(time, { position, opacity }) {
     this.a1 = opacity.getX(9);

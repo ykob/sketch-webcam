@@ -44,7 +44,8 @@ export default {
         outputStride: 16,
         multiplier: 1,
         quantBytes: 4
-      })
+      }),
+      PromiseTextureLoader(require('@/assets/img/fireball.jpg'))
     ]).then(async response => {
       const time = Math.max(100, 2000 - Date.now() + timeStart);
       await sleep(time);
@@ -54,6 +55,7 @@ export default {
       net = response[1];
       view.start(renderTarget1.texture, response[0]);
       video.start();
+      fireBall.start(response[2]);
       state.scene.add(view);
       sceneView.add(fireBall);
       sceneView.add(keyPoints);

@@ -10,6 +10,14 @@ export default class FireBallCore extends Mesh {
     const geometry = new IcosahedronBufferGeometry(1, 2);
 
     const material = new RawShaderMaterial({
+      uniforms: {
+        time: {
+          value: 0
+        },
+        texture: {
+          value: null
+        }
+      },
       vertexShader: vs,
       fragmentShader: fs,
       flatShading: true,
@@ -17,14 +25,17 @@ export default class FireBallCore extends Mesh {
     });
 
     super(geometry, material);
-
-    this.rotateTime = 0;
   }
-  update(time, power) {
-    const scale = power * 0.02;
-    this.scale.set(scale, scale, scale);
+  start(tex) {
+    const { texture } = this.material.uniforms;
 
-    this.rotateTime += time;
-    this.rotation.set(this.rotateTime, this.rotateTime, this.rotateTime);
+    texture.value = tex;
+  }
+  update(t, power) {
+    const { time } = this.material.uniforms;
+    const scale = power * 0.02;
+
+    this.scale.set(scale, scale, scale);
+    time.value += t;
   }
 }
