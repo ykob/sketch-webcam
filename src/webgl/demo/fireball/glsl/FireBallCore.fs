@@ -16,10 +16,13 @@ void main() {
 
   // Define Colors
   float texR1 = texture2D(texture, vUv - vec2(time * 0.05, 0.0)).r;
-  float texR2 = texture2D(texture, vUv + vec2(time * 0.14, 0.0)).g;
-  float strength1 = (texR1 + texR2) / 2.0;
-  float strength2 = ease(smoothstep(0.1, 1.8, texR1 + texR2));
-  vec3 hsv = vec3(strength1 * 0.12 + 0.01, 0.95 - strength2 * 0.3, 0.6 + strength2 * 0.4);
+  float texR2 = 1.0 -texture2D(texture, vUv + vec2(time * 0.14, 0.0)).g;
+  float strength = sin(radians((texR1 + texR2) * 360.0)) * 0.5 + 0.5;
+  vec3 hsv = vec3(
+    strength * 0.14 + 0.03,
+    0.95 - strength * 0.8,
+    strength * 0.4 + 0.8
+    );
   vec3 rgb = convertHsvToRgb(hsv);
 
   gl_FragColor = vec4(rgb, 1.0);

@@ -31,11 +31,9 @@ export default class FireBallCore extends Mesh {
 
     texture.value = tex;
   }
-  update(t, power) {
+  update(t) {
     const { time } = this.material.uniforms;
-    const scale = power * 0.02;
 
-    this.scale.set(scale, scale, scale);
     time.value += t;
   }
 }
