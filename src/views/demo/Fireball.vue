@@ -45,7 +45,8 @@ export default {
         multiplier: 1,
         quantBytes: 4
       }),
-      PromiseTextureLoader(require('@/assets/img/fireball.jpg'))
+      PromiseTextureLoader(require('@/assets/img/fireball.jpg')),
+      PromiseTextureLoader(require('@/assets/img/noise.jpg'))
     ]).then(async response => {
       const time = Math.max(100, 2000 - Date.now() + timeStart);
       await sleep(time);
@@ -55,7 +56,7 @@ export default {
       net = response[1];
       view.start(renderTarget1.texture, response[0]);
       video.start();
-      fireBall.start(response[2]);
+      fireBall.start(response[2], response[3]);
       state.scene.add(view);
       sceneView.add(fireBall);
       sceneView.add(keyPoints);
@@ -104,6 +105,7 @@ export default {
 
       video.resize();
       keyPoints.resize();
+      fireBall.resize();
       renderTarget1.setSize(resolution.x, resolution.y);
     },
     async start() {

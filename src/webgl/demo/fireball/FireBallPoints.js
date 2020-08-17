@@ -1,9 +1,18 @@
-import { Points, BufferGeometry, BufferAttribute, RawShaderMaterial } from 'three';
+import {
+  Vector2,
+  Points,
+  BufferGeometry,
+  BufferAttribute,
+  RawShaderMaterial,
+  AdditiveBlending
+} from 'three';
 import MathEx from 'js-util/MathEx';
 
 import store from '@/store';
-import vs from '@/webgl/glsl/FireBallPoints.vs';
-import fs from '@/webgl/glsl/FireBallPoints.fs';
+import vs from './glsl/FireBallPoints.vs';
+import fs from './glsl/FireBallPoints.fs';
+
+import PIXEL_RATIO from '@/const/PIXEL_RATIO';
 
 const DURATION = 4;
 const NUM = 360;

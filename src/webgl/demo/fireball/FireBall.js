@@ -3,6 +3,7 @@ import { Group, Vector3, RepeatWrapping } from 'three';
 // import store from '@/store';
 
 import FireBallCore from './FireBallCore';
+import FireBallPoints from './FireBallPoints';
 
 export default class FireBall extends Group {
   constructor() {
@@ -21,16 +22,20 @@ export default class FireBall extends Group {
     this.p11 = new Vector3();
     this.p12 = new Vector3();
     this.core = new FireBallCore();
+    this.points = new FireBallPoints();
 
     this.power = 0;
     this.a = new Vector3();
     this.sa = 0;
 
     this.add(this.core);
+    this.add(this.points);
   }
-  start(texture) {
-    texture.wrapS = RepeatWrapping;
-    this.core.start(texture);
+  start(texCore, texNoise) {
+    texCore.wrapS = RepeatWrapping;
+    this.core.start(texCore);
+    this.points.start(texNoise);
+    this.points.show();
   }
   update(time, { position, opacity }) {
     this.a1 = opacity.getX(9);
@@ -87,6 +92,10 @@ export default class FireBall extends Group {
     this.scale.set(this.sa, this.sa, this.sa);
 
     // update the children.
-    this.core.update(time, this.power);
+    this.core.update(time);
+    this.points.update(time);
+  }
+  resize() {
+    this.points.resize();
   }
 }
