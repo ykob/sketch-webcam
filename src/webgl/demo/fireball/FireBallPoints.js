@@ -32,7 +32,7 @@ export default class FireBallPoints extends Points {
     const baStartY = new BufferAttribute(new Float32Array(NUM), 1);
     for (var i = 0, ul = NUM; i < ul; i++) {
       const radian = MathEx.radians(Math.random() * 360);
-      const radius = Math.random() * 5 + 1;
+      const radius = Math.random() * 2 + 1;
       baPositions.setXYZ(
         i,
         Math.cos(radian) * radius,
@@ -40,7 +40,7 @@ export default class FireBallPoints extends Points {
         Math.sin(radian) * radius
       );
       baDelays.setX(i, Math.random() * DURATION);
-      baStartY.setX(i, Math.random() * 4);
+      baStartY.setX(i, Math.random() * 1);
     }
     geometry.setAttribute('position', baPositions);
     geometry.setAttribute('delay', baDelays);
@@ -77,7 +77,7 @@ export default class FireBallPoints extends Points {
 
     // Create Object3D
     super(geometry, material);
-    this.name = 'SkullPoints';
+    this.name = 'FireBallPoints';
     this.timeShow = 0;
     this.timeHide = 0;
     this.isShown = false;
