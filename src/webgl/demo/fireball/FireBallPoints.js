@@ -50,7 +50,7 @@ export default class FireBallPoints extends Points {
           value: new Vector2()
         },
         pixelRatio: {
-          value: 1
+          value: PIXEL_RATIO
         },
         noiseTex: {
           value: null
