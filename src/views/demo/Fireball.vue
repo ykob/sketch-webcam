@@ -1,5 +1,5 @@
 <script>
-import { Scene, WebGLRenderTarget } from 'three';
+import { Scene, WebGLRenderTarget, RepeatWrapping } from 'three';
 import * as posenet from '@tensorflow-models/posenet';
 import sleep from 'js-util/sleep';
 
@@ -52,6 +52,10 @@ export default {
       await sleep(time);
 
       if (this._isDestroyed !== false) return;
+
+      response[2].wrapS = RepeatWrapping;
+      response[3].wrapS = RepeatWrapping;
+      response[3].wrapT = RepeatWrapping;
 
       net = response[1];
       view.start(renderTarget1.texture, response[0]);

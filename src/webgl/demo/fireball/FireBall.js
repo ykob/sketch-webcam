@@ -1,7 +1,8 @@
-import { Group, Vector3, RepeatWrapping } from 'three';
+import { Group, Vector3 } from 'three';
 
 // import store from '@/store';
 
+import FireBallAura from './FireBallAura';
 import FireBallCore from './FireBallCore';
 import FireBallPoints from './FireBallPoints';
 
@@ -21,6 +22,7 @@ export default class FireBall extends Group {
     this.p10a = new Vector3();
     this.p11 = new Vector3();
     this.p12 = new Vector3();
+    this.aura = new FireBallAura();
     this.core = new FireBallCore();
     this.points = new FireBallPoints();
 
@@ -29,10 +31,10 @@ export default class FireBall extends Group {
     this.sa = 0;
 
     this.add(this.core);
+    this.add(this.aura);
     this.add(this.points);
   }
   start(texCore, texNoise) {
-    texCore.wrapS = RepeatWrapping;
     this.core.start(texCore);
     this.points.start(texNoise);
     this.points.show();
@@ -92,6 +94,7 @@ export default class FireBall extends Group {
     this.scale.set(this.sa, this.sa, this.sa);
 
     // update the children.
+    this.aura.update(time);
     this.core.update(time);
     this.points.update(time);
   }
