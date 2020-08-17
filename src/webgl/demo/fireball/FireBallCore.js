@@ -7,7 +7,7 @@ import fs from './glsl/FireBallCore.fs';
 
 export default class FireBallCore extends Mesh {
   constructor() {
-    const geometry = new IcosahedronBufferGeometry(1, 2);
+    const geometry = new IcosahedronBufferGeometry(1.6, 2);
 
     const material = new RawShaderMaterial({
       uniforms: {
