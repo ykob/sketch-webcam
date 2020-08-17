@@ -20,7 +20,6 @@ export default class FireBallCore extends Mesh {
       },
       vertexShader: vs,
       fragmentShader: fs,
-      flatShading: true,
       transparent: true
     });
 

@@ -19,7 +19,7 @@ varying float vAlpha;
 void main() {
   // Coordinate transformation
   float alpha = mod(time - delay, duration) / duration;
-  vec3 risePosition = vec3(0.0, alpha * 5.0 - 3.0 + startY, 0.0);
+  vec3 risePosition = vec3(0.0, alpha * 8.0 - 3.0 + startY, 0.0);
 
   float noiseR = texture2D(
     noiseTex,
