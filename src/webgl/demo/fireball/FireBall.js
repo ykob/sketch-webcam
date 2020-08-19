@@ -4,6 +4,7 @@ import { Group, Vector3 } from 'three';
 
 import FireBallAura from './FireBallAura';
 import FireBallCore from './FireBallCore';
+import FireBallFlare from './FireBallFlare';
 import FireBallPoints from './FireBallPoints';
 
 export default class FireBall extends Group {
@@ -24,18 +25,21 @@ export default class FireBall extends Group {
     this.p12 = new Vector3();
     this.aura = new FireBallAura();
     this.core = new FireBallCore();
+    this.flare = new FireBallFlare();
     this.points = new FireBallPoints();
 
     this.power = 0;
     this.a = new Vector3();
     this.sa = 0;
 
-    this.add(this.core);
     this.add(this.aura);
+    this.add(this.core);
+    this.add(this.flare);
     this.add(this.points);
   }
   start(texCore, texNoise) {
     this.core.start(texCore);
+    this.flare.start(texCore);
     this.points.start(texNoise);
     this.points.show();
   }
@@ -96,6 +100,7 @@ export default class FireBall extends Group {
     // update the children.
     this.aura.update(time);
     this.core.update(time);
+    this.flare.update(time);
     this.points.update(time);
   }
   resize() {
