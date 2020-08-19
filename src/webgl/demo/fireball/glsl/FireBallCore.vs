@@ -18,7 +18,6 @@ void main() {
 
   vPosition = mPosition.xyz;
   vUv = uv;
-  vRim = dot(normal, cameraPosition);
   vRim = smoothstep(0.4, 1.0, abs(sin(angleToCamera)));
 
   gl_Position = projectionMatrix * viewMatrix * mPosition;
