@@ -7,7 +7,7 @@ import fs from './glsl/FireBallAura.fs';
 
 export default class FireBallAura extends Mesh {
   constructor() {
-    const geometry = new PlaneBufferGeometry(4.8, 4.8, 1, 1);
+    const geometry = new PlaneBufferGeometry(6, 6, 1, 1);
 
     const material = new RawShaderMaterial({
       uniforms: {
@@ -17,7 +17,8 @@ export default class FireBallAura extends Mesh {
       },
       vertexShader: vs,
       fragmentShader: fs,
-      transparent: true
+      transparent: true,
+      depthWrite: false
     });
 
     super(geometry, material);

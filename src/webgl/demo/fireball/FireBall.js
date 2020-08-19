@@ -32,6 +32,10 @@ export default class FireBall extends Group {
     this.a = new Vector3();
     this.sa = 0;
 
+    this.aura.renderOrder = 1;
+    this.core.renderOrder = 2;
+    this.flare.renderOrder = 2;
+
     this.add(this.aura);
     this.add(this.core);
     this.add(this.flare);

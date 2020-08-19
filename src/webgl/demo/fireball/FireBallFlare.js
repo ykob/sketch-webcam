@@ -2,6 +2,7 @@ import {
   Mesh,
   IcosahedronBufferGeometry,
   RawShaderMaterial,
+  AdditiveBlending,
   DoubleSide
 } from 'three';
 
@@ -12,7 +13,7 @@ import fs from './glsl/FireBallFlare.fs';
 
 export default class FireBallFlare extends Mesh {
   constructor() {
-    const geometry = new IcosahedronBufferGeometry(2.2, 2);
+    const geometry = new IcosahedronBufferGeometry(2.7, 2);
 
     const material = new RawShaderMaterial({
       uniforms: {
@@ -26,7 +27,9 @@ export default class FireBallFlare extends Mesh {
       vertexShader: vs,
       fragmentShader: fs,
       transparent: true,
-      side: DoubleSide
+      blending: AdditiveBlending,
+      side: DoubleSide,
+      depthWrite: false
     });
 
     super(geometry, material);
