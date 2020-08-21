@@ -13,7 +13,7 @@ import fs from './glsl/FireBallFlare.fs';
 
 export default class FireBallFlare extends Mesh {
   constructor() {
-    const geometry = new IcosahedronBufferGeometry(2, 4);
+    const geometry = new IcosahedronBufferGeometry(2.2, 5);
 
     const material = new RawShaderMaterial({
       uniforms: {

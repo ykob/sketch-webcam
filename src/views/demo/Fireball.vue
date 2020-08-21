@@ -9,14 +9,22 @@ import PromiseTextureLoader from '@/webgl/common/PromiseTextureLoader';
 import View from '@/webgl/common/View';
 import KeyPointsGroup from '@/webgl/demo/fireball/KeyPointsGroup';
 import FireBall from '@/webgl/demo/fireball/FireBall';
+import PostEffectBright from '@/webgl/common/PostEffectBright';
+import PostEffectGodray from '@/webgl/demo/fireball/PostEffectGodray';
+import PostEffectTotal from '@/webgl/demo/fireball/PostEffectTotal';
 import Video from '@/webgl/demo/fireball/Video';
 
 const sceneView = new Scene();
 const view = new View();
 const fireBall = new FireBall();
+const postEffectBright = new PostEffectBright();
+const postEffectGodray = new PostEffectGodray();
+const postEffectTotal = new PostEffectTotal();
 const video = new Video();
 const keyPoints = new KeyPointsGroup();
 const renderTarget1 = new WebGLRenderTarget();
+const renderTarget2 = new WebGLRenderTarget();
+const renderTarget3 = new WebGLRenderTarget();
 let net = null;
 let timeSegment = 0;
 
@@ -58,9 +66,12 @@ export default {
       response[3].wrapT = RepeatWrapping;
 
       net = response[1];
-      view.start(renderTarget1.texture, response[0]);
+      view.start(renderTarget3.texture, response[0]);
       video.start();
       fireBall.start(response[2], response[3]);
+      postEffectBright.start(renderTarget1.texture);
+      postEffectGodray.start(renderTarget2.texture);
+      postEffectTotal.start(renderTarget1.texture, renderTarget2.texture);
       state.scene.add(view);
       sceneView.add(fireBall);
       sceneView.add(keyPoints);
@@ -78,9 +89,6 @@ export default {
 
     await view.hide();
     state.scene.remove(view);
-    sceneView.remove(fireBall);
-    sceneView.remove(keyPoints);
-    sceneView.remove(video);
     commit('destroyUpdate');
     commit('destroyResize');
   },
@@ -99,8 +107,34 @@ export default {
       view.update(time);
 
       // Render the post effect.
+      sceneView.add(fireBall);
       state.renderer.setRenderTarget(renderTarget1);
       state.renderer.render(sceneView, state.camera);
+      sceneView.remove(fireBall);
+
+      sceneView.add(postEffectBright);
+      state.renderer.setRenderTarget(renderTarget2);
+      state.renderer.render(sceneView, state.camera);
+      sceneView.remove(postEffectBright);
+
+      sceneView.add(postEffectGodray);
+      state.renderer.setRenderTarget(renderTarget1);
+      state.renderer.render(sceneView, state.camera);
+      sceneView.remove(postEffectGodray);
+
+      sceneView.add(fireBall);
+      sceneView.add(keyPoints);
+      sceneView.add(video);
+      state.renderer.setRenderTarget(renderTarget2);
+      state.renderer.render(sceneView, state.camera);
+      sceneView.remove(fireBall);
+      sceneView.remove(keyPoints);
+      sceneView.remove(video);
+
+      sceneView.add(postEffectTotal);
+      state.renderer.setRenderTarget(renderTarget3);
+      state.renderer.render(sceneView, state.camera);
+      sceneView.remove(postEffectTotal);
 
       state.renderer.setRenderTarget(null);
     },
@@ -111,6 +145,8 @@ export default {
       keyPoints.resize();
       fireBall.resize();
       renderTarget1.setSize(resolution.x, resolution.y);
+      renderTarget2.setSize(resolution.x, resolution.y);
+      renderTarget3.setSize(resolution.x, resolution.y);
     },
     async start() {
       const { commit } = this.$store;
