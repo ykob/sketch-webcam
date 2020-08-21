@@ -14,10 +14,10 @@ varying vec2 vUv;
 
 void main() {
   // Coordinate transformation
-  float texR1 = texture2D(texture, uv + vec2(time * 0.1, 0.0)).r;
-  float texR2 = 1.0 - texture2D(texture, uv - vec2(time * 0.2, 0.0)).g;
-  float strength = sin(radians((texR1 + texR2) * 360.0)) * 0.5 + 0.5;
-  vec3 updatePosition = position + normalize(position) * strength * 1.5;
+  float texR = 1.0 - texture2D(texture, uv + vec2(time * 0.1, 0.0)).r;
+  float texG = 1.0 - texture2D(texture, uv - vec2(time * 0.2, 0.0)).g;
+  float strength = sin(radians((texR * 0.7 + texG * 0.3) * 360.0)) * 0.5 + 0.5;
+  vec3 updatePosition = position + normalize(position) * strength * 2.0;
 
   vec4 mPosition = modelMatrix * vec4(updatePosition, 1.0);
 

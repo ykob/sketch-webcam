@@ -10,9 +10,10 @@ varying vec2 vUv;
 
 void main() {
   // Define Colors
-  float texR1 = texture2D(texture, vUv + vec2(time * 0.1, 0.0)).r;
-  float texR2 = 1.0 - texture2D(texture, vUv - vec2(time * 0.2, 0.0)).g;
-  float strength = smoothstep(0.5, 1.0, sin(radians((texR1 + texR2) * 360.0)) * 0.5 + 0.5);
+  float texR = 1.0 - texture2D(texture, vUv + vec2(time * 0.1, 0.0)).r;
+  float texG = 1.0 - texture2D(texture, vUv - vec2(time * 0.2, 0.0)).g;
+  float strength = smoothstep(0.4, 1.0, sin(radians((texR * 0.7 + texG * 0.3) * 360.0)) * 0.5 + 0.5);
+  strength = pow(strength, 2.0);
   vec3 hsv = vec3(
     strength * 0.14,
     0.95 - strength * 0.6,
