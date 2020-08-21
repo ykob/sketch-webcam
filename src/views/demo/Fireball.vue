@@ -104,6 +104,7 @@ export default {
         timeSegment = 0;
       }
 
+      postEffectGodray.update(fireBall.position);
       view.update(time);
 
       // Render the post effect.

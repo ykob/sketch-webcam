@@ -17,7 +17,7 @@ void main() {
   vec3 hsv = vec3(
     strength * 0.14,
     0.95 - strength * 0.6,
-    strength * 0.2 + 0.8
+    strength * 0.2 + 0.5
     );
   vec3 rgb = convertHsvToRgb(hsv);
   float opacity = strength * 0.3;

@@ -17,11 +17,11 @@ void main() {
   vec3 hsv1 = vec3(
     strength * 0.14 + 0.03,
     0.95 - strength * 0.8,
-    strength * 0.4 + 0.8
+    strength * 0.2 + 0.5
     );
   vec3 rgb = convertHsvToRgb(hsv1);
 
-  vec3 hsv2 = vec3(0.17, 0.15, 1.0);
+  vec3 hsv2 = vec3(0.17, 0.15, 0.7);
   vec3 rimColor = convertHsvToRgb(hsv2);
   
   vec3 color = rgb * (1.0 - vRim) + rimColor * vRim;

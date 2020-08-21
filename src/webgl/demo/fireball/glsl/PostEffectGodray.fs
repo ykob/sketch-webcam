@@ -6,7 +6,7 @@ uniform sampler2D texture1;
 varying vec2 vUv;
 
 const float godrayIteration = 60.0;
-const float godrayStrength = 90.0;
+const float godrayStrength = 40.0;
 
 void main() {
   // get the texture colors.
