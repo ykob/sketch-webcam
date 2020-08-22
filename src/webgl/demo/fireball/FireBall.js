@@ -31,6 +31,9 @@ export default class FireBall extends Group {
     this.power = 0;
     this.a = new Vector3();
     this.sa = 0;
+    this.isShown = false;
+    this.isHidden = false;
+    this.visible = false;
 
     this.aura.renderOrder = 1;
     this.core.renderOrder = 2;
@@ -79,21 +82,28 @@ export default class FireBall extends Group {
 
     // calculate position, acceleration and power.
     if (this.a1 * this.a2 > 0 && d2 / d1 < 1) {
-      const l = this.p9a.clone().lerp(this.p10a, 0.5);
-      const a = l
-        .clone()
-        .sub(this.position)
-        .multiplyScalar(0.03);
-
-      if (this.power === 0) {
-        this.a.set(0, 0, 0);
-        this.position.copy(l);
-      }
-      this.a.add(a);
-      this.power = Math.min(100, this.power + 1);
+      this.power = Math.min(200, this.power + 1);
     } else {
-      this.power = Math.max(0, this.power - 5);
+      this.power = Math.max(0, this.power - 10);
     }
+
+    const l = this.p9a.clone().lerp(this.p10a, 0.5);
+    const a = l
+      .clone()
+      .sub(this.position)
+      .multiplyScalar(0.03);
+
+    if (this.isShown === false && this.power > 100) {
+      this.a.set(0, 0, 0);
+      this.position.copy(l);
+      this.visible = true;
+      this.isShown = true;
+    } else if (this.isShown === true && this.power < 50) {
+      this.visible = false;
+      this.isShown = false;
+      this.isHidden = true;
+    }
+    this.a.add(a);
     this.a.add(this.a.clone().multiplyScalar(-0.08));
     this.position.add(this.a);
 
