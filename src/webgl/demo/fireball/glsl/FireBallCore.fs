@@ -2,6 +2,8 @@ precision highp float;
 
 uniform float time;
 uniform sampler2D texture;
+uniform float alphaShow;
+uniform float alphaHide;
 
 varying vec3 vPosition;
 varying vec2 vUv;
@@ -10,6 +12,8 @@ varying float vRim;
 #pragma glslify: convertHsvToRgb = require(glsl-util/convertHsvToRgb);
 
 void main() {
+  float alpha = alphaShow * (1.0 - alphaHide);
+
   // Define Colors
   float texR1 = texture2D(texture, vUv - vec2(time * 0.05, 0.0)).r;
   float texR2 = 1.0 - texture2D(texture, vUv + vec2(time * 0.14, 0.0)).g;
@@ -25,6 +29,7 @@ void main() {
   vec3 rimColor = convertHsvToRgb(hsv2);
   
   vec3 color = rgb * (1.0 - vRim) + rimColor * vRim;
+  float opacity = alpha;
 
-  gl_FragColor = vec4(color, 1.0);
+  gl_FragColor = vec4(color, opacity);
 }

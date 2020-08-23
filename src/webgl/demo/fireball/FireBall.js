@@ -7,6 +7,9 @@ import FireBallCore from './FireBallCore';
 import FireBallFlare from './FireBallFlare';
 import FireBallPoints from './FireBallPoints';
 
+const DURATION_SHOW = 2;
+const DURATION_HIDE = 2;
+
 export default class FireBall extends Group {
   constructor() {
     super();
@@ -31,6 +34,8 @@ export default class FireBall extends Group {
     this.power = 0;
     this.a = new Vector3();
     this.sa = 0;
+    this.timeShow = 0;
+    this.timeHide = 0;
     this.isShown = false;
     this.isHidden = false;
     this.visible = false;
@@ -49,6 +54,16 @@ export default class FireBall extends Group {
     this.flare.start(texCore);
     this.points.start(texNoise);
     this.points.show();
+  }
+  show() {
+    if (this.isShown === true || this.isHidden === true) return;
+    this.isShown = true;
+    this.timeShow = 0;
+    this.timeHide = 0;
+  }
+  hide() {
+    if (this.isHidden === true) return;
+    this.isHidden = true;
   }
   update(time, { position, opacity }) {
     this.a1 = opacity.getX(9);
@@ -111,11 +126,26 @@ export default class FireBall extends Group {
     this.sa += (d1 - this.sa) * 0.1;
     this.scale.set(this.sa, this.sa, this.sa);
 
+    // add time.
+    if (this.isShown === true) {
+      this.timeShow = Math.min(this.timeShow + time, DURATION_SHOW);
+    }
+    if (this.isHidden === true) {
+      this.timeHide = Math.min(this.timeHide + time, DURATION_HIDE);
+    }
+
     // update the children.
-    this.aura.update(time);
-    this.core.update(time);
-    this.flare.update(time);
-    this.points.update(time);
+    this.aura.update(time, this.timeShow, this.timeHide);
+    this.core.update(time, this.timeShow, this.timeHide);
+    this.flare.update(time, this.timeShow, this.timeHide);
+    this.points.update(time, this.timeShow, this.timeHide);
+
+    if (this.timeHide >= DURATION_HIDE) {
+      this.timeShow = 0;
+      this.timeHide = 0;
+      this.isShown = false;
+      this.isHidden = false;
+    }
   }
   resize() {
     this.points.resize();
