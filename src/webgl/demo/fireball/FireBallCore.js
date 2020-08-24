@@ -7,7 +7,7 @@ import vs from './glsl/FireBallCore.vs';
 import fs from './glsl/FireBallCore.fs';
 
 const DURATION_SHOW = 2;
-const DURATION_HIDE = 2;
+const DURATION_HIDE = 1;
 
 export default class FireBallCore extends Mesh {
   constructor() {

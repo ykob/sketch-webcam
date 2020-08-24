@@ -8,7 +8,7 @@ import FireBallFlare from './FireBallFlare';
 import FireBallPoints from './FireBallPoints';
 
 const DURATION_SHOW = 2;
-const DURATION_HIDE = 2;
+const DURATION_HIDE = 1;
 
 export default class FireBall extends Group {
   constructor() {

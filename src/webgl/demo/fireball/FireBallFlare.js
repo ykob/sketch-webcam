@@ -13,7 +13,7 @@ import vs from './glsl/FireBallFlare.vs';
 import fs from './glsl/FireBallFlare.fs';
 
 const DURATION_SHOW = 2;
-const DURATION_HIDE = 2;
+const DURATION_HIDE = 1;
 
 export default class FireBallFlare extends Mesh {
   constructor() {

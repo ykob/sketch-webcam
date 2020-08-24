@@ -7,7 +7,7 @@ import vs from './glsl/FireBallAura.vs';
 import fs from './glsl/FireBallAura.fs';
 
 const DURATION_SHOW = 2;
-const DURATION_HIDE = 2;
+const DURATION_HIDE = 1;
 
 export default class FireBallAura extends Mesh {
   constructor() {
