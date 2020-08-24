@@ -55,5 +55,8 @@ export default class FireBallFlare extends Mesh {
     time.value += t;
     alphaShow.value = MathEx.clamp(ts / DURATION_SHOW, 0, 1);
     alphaHide.value = MathEx.clamp(th / DURATION_HIDE, 0, 1);
+
+    const scale = 1 + alphaHide.value * 1.2;
+    this.scale.set(scale, scale, scale);
   }
 }

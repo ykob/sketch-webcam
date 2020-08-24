@@ -7,7 +7,7 @@ import vs from './glsl/FireBallAura.vs';
 import fs from './glsl/FireBallAura.fs';
 
 const DURATION_SHOW = 2;
-const DURATION_HIDE = 1;
+const DURATION_HIDE = 0.6;
 
 export default class FireBallAura extends Mesh {
   constructor() {
@@ -39,5 +39,8 @@ export default class FireBallAura extends Mesh {
     time.value += t;
     alphaShow.value = MathEx.clamp(ts / DURATION_SHOW, 0, 1);
     alphaHide.value = MathEx.clamp(th / DURATION_HIDE, 0, 1);
+
+    const scale = 0.4 + alphaShow.value * 0.6 + alphaHide.value * 0.2;
+    this.scale.set(scale, scale, scale);
   }
 }
