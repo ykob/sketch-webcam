@@ -103,23 +103,26 @@ export default class FireBall extends Group {
     }
 
     const l = this.p9a.clone().lerp(this.p10a, 0.5);
-    const a = l
-      .clone()
-      .sub(this.position)
-      .multiplyScalar(0.03);
 
+    if (this.isHidden === false) {
+      const a = l
+        .clone()
+        .sub(this.position)
+        .multiplyScalar(0.01);
+
+      this.a.add(a);
+    }
     if (this.isShown === false && this.power > 100) {
       this.a.set(0, 0, 0);
       this.position.copy(l);
       this.visible = true;
       this.isShown = true;
     } else if (this.isShown === true && this.power < 50) {
-      this.visible = false;
       this.isShown = false;
       this.isHidden = true;
     }
-    this.a.add(a);
-    this.a.add(this.a.clone().multiplyScalar(-0.08));
+
+    this.a.add(this.a.clone().multiplyScalar(-0.06));
     this.position.add(this.a);
 
     // calculate scale.
@@ -145,6 +148,7 @@ export default class FireBall extends Group {
       this.timeHide = 0;
       this.isShown = false;
       this.isHidden = false;
+      this.visible = false;
     }
   }
   resize() {
