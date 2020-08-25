@@ -17,6 +17,7 @@
     "@tensorflow/tfjs-converter": "^1.7.2",
     "@tensorflow/tfjs-core": "^1.7.2",
     "core-js": "^3.6.4",
+    "easing-js": "git://github.com/danro/easing-js.git",
     "glsl-easings": "^1.0.0",
     "glsl-util": "git://github.com/ykob/glsl-util.git",
     "js-util": "git://github.com/ykob/js-util.git",
