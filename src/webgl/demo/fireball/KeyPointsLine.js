@@ -5,8 +5,6 @@ import {
   RawShaderMaterial
 } from 'three';
 
-import store from '@/store';
-
 import vs from './glsl/KeyPointsLine.vs';
 import fs from './glsl/KeyPointsLine.fs';
 
@@ -20,11 +18,6 @@ export default class KeyPointsLine extends LineSegments {
     geometry.setAttribute('opacity', baOpacities);
 
     const material = new RawShaderMaterial({
-      uniforms: {
-        pixelRatio: {
-          value: store.state.pixelRatio
-        }
-      },
       vertexShader: vs,
       fragmentShader: fs,
       transparent: true

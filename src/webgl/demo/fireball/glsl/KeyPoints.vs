@@ -4,7 +4,7 @@ attribute float opacity;
 uniform mat4 projectionMatrix;
 uniform mat4 viewMatrix;
 uniform mat4 modelMatrix;
-uniform float pixelRatio;
+uniform vec2 resolution;
 
 varying float vOpacity;
 
@@ -13,7 +13,7 @@ void main() {
   vec4 mvPosition = viewMatrix * modelMatrix * vec4(position, 1.0);
 
   // Define the point size.
-  float pointSize = 12.0 * pixelRatio;
+  float pointSize = 8.0;
 
   vOpacity = opacity;
 

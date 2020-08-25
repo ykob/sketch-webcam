@@ -151,7 +151,4 @@ export default class FireBall extends Group {
       this.visible = false;
     }
   }
-  resize() {
-    this.points.resize();
-  }
 }

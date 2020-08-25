@@ -1,5 +1,4 @@
 import {
-  Vector2,
   Points,
   BufferGeometry,
   BufferAttribute,
@@ -8,11 +7,8 @@ import {
 } from 'three';
 import MathEx from 'js-util/MathEx';
 
-import store from '@/store';
 import vs from './glsl/FireBallPoints.vs';
 import fs from './glsl/FireBallPoints.fs';
-
-import PIXEL_RATIO from '@/const/PIXEL_RATIO';
 
 const DURATION = 4;
 const NUM = 360;
@@ -54,12 +50,6 @@ export default class FireBallPoints extends Points {
         },
         duration: {
           value: DURATION
-        },
-        resolution: {
-          value: new Vector2()
-        },
-        pixelRatio: {
-          value: PIXEL_RATIO
         },
         noiseTex: {
           value: null
@@ -130,10 +120,5 @@ export default class FireBallPoints extends Points {
       1.0
     );
     alpha.value = alphaShow * (1.0 - alphaHide);
-  }
-  resize() {
-    const { resolution } = this.material.uniforms;
-
-    resolution.value.copy(store.state.resolution);
   }
 }

@@ -91,8 +91,5 @@ export default class KeyPointsGroup extends Group {
       Math.min(1, ((this.size.x / this.size.y) * resolution.y) / resolution.x),
       Math.min(1, ((this.size.y / this.size.x) * resolution.x) / resolution.y)
     );
-
-    this.points.material.uniforms.pixelRatio.value = store.state.pixelRatio;
-    this.line.material.uniforms.pixelRatio.value = store.state.pixelRatio;
   }
 }

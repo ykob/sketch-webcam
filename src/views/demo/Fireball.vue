@@ -144,7 +144,6 @@ export default {
 
       video.resize();
       keyPoints.resize();
-      fireBall.resize();
       renderTarget1.setSize(resolution.x, resolution.y);
       renderTarget2.setSize(resolution.x, resolution.y);
       renderTarget3.setSize(resolution.x, resolution.y);
