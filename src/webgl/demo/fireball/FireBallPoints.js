@@ -13,9 +13,7 @@ import fs from './glsl/FireBallPoints.fs';
 const DURATION = 4;
 const NUM = 360;
 const DURATION_SHOW = 2;
-const DELAY_SHOW = 4;
 const DURATION_HIDE = 1;
-const DELAY_HIDE = 0;
 
 export default class FireBallPoints extends Points {
   constructor() {
@@ -54,7 +52,10 @@ export default class FireBallPoints extends Points {
         noiseTex: {
           value: null
         },
-        alpha: {
+        alphaShow: {
+          value: 0
+        },
+        alphaHide: {
           value: 0
         }
       },
@@ -68,57 +69,18 @@ export default class FireBallPoints extends Points {
     // Create Object3D
     super(geometry, material);
     this.name = 'FireBallPoints';
-    this.timeShow = 0;
-    this.timeHide = 0;
-    this.isShown = false;
-    this.isHidden = false;
   }
   start(tex) {
     const { noiseTex } = this.material.uniforms;
 
     noiseTex.value = tex;
   }
-  show() {
-    if (this.timeShow > 0) this.timeShow = DELAY_SHOW / 2;
-    this.timeHide = 0;
-    this.isShown = true;
-    this.isHidden = false;
-  }
-  hide() {
-    this.isHidden = true;
-  }
-  update(t) {
-    const { time, alpha } = this.material.uniforms;
+  update(t, ts, th) {
+    const { time, alphaShow, alphaHide } = this.material.uniforms;
 
     time.value += t;
+    alphaShow.value = MathEx.clamp(ts / DURATION_SHOW, 0, 1);
+    alphaHide.value = MathEx.clamp(th / DURATION_HIDE, 0, 1);
     this.rotation.set(0, time.value * 0.2, 0);
-
-    // for the showing effect.
-    if (this.isShown === true) {
-      this.timeShow += t;
-      if (this.timeShow - DELAY_SHOW >= DURATION_SHOW) {
-        this.isShown = false;
-      }
-    }
-    // for the hiding effect.
-    if (this.isHidden === true) {
-      this.timeHide += t;
-      if (this.timeHide - DELAY_HIDE >= DURATION_HIDE) {
-        this.isHidden = false;
-      }
-    }
-
-    // calculation the alpha.
-    const alphaShow = MathEx.clamp(
-      (this.timeShow - DELAY_SHOW) / DURATION_SHOW,
-      0.0,
-      1.0
-    );
-    const alphaHide = MathEx.clamp(
-      (this.timeHide - DELAY_HIDE) / DURATION_HIDE,
-      0.0,
-      1.0
-    );
-    alpha.value = alphaShow * (1.0 - alphaHide);
   }
 }

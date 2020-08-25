@@ -53,7 +53,6 @@ export default class FireBall extends Group {
     this.core.start(texCore);
     this.flare.start(texCore);
     this.points.start(texNoise);
-    this.points.show();
   }
   show() {
     if (this.isShown === true || this.isHidden === true) return;
