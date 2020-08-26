@@ -98,8 +98,10 @@ export default {
 
       timeSegment += time;
       if (timeSegment >= 1 / 60) {
-        const pose = await net.estimateSinglePose(state.webcam.video);
-        keyPoints.update(pose.keypoints);
+        const pose = await net.estimateMultiplePoses(state.webcam.video, {
+          maxDetections: 3
+        });
+        keyPoints.update(pose[0].keypoints);
         fireBall.update(time, keyPoints.points.geometry.attributes);
         timeSegment = 0;
       }
