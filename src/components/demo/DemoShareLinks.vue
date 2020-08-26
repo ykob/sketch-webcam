@@ -13,11 +13,14 @@ export default {
     }
   },
   computed: {
+    text() {
+      return `${this.$route.name} / ${process.env.VUE_APP_WEBSITE_NAME}`;
+    },
     url() {
       return `${process.env.VUE_APP_DOMAIN}${this.$route.path}`;
     },
     hrefTwitter() {
-      return `https://twitter.com/intent/tweet?text=${this.url}`;
+      return `https://twitter.com/intent/tweet?text=${this.text}&url=${this.url}&hashtags=webgl,threejs,tensorflowjs`;
     }
   }
 };
