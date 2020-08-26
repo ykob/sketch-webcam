@@ -24,14 +24,11 @@ export default {
 </script>
 
 <template lang="pug">
-transition(
-  appear
-  )
-  .demo-share-links(
-    v-if = 'isShown'
-    )
+.demo-share-links
+  transition
     a.demo-share-links__btn(
-      :href = 'hrefTwitter'
+     v-if = 'isShown'
+     :href = 'hrefTwitter'
       target = '_blank'
       )
       IconTwitter.demo-share-links__icon-twitter(
@@ -57,8 +54,38 @@ transition(
     justify-content: center;
     align-items: center;
     position: relative;
+    margin-top: 4px;
     border-radius: 50%;
     background-color: rgba(#000, 0.8);
+    &.v-enter {
+      opacity: 0;
+      transform: translate3d(0, 4px, 0) scale(0.8);
+    }
+    &.v-enter-to {
+      opacity: 1;
+      transform: scale(1);
+      transition-duration: 0.2s;
+      transition-property: opacity, transform;
+    }
+    .page-leave-to &,
+    &.v-leave-to {
+      opacity: 0;
+      pointer-events: none;
+      transform: translate3d(0, 6px, 0) scale(0.7);
+      transition-duration: 0.2s;
+      transition-property: opacity, transform;
+    }
+    @for $i from 1 through 2 {
+      &:nth-of-type(#{$i}) {
+        &.v-enter-to {
+          transition-delay: (2 - $i) * 0.04s;
+        }
+        .page-leave-to &,
+        &.v-leave-to {
+          transition-delay: ($i - 1) * 0.04s;
+        }
+      }
+    }
   }
 }
 </style>
