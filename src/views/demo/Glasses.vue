@@ -1,5 +1,4 @@
 <script>
-import { Scene, WebGLRenderTarget } from 'three';
 import * as facemesh from '@tensorflow-models/facemesh';
 import sleep from 'js-util/sleep';
 
@@ -7,15 +6,9 @@ import DemoConsole from '@/components/demo/DemoConsole';
 import DemoOutline from '@/components/demo/DemoOutline';
 import PromiseOBJLoader from '@/webgl/common/PromiseOBJLoader';
 import PromiseTextureLoader from '@/webgl/common/PromiseTextureLoader';
-import View from '@/webgl/common/View';
-import Glasses from '@/webgl/demo/glasses/Glasses';
-import Video from '@/webgl/demo/glasses/Video';
+import WebGLContent from '@/webgl/demo/glasses/';
 
-const sceneView = new Scene();
-const view = new View();
-const video = new Video();
-const renderTarget1 = new WebGLRenderTarget();
-let glasses;
+const webglContent = new WebGLContent();
 let model;
 let timeSegment = 0;
 
@@ -33,7 +26,7 @@ export default {
     isStarted: false
   }),
   created() {
-    const { state, commit } = this.$store;
+    const { commit } = this.$store;
     const timeStart = Date.now();
 
     Promise.all([
@@ -49,12 +42,7 @@ export default {
       if (this._isDestroyed !== false) return;
 
       model = response[1];
-      view.start(renderTarget1.texture, response[0]);
-      glasses = new Glasses(response[2].children[0].geometry);
-      video.start();
-      state.scene.add(view);
-      sceneView.add(glasses);
-      sceneView.add(video);
+      webglContent.start(response[0], response[2].children[0].geometry);
 
       commit('setUpdate', this.update);
       commit('setResize', this.resize);
@@ -64,45 +52,26 @@ export default {
     });
   },
   async destroyed() {
-    const { state, commit } = this.$store;
+    const { commit } = this.$store;
 
-    await view.hide();
-    state.scene.remove(view);
-    sceneView.remove(glasses);
-    sceneView.remove(video);
+    await webglContent.destroy();
     commit('destroyUpdate');
     commit('destroyResize');
   },
   methods: {
     async update(time) {
       const { state } = this.$store;
+      let predictions = null;
 
       timeSegment += time;
       if (timeSegment >= 1 / 60) {
-        const predictions = await model.estimateFaces(state.webcam.video);
-        if (predictions.length > 0) {
-          glasses.update(predictions[0]);
-          glasses.visible = true;
-        } else {
-          glasses.visible = false;
-        }
+        predictions = await model.estimateFaces(state.webcam.video);
         timeSegment = 0;
       }
-
-      view.update(time);
-
-      // Render the post effect.
-      state.renderer.setRenderTarget(renderTarget1);
-      state.renderer.render(sceneView, state.camera);
-
-      state.renderer.setRenderTarget(null);
+      webglContent.update(time, predictions);
     },
     resize() {
-      const { resolution } = this.$store.state;
-
-      glasses.resize();
-      video.resize();
-      renderTarget1.setSize(resolution.x, resolution.y);
+      webglContent.resize();
     },
     async start() {
       const { commit } = this.$store;
@@ -110,7 +79,7 @@ export default {
       this.isStarted = true;
       commit('webcam/playVideo');
       await sleep(200);
-      view.show();
+      webglContent.show();
     }
   }
 };
