@@ -11,7 +11,6 @@ uniform sampler2D texture;
 uniform float alphaShow;
 uniform float alphaHide;
 
-varying vec3 vPosition;
 varying vec2 vUv;
 varying float vRim;
 
@@ -27,7 +26,6 @@ void main() {
   vec4 mPosition = modelMatrix * vec4(updatePosition, 1.0);
   float angleToCamera = acos(dot(normalize(cameraPosition), normalize(position)));
 
-  vPosition = mPosition.xyz;
   vUv = uv;
   vRim = smoothstep(0.4, 1.0, abs(sin(angleToCamera)));
 

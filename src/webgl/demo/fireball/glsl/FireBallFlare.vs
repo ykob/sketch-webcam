@@ -9,7 +9,6 @@ uniform vec3 cameraPosition;
 uniform float time;
 uniform sampler2D texture;
 
-varying vec3 vPosition;
 varying vec2 vUv;
 
 void main() {
@@ -21,7 +20,6 @@ void main() {
 
   vec4 mPosition = modelMatrix * vec4(updatePosition, 1.0);
 
-  vPosition = mPosition.xyz;
   vUv = uv;
 
   gl_Position = projectionMatrix * viewMatrix * mPosition;

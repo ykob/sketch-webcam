@@ -5,7 +5,6 @@ uniform sampler2D texture;
 uniform float alphaShow;
 uniform float alphaHide;
 
-varying vec3 vPosition;
 varying vec2 vUv;
 varying float vRim;
 
