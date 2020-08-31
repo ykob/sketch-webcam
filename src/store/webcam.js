@@ -19,12 +19,6 @@ export default {
     setFacingMode(state, facingMode) {
       state.facingMode = facingMode;
     },
-    setVideoAttr(_state, srcObject) {
-      // get video stream, and set attributes to video object to play auto on iOS.
-      video.srcObject = srcObject;
-      video.setAttribute('playsinline', true);
-      video.setAttribute('controls', true);
-    },
     setResolution(state) {
       // get video resolution with promise.
       let x = video.videoWidth;
@@ -69,7 +63,14 @@ export default {
           });
           throw new Error("It's not allowed to use WebCam.");
         });
-      commit('setVideoAttr', srcObject);
+      // get video stream, and set attributes to video object to play auto on iOS.
+      video.srcObject = srcObject;
+      video.setAttribute('playsinline', true);
+      video.setAttribute('controls', true);
+      video.style.width = '0px';
+      video.style.height = '0px';
+      document.body.append(video);
+
       await sleep(1000);
       commit('setResolution');
       commit('createVideoTexture');
