@@ -2,7 +2,7 @@
 
 Interactive demos with webcam, tensorflow.js models, three.js and Vue-CLI.
 
-https://webcam-tplh.net/
+https://webcam.tplh.net/
 
 ## Using Models
 
