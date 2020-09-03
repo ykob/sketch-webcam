@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { WebGLRenderer, Vector2, Scene, Clock } from 'three';
+import { WebGL1Renderer, Vector2, Scene, Clock } from 'three';
 import UAParser from 'ua-parser-js';
 
 import touch from './touch';
@@ -19,7 +19,7 @@ export default new Vuex.Store({
     canvas,
     resolution: new Vector2(),
     mouse: new Vector2(),
-    renderer: new WebGLRenderer({
+    renderer: new WebGL1Renderer({
       alpha: true,
       antialias: false,
       canvas: canvas
