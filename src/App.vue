@@ -1,4 +1,6 @@
 <script>
+import * as tf from '@tensorflow/tfjs-core';
+
 import BackHome from '@/components/common/BackHome.vue';
 import GradualCover from '@/components/common/GradualCover.vue';
 import Modal from '@/components/common/Modal.vue';
@@ -16,8 +18,10 @@ export default {
     Modal,
     SiteTitle
   },
-  created() {
+  async created() {
     const { state, dispatch } = this.$store;
+
+    await tf.setBackend('webgl');
 
     // append canvas and add styles to it.
     document.body.append(state.canvas);
