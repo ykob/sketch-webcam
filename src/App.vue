@@ -1,5 +1,7 @@
 <script>
 import * as tf from '@tensorflow/tfjs-core';
+import '@tensorflow/tfjs-backend-cpu';
+import '@tensorflow/tfjs-backend-webgl';
 
 import BackHome from '@/components/common/BackHome.vue';
 import GradualCover from '@/components/common/GradualCover.vue';
