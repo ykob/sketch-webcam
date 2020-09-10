@@ -33,10 +33,10 @@ transition(
             |yoichi kobayashi.
         .home-header__links
           a.home-header__link(
-              href = 'https://github.com/ykob/sketch-webcam'
-              target = '_blank'
-              )
-              IconGitHub
+            href = 'https://github.com/ykob/sketch-webcam'
+            target = '_blank'
+            )
+            IconGitHub
           a.home-header__link(
             href = 'https://twitter.com/ykob0123'
             target = '_blank'
@@ -125,6 +125,13 @@ transition(
     height: 24px;
     display: block;
     margin-right: 12px;
+  }
+  a {
+    transition-duration: 0.2s;
+    transition-property: opacity;
+    &:hover {
+      opacity: 0.5;
+    }
   }
 }
 </style>
