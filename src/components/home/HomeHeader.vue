@@ -42,7 +42,6 @@ transition(
             target = '_blank'
             )
             IconTwitter
-      
 </template>
 
 <style lang="scss" scoped>
@@ -67,17 +66,17 @@ transition(
     margin-left: 24px;
   }
   &.v-enter {
-    opacity: 0;
+    opacity: 0.999;
   }
   &.v-enter-to {
     opacity: 1;
-    transition-duration: 1s;
+    transition-duration: 2s;
     transition-property: opacity;
   }
   .page-leave-to &,
   &.v-leave-to {
-    opacity: 0;
-    transition-duration: 1s;
+    opacity: 0.999;
+    transition-duration: 2s;
     transition-property: opacity;
   }
   &__title {
@@ -131,6 +130,54 @@ transition(
     transition-property: opacity;
     &:hover {
       opacity: 0.5;
+    }
+  }
+
+  .v-enter & {
+    &__title,
+    &__description,
+    &__options {
+      opacity: 0;
+      transform: translate3d(0, 24px, 0);
+    }
+  }
+  .v-enter-to & {
+    &__title,
+    &__description,
+    &__options {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+      transition-duration: 1s;
+      transition-property: opacity, transform;
+    }
+    &__title {
+      transition-delay: 0.2s;
+    }
+    &__description {
+      transition-delay: 0.26s;
+    }
+    &__options {
+      transition-delay: 0.32s;
+    }
+  }
+  .page-leave-to &,
+  &.v-leave-to {
+    &__title,
+    &__description,
+    &__options {
+      opacity: 0;
+      transform: translate3d(0, -24px, 0);
+      transition-duration: 1s;
+      transition-property: opacity, transform;
+    }
+    &__title {
+      transition-delay: 0s;
+    }
+    &__description {
+      transition-delay: 0.06s;
+    }
+    &__options {
+      transition-delay: 0.12s;
     }
   }
 }

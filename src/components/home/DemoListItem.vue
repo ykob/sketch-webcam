@@ -101,7 +101,10 @@ transition(
 
   @for $i from 1 through 100 {
     &:nth-of-type(#{$i}) {
-      &.v-enter-to,
+      &.v-enter-to {
+        transition-delay: (($i - 1) * 0.06 + 0.4) * 1s;
+      }
+      .page-leave-to &,
       &.v-leave-to {
         transition-delay: (($i - 1) * 0.06) * 1s;
       }
