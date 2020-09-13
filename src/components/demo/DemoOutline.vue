@@ -158,7 +158,7 @@ transition(
     &__title,
     &__description {
       opacity: 0;
-      transform: translate3d(0, 16px, 0);
+      transform: translate3d(0, 24px, 0);
     }
     &__processing-marker {
       opacity: 0;
@@ -176,17 +176,18 @@ transition(
       opacity: 1;
       transform: translate3d(0, 0, 0);
       transition-duration: 1s;
+      transition-delay: 0.5s;
       transition-timing-function: $easeOutCubic;
       transition-property: opacity, transform;
     }
     &__description {
-      transition-delay: 0.1s;
+      transition-delay: 0.6s;
     }
     &__processing-marker {
       opacity: 1;
       transform: scale(1);
       transition-duration: 1s;
-      transition-delay: 0.2s;
+      transition-delay: 0.7s;
       transition-timing-function: $easeOutCubic;
       transition-property: opacity, transform;
     }
@@ -202,8 +203,9 @@ transition(
     &__description,
     &__play-btn {
       opacity: 0;
-      transform: translate3d(0, -16px, 0);
+      transform: translate3d(0, -24px, 0);
       transition-duration: 1s;
+      transition-delay: 0s;
       transition-timing-function: $easeOutCubic;
       transition-property: opacity, transform;
     }
