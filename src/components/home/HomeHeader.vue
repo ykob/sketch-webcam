@@ -82,19 +82,26 @@ transition(
   &__title {
     line-height: 1;
     margin-top: 0;
-    @include fontSizeAll(42, 42, 28);
     letter-spacing: 0.12em;
     @include l-more-than-mobile {
       margin-bottom: 16px;
+      font-size: 3.5vw;
     }
     @include l-mobile {
       margin-bottom: 8px;
+    }
+    @include l-mobile-p {
+      font-size: 8.5vw;
+    }
+    @include l-mobile-l {
+      font-size: 4.5vw;
     }
   }
   &__description {
     margin-top: 0;
     @include l-more-than-mobile {
       margin-bottom: 24px;
+      font-size: 1vw;
     }
     @include l-mobile {
       margin-bottom: 16px;
@@ -108,9 +115,9 @@ transition(
   }
   &__signature {
     margin: 0;
-    @include fontSizeAll(11, 11, 9);
     @include l-more-than-mobile {
       margin-right: 32px;
+      font-size: 0.7vw;
     }
     @include l-mobile {
       margin-bottom: 8px;
