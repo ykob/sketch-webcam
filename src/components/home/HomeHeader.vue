@@ -65,20 +65,7 @@ transition(
     margin-right: 24px;
     margin-left: 24px;
   }
-  &.v-enter {
-    opacity: 0.999;
-  }
-  &.v-enter-to {
-    opacity: 1;
-    transition-duration: 2s;
-    transition-property: opacity;
-  }
-  .page-leave-to &,
-  &.v-leave-to {
-    opacity: 0.999;
-    transition-duration: 2s;
-    transition-property: opacity;
-  }
+
   &__title {
     line-height: 1;
     margin-top: 0;
@@ -140,7 +127,8 @@ transition(
     }
   }
 
-  .v-enter & {
+  .page-enter & {
+    opacity: 0.999;
     &__title,
     &__description,
     &__options {
@@ -148,7 +136,10 @@ transition(
       transform: translate3d(0, 24px, 0);
     }
   }
-  .v-enter-to & {
+  .page-enter-to & {
+    opacity: 1;
+    transition-duration: 2s;
+    transition-property: opacity;
     &__title,
     &__description,
     &__options {
@@ -167,8 +158,10 @@ transition(
       transition-delay: 0.32s;
     }
   }
-  .page-leave-to &,
-  &.v-leave-to {
+  .page-leave-to & {
+    opacity: 0.999;
+    transition-duration: 2s;
+    transition-property: opacity;
     &__title,
     &__description,
     &__options {
