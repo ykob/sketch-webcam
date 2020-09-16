@@ -78,7 +78,6 @@ export default {
       commit('setResolution');
       commit('createVideoTexture');
       video.play();
-      video.pause();
 
       return;
     }
