@@ -63,10 +63,13 @@ export default {
           });
           throw new Error("It's not allowed to use WebCam.");
         });
+
       // get video stream, and set attributes to video object to play auto on iOS.
       video.srcObject = srcObject;
       video.setAttribute('playsinline', true);
       video.setAttribute('controls', true);
+
+      // append the video element to run normally on Safari and Mobile Safari.
       video.style.width = '0px';
       video.style.height = '0px';
       document.body.append(video);
