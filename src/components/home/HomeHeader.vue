@@ -14,6 +14,7 @@ export default {
 <template lang="pug">
 transition(
   appear
+  :duration = '2000'
   )
   .home-header
     .home-header__in
@@ -128,7 +129,6 @@ transition(
   }
 
   .page-enter & {
-    opacity: 0.999;
     &__title,
     &__description,
     &__options {
@@ -137,9 +137,6 @@ transition(
     }
   }
   .page-enter-to & {
-    opacity: 1;
-    transition-duration: 2s;
-    transition-property: opacity;
     &__title,
     &__description,
     &__options {
@@ -159,9 +156,6 @@ transition(
     }
   }
   .page-leave-to & {
-    opacity: 0.999;
-    transition-duration: 2s;
-    transition-property: opacity;
     &__title,
     &__description,
     &__options {

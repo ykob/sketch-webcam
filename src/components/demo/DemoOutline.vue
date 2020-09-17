@@ -27,6 +27,7 @@ export default {
 transition(
   name = 'outline'
   appear
+  :duration = '2000'
   )
   .demo-outline
     .demo-outline__in
@@ -151,9 +152,6 @@ transition(
       transition-property: opacity, transform;
     }
   }
-  &.outline-enter {
-    opacity: 0.9999;
-  }
   .outline-enter & {
     &__title,
     &__description {
@@ -164,11 +162,6 @@ transition(
       opacity: 0;
       transform: scale(0.5);
     }
-  }
-  &.outline-enter-to {
-    opacity: 1;
-    transition-duration: 2s;
-    transition-property: opacity;
   }
   .outline-enter-to & {
     &__title,
@@ -191,11 +184,6 @@ transition(
       transition-timing-function: $easeOutCubic;
       transition-property: opacity, transform;
     }
-  }
-  &.outline-leave-to {
-    opacity: 0.9999;
-    transition-duration: 2s;
-    transition-property: opacity;
   }
   .page-leave-to &,
   .outline-leave-to & {
