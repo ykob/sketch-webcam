@@ -60,6 +60,7 @@ export default {
   async destroyed() {
     const { commit } = this.$store;
 
+    await webglContent.destroy();
     commit('destroyUpdate');
     commit('destroyResize');
   },
