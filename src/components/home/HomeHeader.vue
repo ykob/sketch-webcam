@@ -80,12 +80,12 @@ transition(
     @include l-mobile-p {
       line-height: 0.8;
       margin-bottom: 3vw;
-      font-size: 15vw;
+      font-size: 13vw;
     }
     @include l-mobile-l {
-      line-height: 1;
-      margin-bottom: 1.2vw;
-      font-size: 4.5vw;
+      line-height: 0.8;
+      margin-bottom: 1.7vw;
+      font-size: 6.5vw;
     }
   }
   &__description {
@@ -125,7 +125,7 @@ transition(
     }
     @include l-mobile-l {
       margin-bottom: 2vw;
-      font-size: 1vw;
+      font-size: 1.2vw;
     }
   }
   &__links {

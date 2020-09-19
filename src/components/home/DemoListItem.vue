@@ -59,8 +59,11 @@ transition(
   @include l-more-than-mobile {
     margin-top: 2.4vw;
   }
-  @include l-mobile {
-    margin-top: 24px;
+  @include l-mobile-p {
+    margin-top: 6vw;
+  }
+  @include l-mobile-l {
+    margin-top: 2.4vw;
   }
   &:first-child {
     margin-top: 0;
@@ -72,7 +75,7 @@ transition(
       font-size: 1.2vw;
     }
     @include l-mobile-p {
-      padding-bottom: 0.4em;
+      padding-bottom: 0.3em;
       font-size: 3.5vw;
     }
     @include l-mobile-l {
@@ -86,10 +89,10 @@ transition(
       font-size: 2.4vw;
     }
     @include l-mobile-p {
-      font-size: 8vw;
+      font-size: 7.5vw;
     }
     @include l-mobile-l {
-      font-size: 3.5vw;
+      font-size: 4vw;
     }
   }
 
