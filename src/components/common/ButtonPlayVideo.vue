@@ -17,16 +17,17 @@ button {
   appearance: none;
   padding: 0;
   border: 0;
-  border-radius: 20px;
   color: $color-bg;
   background-color: $color-link;
   @include l-more-than-mobile {
     width: 180px;
-    height: 40px;
+    height: 48px;
+    border-radius: 24px;
   }
   @include l-mobile {
     width: 150px;
-    height: 32px;
+    height: 40px;
+    border-radius: 20px;
   }
   &:focus {
     outline: 0;

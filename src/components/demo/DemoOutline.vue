@@ -57,37 +57,64 @@ transition(
   box-sizing: border-box;
   position: absolute;
   top: 0;
+  right: 0;
   left: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  @include l-mobile {
-    padding: 8px;
+  @include l-more-than-mobile {
+    max-width: 480px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+  @include l-mobile-p {
+    padding-right: 24px;
+    padding-left: 24px;
+  }
+  @include l-mobile-l {
+    padding-right: 16vw;
+    padding-left: 16vw;
   }
   &__in {
     position: relative;
     text-align: center;
     @include l-more-than-mobile {
-      padding-bottom: 64px;
+      padding-bottom: 48px;
     }
     @include l-mobile {
-      padding-bottom: 48px;
+      padding-bottom: 40px;
     }
   }
   &__title {
     line-height: 1;
     margin-top: 0;
-    @include fontSizeAll(40, 40, 28);
     @include l-more-than-mobile {
-      margin-bottom: 16px;
+      margin-bottom: 1vw;
+      font-size: 4vw;
     }
-    @include l-mobile {
-      margin-bottom: 8px;
+    @include l-mobile-p {
+      margin-bottom: 3vw;
+      font-size: 10vw;
+    }
+    @include l-mobile-l {
+      margin-bottom: 1.5vw;
+      font-size: 6vw;
     }
   }
   &__description {
-    max-width: 480px;
     margin: 0;
+    @include l-more-than-mobile {
+      margin-bottom: 2vw;
+      font-size: 1.2vw;
+    }
+    @include l-mobile-p {
+      margin-bottom: 6vw;
+      font-size: 3.5vw;
+    }
+    @include l-mobile-l {
+      margin-bottom: 3vw;
+      font-size: 2.1vw;
+    }
   }
   &__play-btn {
     position: absolute;
