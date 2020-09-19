@@ -48,50 +48,59 @@ transition(
 .home-header {
   box-sizing: border-box;
   @include l-more-than-mobile {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 50%;
+    width: 58.6%;
     height: 100%;
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    padding-right: 4 / 100 * 100%;
-    padding-left: 8 / 100 * 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
   }
-  @include l-mobile {
-    margin-top: 40px;
-    margin-bottom: 40px;
-    margin-right: 24px;
-    margin-left: 24px;
+  @include l-mobile-l {
+    width: 58.6%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding-right: 4vw;
   }
 
   &__title {
-    line-height: 1;
     margin-top: 0;
     letter-spacing: 0.12em;
     @include l-more-than-mobile {
-      margin-bottom: 16px;
-      font-size: 3.5vw;
-    }
-    @include l-mobile {
-      margin-bottom: 8px;
+      line-height: 1;
+      margin-bottom: 1.2vw;
+      font-size: 4vw;
     }
     @include l-mobile-p {
-      font-size: 8.5vw;
+      line-height: 0.8;
+      margin-bottom: 3vw;
+      font-size: 15vw;
     }
     @include l-mobile-l {
+      line-height: 1;
+      margin-bottom: 1.2vw;
       font-size: 4.5vw;
     }
   }
   &__description {
     margin-top: 0;
     @include l-more-than-mobile {
-      margin-bottom: 24px;
-      font-size: 1vw;
+      margin-bottom: 2.4vw;
+      font-size: 1.2vw;
     }
-    @include l-mobile {
-      margin-bottom: 16px;
+    @include l-mobile-p {
+      margin-bottom: 4.5vw;
+      font-size: 3.5vw;
+    }
+    @include l-mobile-l {
+      margin-bottom: 2.4vw;
+      font-size: 1.7vw;
     }
   }
   &__options {
@@ -99,15 +108,24 @@ transition(
       display: flex;
       align-items: center;
     }
+    @include l-mobile-p {
+      margin-bottom: 12vw;
+      font-size: 1.4vw;
+    }
   }
   &__signature {
     margin: 0;
     @include l-more-than-mobile {
-      margin-right: 32px;
-      font-size: 0.7vw;
+      margin-right: 2vw;
+      font-size: 0.85vw;
     }
-    @include l-mobile {
-      margin-bottom: 8px;
+    @include l-mobile-p {
+      margin-bottom: 2vw;
+      font-size: 2.5vw;
+    }
+    @include l-mobile-l {
+      margin-bottom: 2vw;
+      font-size: 1vw;
     }
   }
   &__links {

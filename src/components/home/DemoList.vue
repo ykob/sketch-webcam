@@ -16,9 +16,10 @@ export default {
   },
   computed: {
     styles() {
-      const { resolution, isMobile } = this.$store.state;
+      const { resolution } = this.$store.state;
+      const { isMobilePortrait } = this.$store.getters;
       return {
-        minHeight: isMobile ? 'auto' : `${resolution.y}px`
+        minHeight: isMobilePortrait ? 'auto' : `${resolution.y}px`
       };
     }
   }
@@ -44,13 +45,5 @@ export default {
   justify-content: center;
   align-items: flex-start;
   box-sizing: border-box;
-  @include l-more-than-mobile {
-    padding-right: 8%;
-    padding-left: 4%;
-  }
-  @include l-mobile {
-    margin-right: 24px;
-    margin-left: 24px;
-  }
 }
 </style>

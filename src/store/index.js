@@ -32,6 +32,11 @@ export default new Vuex.Store({
     isMobile: false,
     pixelRatio: 1
   },
+  getters: {
+    isMobilePortrait(state) {
+      return state.isMobile && state.resolution.x < state.resolution.y;
+    }
+  },
   mutations: {
     setUpdate(state, update) {
       state.update = update;

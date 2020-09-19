@@ -104,8 +104,4 @@ div(
   slot
 </template>
 
-<style lang="scss" scoped>
-div {
-  overflow: hidden;
-}
-</style>
+<style lang="scss" scoped></style>

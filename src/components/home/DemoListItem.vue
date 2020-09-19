@@ -57,7 +57,7 @@ transition(
   display: flex;
   align-items: flex-end;
   @include l-more-than-mobile {
-    margin-top: 36px;
+    margin-top: 2.4vw;
   }
   @include l-mobile {
     margin-top: 24px;
@@ -66,19 +66,31 @@ transition(
     margin-top: 0;
   }
   &__num {
-    @include fontSizeAll(16, 16, 12);
+    margin-right: 1.2em;
     @include l-more-than-mobile {
-      margin-right: 24px;
-      padding-bottom: 4px;
+      padding-bottom: 0.35em;
+      font-size: 1.2vw;
     }
-    @include l-mobile {
-      margin-right: 16px;
-      padding-bottom: 2px;
+    @include l-mobile-p {
+      padding-bottom: 0.4em;
+      font-size: 3.5vw;
+    }
+    @include l-mobile-l {
+      padding-bottom: 0.5em;
+      font-size: 1.7vw;
     }
   }
   &__label {
-    @include fontSizeAll(28, 28, 21);
     letter-spacing: 0.12em;
+    @include l-more-than-mobile {
+      font-size: 2.4vw;
+    }
+    @include l-mobile-p {
+      font-size: 8vw;
+    }
+    @include l-mobile-l {
+      font-size: 3.5vw;
+    }
   }
 
   &.v-enter {
