@@ -2,6 +2,8 @@
 import * as tf from '@tensorflow/tfjs-core';
 import '@tensorflow/tfjs-backend-cpu';
 import '@tensorflow/tfjs-backend-webgl';
+import sleep from 'js-util/sleep';
+import debounce from 'js-util/debounce';
 
 import BackHome from '@/components/common/BackHome.vue';
 import GradualCover from '@/components/common/GradualCover.vue';
@@ -34,7 +36,7 @@ export default {
       `;
 
     // On global events.
-    window.addEventListener('resize', this.resize);
+    window.addEventListener('resize', debounce(this.resize, 500));
     window.addEventListener('deviceorientation', this.resize);
     window.addEventListener('mousemove', this.mousemove);
     document.addEventListener('touchstart', this.touchstart);
@@ -60,10 +62,12 @@ export default {
       state.renderer.render(state.scene, state.camera);
       requestAnimationFrame(this.update);
     },
-    resize() {
+    async resize() {
+      console.log('resize');
       const { state, commit } = this.$store;
 
-      state.resolution.set(document.body.clientWidth, window.innerHeight);
+      await sleep(500);
+      state.resolution.set(window.innerWidth, window.innerHeight);
       state.canvas.width = state.resolution.x;
       state.canvas.height = state.resolution.y;
       commit('changeMediaQuery', state.resolution.x < 768);
@@ -71,6 +75,7 @@ export default {
       state.camera.resize();
       state.renderer.setSize(state.resolution.x, state.resolution.y);
       state.renderer.setPixelRatio(state.pixelRatio);
+      commit('webcam/setResolution');
       if (state.resize !== null) {
         state.resize();
       }
