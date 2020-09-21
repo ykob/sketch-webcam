@@ -63,7 +63,6 @@ export default {
       requestAnimationFrame(this.update);
     },
     async resize() {
-      console.log('resize');
       const { state, commit } = this.$store;
 
       await sleep(500);
