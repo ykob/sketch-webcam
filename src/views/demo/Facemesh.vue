@@ -54,6 +54,7 @@ export default {
       commit('setResize', this.resize);
       this.resize();
 
+      await sleep(100);
       this.isLoaded = true;
     });
   },
