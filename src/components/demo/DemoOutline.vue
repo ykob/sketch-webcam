@@ -153,12 +153,12 @@ transition(
     @include l-more-than-mobile {
       width: 32px;
       height: 32px;
-      bottom: 0;
+      bottom: 8px;
     }
     @include l-mobile {
       width: 24px;
       height: 24px;
-      bottom: 4px;
+      bottom: 8px;
     }
     span {
       width: 100%;
