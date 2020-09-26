@@ -154,10 +154,7 @@ export default {
       renderTarget3.setSize(resolution.x, resolution.y);
     },
     async start() {
-      const { commit } = this.$store;
-
       this.isStarted = true;
-      commit('webcam/playVideo');
       await sleep(200);
       view.show();
     }

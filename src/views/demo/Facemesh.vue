@@ -81,10 +81,7 @@ export default {
       webglContent.resize();
     },
     async start() {
-      const { commit } = this.$store;
-
       this.isStarted = true;
-      commit('webcam/playVideo');
       await sleep(200);
       webglContent.show();
     }

@@ -12,10 +12,6 @@ export default {
     videoTexture: null
   },
   mutations: {
-    playVideo() {
-      // play video.
-      video.play();
-    },
     setFacingMode(state, facingMode) {
       state.facingMode = facingMode;
     },
